@@ -36,6 +36,7 @@ public final class CallCompositeLocalOptions {
     private boolean cameraOn = false;
     private boolean microphoneOn = false;
     private boolean skipSetupScreen = false;
+    private boolean lockRotation = false;
 
     /**
      * Create LocalSettings.
@@ -106,6 +107,15 @@ public final class CallCompositeLocalOptions {
      */
     public CallCompositeLocalOptions setSkipSetupScreen(final boolean skipSetupScreen) {
         this.skipSetupScreen = skipSetupScreen;
+        return this;
+    }
+
+    public boolean isLockRotation() {
+        return this.lockRotation;
+    }
+
+    public CallCompositeLocalOptions setLockRotation(final boolean lockRotation) {
+        this.lockRotation = lockRotation;
         return this;
     }
 
