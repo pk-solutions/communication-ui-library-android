@@ -60,6 +60,8 @@ publishing {
             }
         }
 
+/*
+// Commenting this out because it breaks jitpack.io
         callingSDK(MavenPublication) {
             pom {
                 name = "Microsoft Azure Android Voice &amp; Video Calling Library for Communication Services"
@@ -110,5 +112,6 @@ publishing {
 
             }
         }
+        */
     }
 }
