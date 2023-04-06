@@ -1,4 +1,4 @@
 include ':calling'
-include ':chat'
-include ':call-with-chat'
-include ':demo-app'
+//include ':chat'
+//include ':call-with-chat'
+//include ':demo-app'
