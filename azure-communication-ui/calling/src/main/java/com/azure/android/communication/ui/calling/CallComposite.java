@@ -9,18 +9,14 @@ import android.content.Intent;
 import com.azure.android.communication.common.CommunicationIdentifier;
 import com.azure.android.communication.ui.calling.configuration.CallCompositeConfiguration;
 import com.azure.android.communication.ui.calling.configuration.CallConfiguration;
-import com.azure.android.communication.ui.calling.configuration.CallType;
 import com.azure.android.communication.ui.calling.di.DependencyInjectionContainer;
 import com.azure.android.communication.ui.calling.models.CallCompositeDebugInfo;
-import com.azure.android.communication.ui.calling.models.CallCompositeGroupCallLocator;
-import com.azure.android.communication.ui.calling.models.CallCompositeJoinLocator;
 import com.azure.android.communication.ui.calling.models.CallCompositeLocalOptions;
 import com.azure.android.communication.ui.calling.models.CallCompositeErrorEvent;
 import com.azure.android.communication.ui.calling.models.CallCompositeRemoteOptions;
 import com.azure.android.communication.ui.calling.models.CallCompositeRemoteParticipantJoinedEvent;
 import com.azure.android.communication.ui.calling.models.CallCompositeParticipantViewData;
 import com.azure.android.communication.ui.calling.models.CallCompositeSetParticipantViewDataResult;
-import com.azure.android.communication.ui.calling.models.CallCompositeTeamsMeetingLinkLocator;
 import com.azure.android.communication.ui.calling.presentation.CallCompositeActivity;
 import com.azure.android.communication.ui.calling.presentation.manager.DebugInfoManager;
 import com.jakewharton.threetenabp.AndroidThreeTen;
@@ -29,7 +25,6 @@ import static com.azure.android.communication.ui.calling.CallCompositeExtentions
 import static com.azure.android.communication.ui.calling.service.sdk.TypeConversionsKt.into;
 
 import java.lang.ref.WeakReference;
-import java.util.UUID;
 
 /**
  * Azure android communication calling composite component.
@@ -241,25 +236,9 @@ public final class CallComposite {
                             final boolean isTest) {
         AndroidThreeTen.init(context.getApplicationContext());
 
-        UUID groupId = null;
-        String meetingLink = null;
-        final CallType callType;
-
-        final CallCompositeJoinLocator locator = remoteOptions.getLocator();
-        if (locator instanceof CallCompositeGroupCallLocator) {
-            callType = CallType.GROUP_CALL;
-            groupId = ((CallCompositeGroupCallLocator) locator).getGroupId();
-        } else {
-            callType = CallType.TEAMS_MEETING;
-            meetingLink = ((CallCompositeTeamsMeetingLinkLocator) locator).getMeetingLink();
-        }
-
         configuration.setCallConfig(new CallConfiguration(
-                remoteOptions.getCredential(),
-                remoteOptions.getDisplayName(),
-                groupId,
-                meetingLink,
-                callType));
+                remoteOptions.getCallFactory(),
+                remoteOptions.getDisplayName()));
 
         if (localOptions != null) {
             configuration.setCallCompositeLocalOptions(localOptions);

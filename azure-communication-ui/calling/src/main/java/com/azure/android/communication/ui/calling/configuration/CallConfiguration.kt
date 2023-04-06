@@ -3,21 +3,17 @@
 
 package com.azure.android.communication.ui.calling.configuration
 
-import com.azure.android.communication.common.CommunicationTokenCredential
-import com.azure.android.communication.ui.calling.DiagnosticConfig
-import java.util.UUID
+import com.azure.android.communication.ui.calling.models.CallCompositeCallFactory
 
+/*
 internal enum class CallType {
     GROUP_CALL,
     TEAMS_MEETING,
 }
+ */
 
 internal data class CallConfiguration(
-    val communicationTokenCredential: CommunicationTokenCredential,
+    val callFactory: CallCompositeCallFactory,
     val displayName: String,
-    val groupId: UUID?,
-    val meetingLink: String?,
-    val callType: CallType,
 ) {
-    val diagnosticConfig = DiagnosticConfig()
 }

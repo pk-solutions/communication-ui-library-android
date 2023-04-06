@@ -8,6 +8,7 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Build
 import android.util.AttributeSet
+import android.view.View
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
@@ -35,6 +36,7 @@ internal class SetupControlBarView : LinearLayout {
         micButton = findViewById(R.id.azure_communication_ui_setup_audio_button)
         cameraButton = findViewById(R.id.azure_communication_ui_setup_camera_button)
         audioDeviceButton = findViewById(R.id.azure_communication_ui_setup_audio_device_button)
+        audioDeviceButton.visibility = View.GONE
         micButton.setOnClickListener {
             toggleAudio()
         }
