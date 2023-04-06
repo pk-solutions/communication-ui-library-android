@@ -15,7 +15,6 @@ import com.azure.android.communication.calling.VideoDevicesUpdatedListener
 import com.azure.android.communication.calling.VideoOptions
 import com.azure.android.communication.ui.calling.CallCompositeException
 import com.azure.android.communication.ui.calling.configuration.CallConfiguration
-import com.azure.android.communication.ui.calling.logger.Logger
 import com.azure.android.communication.ui.calling.models.ParticipantInfoModel
 import com.azure.android.communication.ui.calling.redux.state.AudioOperationalStatus
 import com.azure.android.communication.ui.calling.redux.state.AudioState
@@ -32,7 +31,7 @@ internal class CallingSDKWrapper(
     private val context: Context,
     private val callingSDKEventHandler: CallingSDKEventHandler,
     private val callConfigInjected: CallConfiguration?,
-    private val logger: Logger? = null,
+    //private val logger: Logger? = null,
 ) : CallingSDK {
     private var nullableCall: Call? = null
     //private var callClient: CallClient? = null
@@ -351,7 +350,7 @@ internal class CallingSDKWrapper(
         joinCallOptions.audioOptions = audioOptions
         videoOptions?.let { joinCallOptions.videoOptions = videoOptions }
 
-        return callConfig.callFactory.getCall(videoOptions, audioOptions)
+        return callConfig.callFactory.getCall(context, videoOptions, audioOptions)
             .thenAccept { call: Call ->
                 nullableCall = call
                 callingSDKEventHandler.onJoinCall(call)

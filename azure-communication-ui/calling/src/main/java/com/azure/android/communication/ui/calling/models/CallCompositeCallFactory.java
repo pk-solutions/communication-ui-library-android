@@ -21,7 +21,7 @@ public interface CallCompositeCallFactory {
      * This method is only called once.
      * @return The active call.
      */
-    CompletableFuture<Call> getCall(VideoOptions videoOptions, AudioOptions audioOptions);
+    CompletableFuture<Call> getCall(Context context, VideoOptions videoOptions, AudioOptions audioOptions);
 
     CompletableFuture<DeviceManager> getDeviceManager(Context context);
 }
