@@ -4,12 +4,17 @@
 package com.azure.android.communication.ui.calling.presentation
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.graphics.drawable.ColorDrawable
 import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
+import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
@@ -162,6 +167,60 @@ internal class CallCompositeActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private var lastKey = -1
+    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
+        val keyCode = event?.keyCode
+        if (keyCode?.let { it > 0 } == true) {
+            val isBackKey = localOptions?.backKeys?.contains(keyCode) == true
+            val isConfirmKey = localOptions?.confirmKeys?.contains(keyCode) == true
+            val isUpKey = localOptions?.upKeys?.contains(keyCode) == true
+            val isDownKey = localOptions?.downKeys?.contains(keyCode) == true
+            val isPttKey = localOptions?.pttKeys?.contains(keyCode) == true
+            val isVolumeUpKey = localOptions?.volumeUpKeys?.contains(keyCode) == true
+            val isVolumeDownKey = localOptions?.volumeDownKeys?.contains(keyCode) == true
+
+            if (event.action == KeyEvent.ACTION_DOWN && lastKey != keyCode) {
+                lastKey = keyCode // Prevent duplicate vibrates if continuously held down.
+
+                // Vibrate on key down for some custom keys
+                if (isBackKey || isConfirmKey || isUpKey || isDownKey || isPttKey) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        val v = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+                        v.defaultVibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
+                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        val v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                        v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
+                    } else {
+                        val v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                        v.vibrate(100)
+                    }
+                }
+
+                return true
+
+            } else if (event.action == KeyEvent.ACTION_UP) {
+                lastKey = -1
+
+                // Custom key behavior
+                val fragment = supportFragmentManager.fragments.firstOrNull()
+                if (isBackKey) {
+                    (fragment as? BackNavigation)?.onBackPressed()
+                } else if (isConfirmKey) {
+                    (fragment as? CallingFragment)?.switchLocalCamera()
+                } else if (isUpKey || isDownKey) {
+                    // TODO
+                } else if (isPttKey) {
+                    // TODO
+                } else if (isVolumeUpKey || isVolumeDownKey) {
+                    // TODO
+                }
+
+                return true
+            }
+        }
+        return super.dispatchKeyEvent(event)
     }
 
     private fun configureActionBar() {

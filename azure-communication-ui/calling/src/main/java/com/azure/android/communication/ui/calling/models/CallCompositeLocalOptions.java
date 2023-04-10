@@ -5,6 +5,8 @@ package com.azure.android.communication.ui.calling.models;
 
 import com.azure.android.communication.ui.calling.CallComposite;
 
+import java.util.Set;
+
 /**
  * {@link CallCompositeLocalOptions} for {@link CallComposite#launch}.
  *
@@ -37,6 +39,13 @@ public final class CallCompositeLocalOptions {
     private boolean microphoneOn = false;
     private boolean skipSetupScreen = false;
     private boolean lockRotation = false;
+    private Set<Integer> backKeys = null;
+    private Set<Integer> confirmKeys = null;
+    private Set<Integer> upKeys = null;
+    private Set<Integer> downKeys = null;
+    private Set<Integer> pttKeys = null;
+    private Set<Integer> volumeUpKeys = null;
+    private Set<Integer> volumeDownKeys = null;
 
     /**
      * Create LocalSettings.
@@ -156,6 +165,76 @@ public final class CallCompositeLocalOptions {
             final boolean microphoneOn
     ) {
         this.microphoneOn = microphoneOn;
+        return this;
+    }
+
+    public Set<Integer> getBackKeys() {
+        return this.backKeys;
+    }
+    public CallCompositeLocalOptions setBackKeys(
+            final Set<Integer> backKeys
+    ) {
+        this.backKeys = backKeys;
+        return this;
+    }
+
+    public Set<Integer> getConfirmKeys() {
+        return this.confirmKeys;
+    }
+    public CallCompositeLocalOptions setConfirmKeys(
+            final Set<Integer> confirmKeys
+    ) {
+        this.confirmKeys = confirmKeys;
+        return this;
+    }
+
+    public Set<Integer> getUpKeys() {
+        return this.upKeys;
+    }
+    public CallCompositeLocalOptions setUpKeys(
+            final Set<Integer> upKeys
+    ) {
+        this.upKeys = upKeys;
+        return this;
+    }
+
+    public Set<Integer> getDownKeys() {
+        return this.downKeys;
+    }
+    public CallCompositeLocalOptions setDownKeys(
+            final Set<Integer> downKeys
+    ) {
+        this.downKeys = downKeys;
+        return this;
+    }
+
+    public Set<Integer> getPttKeys() {
+        return pttKeys;
+    }
+    public CallCompositeLocalOptions setPttKeys(
+            final Set<Integer> pttKeys
+    ) {
+        this.pttKeys = pttKeys;
+        return this;
+    }
+
+    public Set<Integer> getVolumeUpKeys() {
+        return volumeUpKeys;
+    }
+    public CallCompositeLocalOptions setVolumeUpKeys(
+            final Set<Integer> volumeUpKeys
+    ) {
+        this.volumeUpKeys = volumeUpKeys;
+        return this;
+    }
+
+    public Set<Integer> getVolumeDownKeys() {
+        return volumeDownKeys;
+    }
+    public CallCompositeLocalOptions setVolumeDownKeys(
+            final Set<Integer> volumeDownKeys
+    ) {
+        this.volumeDownKeys = volumeDownKeys;
         return this;
     }
 }

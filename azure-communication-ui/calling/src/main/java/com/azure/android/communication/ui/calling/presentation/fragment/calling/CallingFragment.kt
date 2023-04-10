@@ -257,4 +257,8 @@ internal class CallingFragment :
     private fun switchFloatingHeader() {
         viewModel.switchFloatingHeader()
     }
+
+    fun switchLocalCamera() {
+        viewModel.localParticipantViewModel.switchCamera()
+    }
 }
