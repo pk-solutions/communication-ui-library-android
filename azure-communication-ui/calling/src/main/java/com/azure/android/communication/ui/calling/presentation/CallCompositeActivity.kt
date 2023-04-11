@@ -208,7 +208,10 @@ internal class CallCompositeActivity : AppCompatActivity() {
                 if (isBackKey) {
                     (fragment as? BackNavigation)?.onBackPressed()
                 } else if (isConfirmKey) {
-                    (fragment as? CallingFragment)?.switchLocalCamera()
+                    if (fragment is CallingFragment)
+                        fragment.switchLocalCamera()
+                    else if (fragment is SetupFragment)
+                        fragment.attemptJoinCall()
                 } else if (isUpKey || isDownKey) {
                     // TODO
                 } else if (isPttKey) {

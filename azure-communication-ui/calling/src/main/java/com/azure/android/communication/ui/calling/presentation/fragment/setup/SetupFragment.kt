@@ -114,7 +114,11 @@ internal class SetupFragment :
         viewModel.exitComposite()
     }
 
-    val callCompositeActivity
+    fun attemptJoinCall() {
+        setupJoinCallButtonHolderView.attemptJoinCall()
+    }
+
+    private val callCompositeActivity
         get() = (activity as AppCompatActivity)
 
     private fun setActionBarTitle() {

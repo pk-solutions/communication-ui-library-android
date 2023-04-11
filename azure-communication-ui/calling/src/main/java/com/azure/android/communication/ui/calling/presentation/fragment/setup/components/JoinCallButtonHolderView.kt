@@ -55,11 +55,7 @@ internal class JoinCallButtonHolderView : ConstraintLayout {
         joiningCallText.text = context.getString(R.string.azure_communication_ui_calling_setup_view_button_connecting_call)
 
         setupJoinCallButton.setOnClickListener {
-            if (networkManager.isNetworkConnectionAvailable()) {
-                viewModel.launchCallScreen()
-            } else {
-                viewModel.handleOffline()
-            }
+            handleClickJoinCall()
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -69,6 +65,19 @@ internal class JoinCallButtonHolderView : ConstraintLayout {
         }
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getDisableJoinCallButtonFlow().collect { onDisableJoinCallButtonChanged(it) }
+        }
+    }
+
+    fun attemptJoinCall() {
+        if (setupJoinCallButton.isEnabled && setupJoinCallButton.visibility != GONE)
+            handleClickJoinCall()
+    }
+
+    private fun handleClickJoinCall() {
+        if (networkManager.isNetworkConnectionAvailable()) {
+            viewModel.launchCallScreen()
+        } else {
+            viewModel.handleOffline()
         }
     }
 
