@@ -90,7 +90,7 @@ internal class CallCompositeActivity : AppCompatActivity() {
         configureLocalization()
         configureActionBar()
         setStatusBarColor()
-        setActionBarVisibility()
+        //setActionBarVisibility()
 
         configuration.themeConfig?.let {
             theme.applyStyle(it, true)
@@ -224,16 +224,16 @@ internal class CallCompositeActivity : AppCompatActivity() {
     }
 
     private fun configureActionBar() {
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(
             ColorDrawable(
                 ContextCompat.getColor(
                     this,
-                    R.color.azure_communication_ui_calling_color_background
+                    R.color.azure_communication_ui_calling_color_primary
                 )
             )
         )
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.azure_communication_ui_calling_ic_fluent_arrow_left_24_filled)
+        //supportActionBar?.setHomeAsUpIndicator(R.drawable.azure_communication_ui_calling_ic_fluent_arrow_left_24_filled)
     }
 
     private fun configureLocalization() {
@@ -253,13 +253,13 @@ internal class CallCompositeActivity : AppCompatActivity() {
         resources.updateConfiguration(config, resources.displayMetrics)
     }
 
-    private fun setActionBarVisibility() {
-        if (store.getCurrentState().navigationState.navigationState != NavigationStatus.SETUP) {
-            supportActionBar?.hide()
-        } else {
-            supportActionBar?.show()
-        }
-    }
+    //private fun setActionBarVisibility() {
+    //    if (store.getCurrentState().navigationState.navigationState != NavigationStatus.SETUP) {
+    //        supportActionBar?.hide()
+    //    } else {
+    //        supportActionBar?.show()
+    //    }
+    //}
 
     private fun getCameraPermissionLauncher(): ActivityResultLauncher<String> {
         return registerForActivityResult(
@@ -304,8 +304,9 @@ internal class CallCompositeActivity : AppCompatActivity() {
                 finish()
             }
             NavigationStatus.IN_CALL -> {
-                supportActionBar?.setShowHideAnimationEnabled(false)
-                supportActionBar?.hide()
+                //supportActionBar?.setShowHideAnimationEnabled(false)
+                //supportActionBar?.hide()
+                supportActionBar?.show()
                 requestedOrientation = if (localOptions?.isLockRotation == true) {
                     ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
                 } else {

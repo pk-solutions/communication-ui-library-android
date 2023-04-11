@@ -4,15 +4,23 @@
 package com.azure.android.communication.ui.calling.presentation.fragment.calling
 
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.os.PowerManager
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.TextUtils
+import android.text.style.ForegroundColorSpan
 import android.util.LayoutDirection
 import android.view.View
 import android.view.accessibility.AccessibilityManager
+import androidx.annotation.ColorInt
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -71,6 +79,8 @@ internal class CallingFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.init(viewLifecycleOwner.lifecycleScope)
+
+        setActionBarTitle()
 
         confirmLeaveOverlayView =
             LeaveConfirmView(viewModel.confirmLeaveOverlayViewModel, this.requireContext())
@@ -260,5 +270,35 @@ internal class CallingFragment :
 
     fun switchLocalCamera() {
         viewModel.localParticipantViewModel.switchCamera()
+    }
+
+    private val callCompositeActivity
+        get() = (activity as AppCompatActivity)
+
+    private fun setActionBarTitle() {
+        fun setActionbarTextColor(text: SpannableString, @ColorInt color: Int) {
+            text.setSpan(
+                ForegroundColorSpan(
+                    ContextCompat.getColor(
+                            requireContext(),
+                            color
+                    )
+                ),
+                0,
+                text.length,
+                Spannable.SPAN_INCLUSIVE_INCLUSIVE
+            )
+        }
+
+        val localOptions = holder.container.configuration.callCompositeLocalOptions
+        if (TextUtils.isEmpty(localOptions?.setupScreenViewData?.title)) {
+            return
+        }
+
+        val titleSpan = SpannableString(localOptions?.setupScreenViewData?.title)
+
+        setActionbarTextColor(titleSpan, R.color.azure_communication_ui_calling_color_action_bar_text)
+
+        callCompositeActivity.supportActionBar?.title = titleSpan
     }
 }
