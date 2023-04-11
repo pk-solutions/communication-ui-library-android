@@ -39,6 +39,7 @@ public final class CallCompositeLocalOptions {
     private boolean microphoneOn = false;
     private boolean skipSetupScreen = false;
     private boolean lockRotation = false;
+    private boolean confirmExit = true;
     private Set<Integer> backKeys = null;
     private Set<Integer> confirmKeys = null;
     private Set<Integer> upKeys = null;
@@ -165,6 +166,16 @@ public final class CallCompositeLocalOptions {
             final boolean microphoneOn
     ) {
         this.microphoneOn = microphoneOn;
+        return this;
+    }
+
+    public boolean isConfirmExit() {
+        return confirmExit;
+    }
+    public CallCompositeLocalOptions setConfirmExit(
+            final boolean confirmExit
+    ) {
+        this.confirmExit = confirmExit;
         return this;
     }
 

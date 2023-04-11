@@ -183,7 +183,8 @@ internal class DependencyInjectionContainerImpl(
         AppReduxState(
             configuration.callConfig?.displayName,
             localOptions?.isCameraOn == true,
-            localOptions?.isMicrophoneOn == true
+            localOptions?.isMicrophoneOn == true,
+            localOptions?.isConfirmExit == true,
         )
     }
 

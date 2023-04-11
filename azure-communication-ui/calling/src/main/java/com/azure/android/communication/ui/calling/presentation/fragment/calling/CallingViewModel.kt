@@ -43,7 +43,11 @@ internal class CallingViewModel(
     }
 
     fun requestCallEnd() {
-        confirmLeaveOverlayViewModel.requestExitConfirmation()
+        val state = store.getCurrentState()
+        if (state.localParticipantState.initialCallJoinState.confirmExit)
+            confirmLeaveOverlayViewModel.requestExitConfirmation()
+        else
+            confirmLeaveOverlayViewModel.confirm(state.callState)
     }
 
     override fun init(coroutineScope: CoroutineScope) {
