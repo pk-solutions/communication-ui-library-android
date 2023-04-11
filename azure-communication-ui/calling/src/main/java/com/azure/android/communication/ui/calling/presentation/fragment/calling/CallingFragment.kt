@@ -4,7 +4,6 @@
 package com.azure.android.communication.ui.calling.presentation.fragment.calling
 
 import android.content.Context
-import android.graphics.drawable.ColorDrawable
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -265,7 +264,8 @@ internal class CallingFragment :
     }
 
     private fun switchFloatingHeader() {
-        viewModel.switchFloatingHeader()
+        if (holder.container.configuration.callCompositeLocalOptions?.isHideFloatingHeader != true)
+            viewModel.switchFloatingHeader()
     }
 
     fun switchLocalCamera() {

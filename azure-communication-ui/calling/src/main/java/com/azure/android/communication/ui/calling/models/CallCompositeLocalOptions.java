@@ -40,6 +40,7 @@ public final class CallCompositeLocalOptions {
     private boolean skipSetupScreen = false;
     private boolean lockRotation = false;
     private boolean confirmExit = true;
+    private boolean hideFloatingHeader = false;
     private Set<Integer> backKeys = null;
     private Set<Integer> confirmKeys = null;
     private Set<Integer> upKeys = null;
@@ -176,6 +177,16 @@ public final class CallCompositeLocalOptions {
             final boolean confirmExit
     ) {
         this.confirmExit = confirmExit;
+        return this;
+    }
+
+    public boolean isHideFloatingHeader() {
+        return this.hideFloatingHeader;
+    }
+    public CallCompositeLocalOptions setHideFloatingHeader(
+            final boolean hideFloatingHeader
+    ) {
+        this.hideFloatingHeader = hideFloatingHeader;
         return this;
     }
 
