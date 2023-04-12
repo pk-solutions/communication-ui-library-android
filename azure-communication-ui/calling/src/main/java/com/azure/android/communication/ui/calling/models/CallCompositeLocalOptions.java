@@ -40,6 +40,7 @@ public final class CallCompositeLocalOptions {
     private boolean skipSetupScreen = false;
     private boolean lockRotation = false;
     private boolean confirmExit = true;
+    private boolean detachControlButtons = false;
     private boolean hideFloatingHeader = false;
     private Set<Integer> backKeys = null;
     private Set<Integer> confirmKeys = null;
@@ -177,6 +178,16 @@ public final class CallCompositeLocalOptions {
             final boolean confirmExit
     ) {
         this.confirmExit = confirmExit;
+        return this;
+    }
+
+    public boolean isDetachControlButtons() {
+        return this.detachControlButtons;
+    }
+    public CallCompositeLocalOptions setDetachControlButtons(
+            final boolean detachControlButtons
+    ) {
+        this.detachControlButtons = detachControlButtons;
         return this;
     }
 

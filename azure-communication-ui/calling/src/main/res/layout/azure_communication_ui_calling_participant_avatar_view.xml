@@ -61,12 +61,13 @@
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:textColor="@color/azure_communication_ui_calling_color_on_background"
+                    style="@style/TextAppearance.AppCompat.Large"
                     />
 
                 <ImageView
                     android:id="@+id/azure_communication_ui_participant_audio_view_mic_indicator"
-                    android:layout_width="17dp"
-                    android:layout_height="17dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="5dp"
                     android:layout_weight="0"

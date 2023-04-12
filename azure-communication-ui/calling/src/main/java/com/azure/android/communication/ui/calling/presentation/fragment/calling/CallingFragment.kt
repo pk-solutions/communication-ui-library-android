@@ -16,6 +16,7 @@ import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.util.LayoutDirection
 import android.view.View
+import android.view.ViewStub
 import android.view.accessibility.AccessibilityManager
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
@@ -90,7 +91,15 @@ internal class CallingFragment :
             holder.container.appStore.getCurrentState().callState
         )
 
-        controlBarView = view.findViewById(R.id.azure_communication_ui_call_call_buttons)
+        val controlStub: ViewStub
+        if (holder.container.configuration.callCompositeLocalOptions?.isDetachControlButtons == true) {
+            controlStub = view.findViewById(R.id.azure_communication_ui_calling_control_buttons_detached_stub)
+            controlStub.layoutResource = R.layout.azure_communication_ui_calling_control_buttons_detached_view
+        } else {
+            controlStub = view.findViewById(R.id.azure_communication_ui_calling_control_bar_stub)
+            controlStub.layoutResource = R.layout.azure_communication_ui_calling_control_bar_view
+        }
+        controlBarView = controlStub.inflate().findViewById(R.id.azure_communication_ui_call_call_buttons)
         controlBarView.start(viewLifecycleOwner, viewModel.controlBarViewModel)
 
         participantGridView =

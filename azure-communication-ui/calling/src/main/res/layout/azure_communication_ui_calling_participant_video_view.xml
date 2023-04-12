@@ -33,8 +33,8 @@
             android:background="@drawable/azure_communication_ui_calling_corner_radius_rectangle_3dp_surface"
             android:orientation="horizontal"
             android:padding="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             >
 
             <TextView
@@ -47,12 +47,13 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:textColor="@color/azure_communication_ui_calling_color_on_background"
+                style="@style/TextAppearance.AppCompat.Large"
                 />
 
             <ImageView
                 android:id="@+id/azure_communication_ui_participant_view_on_video_mic_indicator"
-                android:layout_width="17dp"
-                android:layout_height="17dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:layout_weight="0"
                 app:srcCompat="@drawable/azure_communication_ui_calling_ic_fluent_mic_off_24_filled_composite_button_filled"
