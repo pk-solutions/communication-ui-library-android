@@ -281,6 +281,14 @@ internal class CallingFragment :
         viewModel.localParticipantViewModel.switchCamera()
     }
 
+    fun clickMicOff() {
+        controlBarView.clickMicOff()
+    }
+
+    fun clickMicOn() {
+        controlBarView.clickMicOn()
+    }
+
     private val callCompositeActivity
         get() = (activity as AppCompatActivity)
 

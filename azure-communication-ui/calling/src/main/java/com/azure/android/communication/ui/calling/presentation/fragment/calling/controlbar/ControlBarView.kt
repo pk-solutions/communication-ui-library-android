@@ -216,6 +216,16 @@ internal class ControlBarView : ConstraintLayout {
         }
     }
 
+    fun clickMicOff() {
+        if (micToggle.isSelected && micToggle.isEnabled)
+            micToggle.performClick()
+    }
+
+    fun clickMicOn() {
+        if (!micToggle.isSelected && micToggle.isEnabled)
+            micToggle.performClick()
+    }
+
     private fun subscribeClickListener() {
         endCallButton.setOnClickListener {
             viewModel.requestCallEnd()

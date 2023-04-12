@@ -197,12 +197,18 @@ internal class CallCompositeActivity : AppCompatActivity() {
                     }
                 }
 
+                // Custom key down behavior
+                if (isPttKey) {
+                    val fragment = supportFragmentManager.fragments.firstOrNull()
+                    (fragment as? CallingFragment)?.clickMicOn()
+                }
+
                 return true
 
             } else if (event.action == KeyEvent.ACTION_UP) {
                 lastKey = -1
 
-                // Custom key behavior
+                // Custom key up behavior
                 val fragment = supportFragmentManager.fragments.firstOrNull()
                 if (isBackKey) {
                     (fragment as? BackNavigation)?.onBackPressed()
@@ -214,7 +220,7 @@ internal class CallCompositeActivity : AppCompatActivity() {
                 } else if (isUpKey || isDownKey) {
                     // TODO
                 } else if (isPttKey) {
-                    // TODO
+                    (fragment as? CallingFragment)?.clickMicOff()
                 } else if (isVolumeUpKey || isVolumeDownKey) {
                     // TODO
                 }
