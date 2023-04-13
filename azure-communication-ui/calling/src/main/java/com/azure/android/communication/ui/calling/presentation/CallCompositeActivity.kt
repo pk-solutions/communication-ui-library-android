@@ -222,7 +222,11 @@ internal class CallCompositeActivity : AppCompatActivity() {
                 } else if (isPttKey) {
                     (fragment as? CallingFragment)?.clickMicOff()
                 } else if (isVolumeUpKey || isVolumeDownKey) {
-                    // TODO
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        localOptions?.volumeChanger?.let {
+                            this.audioSessionManager.adjustVolume(it, isVolumeUpKey)
+                        }
+                    }
                 }
 
                 return true

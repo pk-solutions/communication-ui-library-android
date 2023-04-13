@@ -27,13 +27,19 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.coroutineScope
 import com.azure.android.communication.ui.calling.CallCompositeException
+import com.azure.android.communication.ui.calling.logger.Logger
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 import com.azure.android.communication.ui.calling.redux.state.PermissionStatus
+import java.util.function.BiConsumer
+import kotlin.math.min
+import kotlin.math.max
+import kotlin.math.round
 
 internal class AudioSessionManager(
     private val store: Store<ReduxState>,
     private val context: Context,
+    private val logger: Logger,
 ) : BluetoothProfile.ServiceListener, BroadcastReceiver() {
 
     private val audioManager by lazy { context.getSystemService(Context.AUDIO_SERVICE) as AudioManager }
@@ -130,6 +136,11 @@ internal class AudioSessionManager(
                 AudioManager.ACTION_HEADSET_PLUG -> updateHeadphoneStatus()
             }
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun adjustVolume(volumeChanger: BiConsumer<AudioManager, Boolean>, up: Boolean) {
+        volumeChanger.accept(this.audioManager, up)
     }
 
     private fun updateHeadphoneStatus() {

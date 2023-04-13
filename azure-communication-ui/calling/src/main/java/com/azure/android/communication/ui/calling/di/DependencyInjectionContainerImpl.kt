@@ -98,6 +98,7 @@ internal class DependencyInjectionContainerImpl(
         AudioSessionManager(
             appStore,
             applicationContext,
+            logger,
         )
     }
 

@@ -3,9 +3,12 @@
 
 package com.azure.android.communication.ui.calling.models;
 
+import android.media.AudioManager;
+
 import com.azure.android.communication.ui.calling.CallComposite;
 
 import java.util.Set;
+import java.util.function.BiConsumer;
 
 /**
  * {@link CallCompositeLocalOptions} for {@link CallComposite#launch}.
@@ -49,6 +52,7 @@ public final class CallCompositeLocalOptions {
     private Set<Integer> pttKeys = null;
     private Set<Integer> volumeUpKeys = null;
     private Set<Integer> volumeDownKeys = null;
+    private BiConsumer<AudioManager, Boolean> volumeChanger = null;
 
     /**
      * Create LocalSettings.
@@ -268,6 +272,16 @@ public final class CallCompositeLocalOptions {
             final Set<Integer> volumeDownKeys
     ) {
         this.volumeDownKeys = volumeDownKeys;
+        return this;
+    }
+
+    public BiConsumer<AudioManager, Boolean> getVolumeChanger() {
+        return volumeChanger;
+    }
+    public CallCompositeLocalOptions setVolumeChanger(
+            final BiConsumer<AudioManager, Boolean> volumeChanger
+    ) {
+        this.volumeChanger = volumeChanger;
         return this;
     }
 }
