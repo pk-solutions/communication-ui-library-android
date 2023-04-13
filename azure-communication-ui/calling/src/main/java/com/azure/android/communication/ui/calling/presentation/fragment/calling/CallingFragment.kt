@@ -308,11 +308,8 @@ internal class CallingFragment :
         }
 
         val localOptions = holder.container.configuration.callCompositeLocalOptions
-        if (TextUtils.isEmpty(localOptions?.setupScreenViewData?.title)) {
-            return
-        }
 
-        val titleSpan = SpannableString(localOptions?.setupScreenViewData?.title)
+        val titleSpan = SpannableString(localOptions?.setupScreenViewData?.title ?: "")
 
         setActionbarTextColor(titleSpan, R.color.azure_communication_ui_calling_color_action_bar_text)
 
