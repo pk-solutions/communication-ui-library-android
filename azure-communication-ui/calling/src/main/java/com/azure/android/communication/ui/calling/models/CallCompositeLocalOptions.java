@@ -45,6 +45,7 @@ public final class CallCompositeLocalOptions {
     private boolean confirmExit = true;
     private boolean detachControlButtons = false;
     private boolean hideFloatingHeader = false;
+    private boolean ignoreProximitySensor = false;
     private Set<Integer> backKeys = null;
     private Set<Integer> confirmKeys = null;
     private Set<Integer> upKeys = null;
@@ -202,6 +203,16 @@ public final class CallCompositeLocalOptions {
             final boolean hideFloatingHeader
     ) {
         this.hideFloatingHeader = hideFloatingHeader;
+        return this;
+    }
+
+    public boolean isIgnoreProximitySensor() {
+        return this.ignoreProximitySensor;
+    }
+    public CallCompositeLocalOptions setIgnoreProximitySensor(
+            final boolean ignoreProximitySensor
+    ) {
+        this.ignoreProximitySensor = ignoreProximitySensor;
         return this;
     }
 

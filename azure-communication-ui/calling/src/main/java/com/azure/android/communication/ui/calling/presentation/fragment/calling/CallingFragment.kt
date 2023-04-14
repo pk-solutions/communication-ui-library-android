@@ -12,7 +12,6 @@ import android.os.Bundle
 import android.os.PowerManager
 import android.text.Spannable
 import android.text.SpannableString
-import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.util.LayoutDirection
 import android.view.View
@@ -75,6 +74,9 @@ internal class CallingFragment :
     private lateinit var accessibilityManager: AccessibilityManager
     private lateinit var wakeLock: PowerManager.WakeLock
     private lateinit var moreCallOptionsListView: MoreCallOptionsListView
+
+    private val localOptions
+        get() = holder.container.configuration.callCompositeLocalOptions
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -181,9 +183,16 @@ internal class CallingFragment :
             context?.applicationContext?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         powerManager =
             context?.applicationContext?.getSystemService(Context.POWER_SERVICE) as PowerManager
-        wakeLock =
-            powerManager.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, javaClass.name)
-        wakeLock.acquire()
+
+        if (localOptions?.isIgnoreProximitySensor != true) {
+            wakeLock =
+                powerManager.newWakeLock(
+                    PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK,
+                    javaClass.name
+                )
+            wakeLock.acquire()
+        }
+
         sensorManager.registerListener(
             this,
             sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),
@@ -193,7 +202,7 @@ internal class CallingFragment :
 
     override fun onPause() {
         super.onPause()
-        if (this::wakeLock.isInitialized) {
+        if (this::wakeLock.isInitialized && localOptions?.isIgnoreProximitySensor != true) {
             if (wakeLock.isHeld) {
                 wakeLock.setReferenceCounted(false)
                 wakeLock.release()
@@ -225,7 +234,7 @@ internal class CallingFragment :
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
 
     override fun onSensorChanged(event: SensorEvent) {
-        if (event.sensor.type == Sensor.TYPE_PROXIMITY) {
+        if (event.sensor.type == Sensor.TYPE_PROXIMITY && localOptions?.isIgnoreProximitySensor != true) {
             if (event.values[0] == closeToUser) {
                 if (!wakeLock.isHeld) {
                     wakeLock.acquire()
@@ -273,7 +282,7 @@ internal class CallingFragment :
     }
 
     private fun switchFloatingHeader() {
-        if (holder.container.configuration.callCompositeLocalOptions?.isHideFloatingHeader != true)
+        if (localOptions?.isHideFloatingHeader != true)
             viewModel.switchFloatingHeader()
     }
 
@@ -306,8 +315,6 @@ internal class CallingFragment :
                 Spannable.SPAN_INCLUSIVE_INCLUSIVE
             )
         }
-
-        val localOptions = holder.container.configuration.callCompositeLocalOptions
 
         val titleSpan = SpannableString(localOptions?.setupScreenViewData?.title ?: "")
 
