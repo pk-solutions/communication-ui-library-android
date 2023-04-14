@@ -87,6 +87,7 @@ internal class CallCompositeActivity : AppCompatActivity() {
         lifecycleScope.launch { remoteParticipantJoinedHandler.start() }
 
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        configureLockRotation()
         configureLocalization()
         configureActionBar()
         setStatusBarColor()
@@ -233,6 +234,13 @@ internal class CallCompositeActivity : AppCompatActivity() {
             }
         }
         return super.dispatchKeyEvent(event)
+    }
+
+    @SuppressLint("SourceLockedOrientationActivity")
+    private fun configureLockRotation() {
+        if (localOptions?.isLockRotation == true) {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
     }
 
     private fun configureActionBar() {
