@@ -47,7 +47,7 @@ internal class CallingViewModel(
         if (state.localParticipantState.initialCallJoinState.confirmExit)
             confirmLeaveOverlayViewModel.requestExitConfirmation()
         else
-            confirmLeaveOverlayViewModel.confirm(state.callState)
+            confirmLeaveOverlayViewModel.confirm()
     }
 
     override fun init(coroutineScope: CoroutineScope) {
