@@ -85,6 +85,20 @@
         app:layout_constraintTop_toTopOf="parent"
         >
 
-        <include layout="@layout/azure_communication_ui_calling_control_bar_view" />
+        <ViewStub
+            android:id="@+id/azure_communication_ui_calling_control_bar_stub"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:accessibilityTraversalAfter="@id/azure_communication_ui_call_main_layout"
+            />
     </LinearLayout>
+
+    <ViewStub
+        android:id="@+id/azure_communication_ui_calling_control_buttons_detached_stub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:accessibilityTraversalAfter="@id/azure_communication_ui_call_main_layout"
+        android:layout_margin="5dp"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
