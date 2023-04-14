@@ -89,8 +89,7 @@ internal class CallingFragment :
         confirmLeaveOverlayView.layoutDirection =
             activity?.window?.decorView?.layoutDirection ?: LayoutDirection.LOCALE
         confirmLeaveOverlayView.start(
-            viewLifecycleOwner,
-            holder.container.appStore.getCurrentState().callState
+            viewLifecycleOwner
         )
 
         val controlStub: ViewStub
