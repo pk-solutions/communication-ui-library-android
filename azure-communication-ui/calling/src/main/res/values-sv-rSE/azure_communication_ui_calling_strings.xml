@@ -33,6 +33,7 @@
     <!--    Lobby View-->
     <string name="azure_communication_ui_calling_lobby_view_text_waiting_for_host">Väntar på värd</string>
     <string name="azure_communication_ui_calling_lobby_view_text_waiting_details">Någon i mötet kommer att släppa in dig snart</string>
+    <string name="azure_communication_ui_calling_lobby_view_text_ringing">Ansluter till ett samtal …</string>
 
     <!-- Hold Overlay -->
     <string name="azure_communication_ui_calling_hold_view_text">Du är parkerad</string>

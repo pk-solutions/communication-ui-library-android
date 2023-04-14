@@ -24,12 +24,14 @@ import kotlinx.coroutines.flow.StateFlow
 internal class ConnectingLobbyOverlayViewModel(private val dispatch: (Action) -> Unit) {
 
     private lateinit var displayLobbyOverlayFlow: MutableStateFlow<Boolean>
+    private lateinit var displayRingingFlow: MutableStateFlow<Boolean>
     private lateinit var networkManager: NetworkManager
 
     private lateinit var cameraStateFlow: MutableStateFlow<CameraOperationalStatus>
     private lateinit var audioOperationalStatusStateFlow: MutableStateFlow<AudioOperationalStatus>
 
     fun getDisplayLobbyOverlayFlow(): StateFlow<Boolean> = displayLobbyOverlayFlow
+    fun getDisplayRingingFlow(): StateFlow<Boolean> = displayRingingFlow
 
     fun init(
         callingState: CallingState,
@@ -41,6 +43,7 @@ internal class ConnectingLobbyOverlayViewModel(private val dispatch: (Action) ->
         this.networkManager = networkManager
         val displayLobbyOverlay = shouldDisplayLobbyOverlay(callingState, permissionState)
         displayLobbyOverlayFlow = MutableStateFlow(displayLobbyOverlay)
+        displayRingingFlow = MutableStateFlow(callingState.callingStatus === CallingStatus.RINGING)
 
         cameraStateFlow = MutableStateFlow(cameraState.operation)
         audioOperationalStatusStateFlow = MutableStateFlow(audioState.operation)
@@ -60,6 +63,7 @@ internal class ConnectingLobbyOverlayViewModel(private val dispatch: (Action) ->
     ) {
         val displayLobbyOverlay = shouldDisplayLobbyOverlay(callingState, permissionState)
         displayLobbyOverlayFlow.value = displayLobbyOverlay
+        displayRingingFlow.value = callingState.callingStatus === CallingStatus.RINGING
 
         audioOperationalStatusStateFlow.value = audioOperationalStatus
         cameraStateFlow.value = cameraOperationalStatus
@@ -83,7 +87,7 @@ internal class ConnectingLobbyOverlayViewModel(private val dispatch: (Action) ->
     }
 
     private fun shouldDisplayLobbyOverlay(callingState: CallingState, permissionState: PermissionState) =
-        ((callingState.callingStatus == CallingStatus.NONE) || (callingState.callingStatus == CallingStatus.CONNECTING)) &&
+        ((callingState.callingStatus == CallingStatus.NONE) || (callingState.callingStatus == CallingStatus.CONNECTING) || (callingState.callingStatus == CallingStatus.RINGING)) &&
             (permissionState.audioPermissionState != PermissionStatus.DENIED) &&
             (callingState.operationStatus == OperationStatus.SKIP_SETUP_SCREEN)
 

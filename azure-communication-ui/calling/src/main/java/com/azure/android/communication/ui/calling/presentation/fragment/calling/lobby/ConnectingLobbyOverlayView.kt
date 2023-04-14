@@ -44,6 +44,16 @@ internal class ConnectingLobbyOverlayView : LinearLayout {
             }
         }
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.getDisplayRingingFlow().collect{
+                overlayInfo.text = if (it) {
+                    context.getString(R.string.azure_communication_ui_calling_lobby_view_text_ringing)
+                } else {
+                    context.getString(R.string.azure_communication_ui_calling_setup_view_button_connecting_call)
+                }
+            }
+        }
+
         ViewCompat.setAccessibilityDelegate(
             this,
             object : AccessibilityDelegateCompat() {

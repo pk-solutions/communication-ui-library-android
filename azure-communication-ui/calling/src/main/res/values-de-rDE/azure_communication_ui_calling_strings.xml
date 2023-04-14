@@ -33,6 +33,7 @@
     <!--    Lobby View-->
     <string name="azure_communication_ui_calling_lobby_view_text_waiting_for_host">Warten auf Host</string>
     <string name="azure_communication_ui_calling_lobby_view_text_waiting_details">Ein Teilnehmer der Besprechung wird Sie in Kürze einlassen</string>
+    <string name="azure_communication_ui_calling_lobby_view_text_ringing">Anruf wird beigetreten…</string>
 
     <!-- Hold Overlay -->
     <string name="azure_communication_ui_calling_hold_view_text">Von Gesprächspartner gehalten</string>
