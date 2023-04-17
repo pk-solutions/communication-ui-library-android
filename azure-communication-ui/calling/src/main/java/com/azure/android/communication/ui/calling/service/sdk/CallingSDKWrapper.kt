@@ -4,17 +4,11 @@
 package com.azure.android.communication.ui.calling.service.sdk
 
 import android.content.Context
-import com.azure.android.communication.calling.AudioOptions
-import com.azure.android.communication.calling.Call
-import com.azure.android.communication.calling.CameraFacing
-import com.azure.android.communication.calling.DeviceManager
+import com.azure.android.communication.calling.*
 import com.azure.android.communication.calling.LocalVideoStream as NativeLocalVideoStream
-import com.azure.android.communication.calling.HangUpOptions
-import com.azure.android.communication.calling.JoinCallOptions
-import com.azure.android.communication.calling.VideoDevicesUpdatedListener
-import com.azure.android.communication.calling.VideoOptions
 import com.azure.android.communication.ui.calling.CallCompositeException
 import com.azure.android.communication.ui.calling.configuration.CallConfiguration
+import com.azure.android.communication.ui.calling.logger.Logger
 import com.azure.android.communication.ui.calling.models.ParticipantInfoModel
 import com.azure.android.communication.ui.calling.redux.state.AudioOperationalStatus
 import com.azure.android.communication.ui.calling.redux.state.AudioState
@@ -31,7 +25,7 @@ internal class CallingSDKWrapper(
     private val context: Context,
     private val callingSDKEventHandler: CallingSDKEventHandler,
     private val callConfigInjected: CallConfiguration?,
-    //private val logger: Logger? = null,
+    private val logger: Logger? = null,
 ) : CallingSDK {
     private var nullableCall: Call? = null
     //private var callClient: CallClient? = null
@@ -94,6 +88,7 @@ internal class CallingSDKWrapper(
             call = this.call
         } catch (e: Exception) {
             // We can't access the call currently, return a no-op and exit
+            logger?.error("Failed to access call to place hold.", e)
             return CompletableFuture.runAsync { }
         }
 
@@ -107,6 +102,7 @@ internal class CallingSDKWrapper(
             call = this.call
         } catch (e: Exception) {
             // We can't access the call currently, return a no-op and exit
+            logger?.error("Failed to access call to resume.", e)
             return CompletableFuture.runAsync { }
         }
 
@@ -120,6 +116,7 @@ internal class CallingSDKWrapper(
             call = this.call
         } catch (e: Exception) {
             // We can't access the call currently, return a no-op and exit
+            logger?.error("Failed to access call to end.", e)
             return CompletableFuture.runAsync { }
         }
 
@@ -589,6 +586,7 @@ internal class CallingSDKWrapper(
         error: Throwable?,
     ): Nothing? {
         startCallCompletableFuture.completeExceptionally(error)
+        logger?.error("Failed to join call.", error)
         return null
     }
 }
