@@ -11,6 +11,7 @@ import com.azure.android.communication.ui.calling.configuration.CallCompositeCon
 import com.azure.android.communication.ui.calling.configuration.CallConfiguration;
 import com.azure.android.communication.ui.calling.di.DependencyInjectionContainer;
 import com.azure.android.communication.ui.calling.models.CallCompositeDebugInfo;
+import com.azure.android.communication.ui.calling.models.CallCompositeExitEvent;
 import com.azure.android.communication.ui.calling.models.CallCompositeLocalOptions;
 import com.azure.android.communication.ui.calling.models.CallCompositeErrorEvent;
 import com.azure.android.communication.ui.calling.models.CallCompositeRemoteOptions;
@@ -180,6 +181,16 @@ public final class CallComposite {
     public void removeOnRemoteParticipantJoinedEventHandler(
             final CallCompositeEventHandler<CallCompositeRemoteParticipantJoinedEvent> eventHandler) {
         configuration.getCallCompositeEventsHandler().removeOnRemoteParticipantJoinedEventHandler(eventHandler);
+    }
+
+    public void addOnExitEventHandler(
+            final CallCompositeEventHandler<CallCompositeExitEvent> eventHandler) {
+        configuration.getCallCompositeEventsHandler().addOnExitEventHandler(eventHandler);
+    }
+
+    public void removeOnExitEventHandler(
+            final CallCompositeEventHandler<CallCompositeExitEvent> eventHandler) {
+        configuration.getCallCompositeEventsHandler().removeOnExitEventHandler(eventHandler);
     }
 
     /**

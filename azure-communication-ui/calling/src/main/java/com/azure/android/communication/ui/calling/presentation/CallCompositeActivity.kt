@@ -28,6 +28,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import com.azure.android.communication.ui.R
 import com.azure.android.communication.ui.calling.CallCompositeInstanceManager
+import com.azure.android.communication.ui.calling.models.CallCompositeExitEvent
 import com.azure.android.communication.ui.calling.models.CallCompositeSupportedLocale
 import com.azure.android.communication.ui.calling.presentation.fragment.calling.CallingFragment
 import com.azure.android.communication.ui.calling.presentation.fragment.setup.SetupFragment
@@ -321,6 +322,7 @@ internal class CallCompositeActivity : AppCompatActivity() {
                 store.end()
                 callingMiddlewareActionHandler.dispose()
                 videoViewManager.destroy()
+                sendOnExitEvent()
                 finish()
             }
             NavigationStatus.IN_CALL -> {
@@ -346,6 +348,16 @@ internal class CallCompositeActivity : AppCompatActivity() {
                 launchFragment(SetupFragment::class.java.name)
             }
             else -> {}
+        }
+    }
+
+    private fun sendOnExitEvent() {
+        try {
+            val eventArgs = CallCompositeExitEvent()
+            configuration.callCompositeEventsHandler.getOnExitEventHandlers()
+                .forEach { it.handle(eventArgs) }
+        } catch (error: Throwable) {
+            container.logger.error("Failed to send exit event.", error);
         }
     }
 
