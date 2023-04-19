@@ -34,14 +34,13 @@ internal class BannerView : ConstraintLayout {
     fun start(
         viewModel: BannerViewModel,
         viewLifecycleOwner: LifecycleOwner,
-        isBannerClickable: Boolean,
     ) {
         this.viewModel = viewModel
 
         // Start callbacks
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.bannerInfoTypeStateFlow.collect {
-                updateNoticeBox(it, isBannerClickable)
+                updateNoticeBox(it, viewModel.getIsBannerClickableFlow().value)
             }
         }
 

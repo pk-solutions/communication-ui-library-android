@@ -13,6 +13,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Guideline
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.marginBottom
+import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.azure.android.communication.calling.ScalingMode
@@ -199,6 +201,24 @@ internal class LocalParticipantView : ConstraintLayout {
                     localPipWrapper.setOnTouchListener(dragTouchListener)
                 } else {
                     localPipWrapper.setOnTouchListener(null)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.getIsCameraSwitchDetachedFlow().collect {
+                if (it) {
+                    switchCameraButton.layoutParams.width = 60
+                    switchCameraButton.layoutParams.height = 60
+                    localParticipantPip.updateLayoutParams<MarginLayoutParams> {
+                        this.bottomMargin = if (viewModel.getDisplaySwitchCameraButtonFlow().value) 64 else 0
+                    }
+                } else {
+                    switchCameraButton.layoutParams.width = 36
+                    switchCameraButton.layoutParams.height = 36
+                    localParticipantPip.updateLayoutParams<MarginLayoutParams> {
+                        this.bottomMargin = 0
+                    }
                 }
             }
         }

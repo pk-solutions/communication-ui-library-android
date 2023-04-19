@@ -28,7 +28,7 @@
         android:id="@+id/azure_communication_ui_call_switch_camera_button"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:layout_margin="4dp"
+        android:layout_margin="5dp"
         android:background="@drawable/azure_communication_ui_calling_corner_radius_rectangle_4dp"
         android:backgroundTint="@color/azure_communication_ui_calling_color_button_switch_camera"
         android:contentDescription="@string/azure_communication_ui_calling_button_switch_camera_accessibility_label"
@@ -109,4 +109,5 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </com.azure.android.communication.ui.calling.presentation.fragment.calling.localuser.LocalParticipantView>

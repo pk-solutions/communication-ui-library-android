@@ -42,12 +42,15 @@ internal class InfoHeaderViewModel {
 
     fun init(
         callingStatus: CallingStatus,
-        numberOfRemoteParticipants: Int
+        numberOfRemoteParticipants: Int,
+        isHideFloatingHeader: Boolean,
     ) {
         timer = Timer()
         displayFloatingHeaderFlow = MutableStateFlow(false)
         numberOfParticipantsFlow = MutableStateFlow(numberOfRemoteParticipants)
         isOverlayDisplayedFlow = MutableStateFlow(isOverlayDisplayed(callingStatus))
+        if (isHideFloatingHeader)
+            displayedOnLaunch = true;
     }
 
     fun switchFloatingHeader() {

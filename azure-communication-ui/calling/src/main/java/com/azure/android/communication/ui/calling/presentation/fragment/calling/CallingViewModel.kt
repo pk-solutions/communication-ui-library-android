@@ -3,6 +3,7 @@
 
 package com.azure.android.communication.ui.calling.presentation.fragment.calling
 
+import com.azure.android.communication.ui.calling.models.CallCompositeLocalOptions
 import com.azure.android.communication.ui.calling.presentation.fragment.BaseViewModel
 import com.azure.android.communication.ui.calling.presentation.fragment.factories.CallingViewModelFactory
 import com.azure.android.communication.ui.calling.presentation.manager.NetworkManager
@@ -18,7 +19,8 @@ import kotlinx.coroutines.CoroutineScope
 internal class CallingViewModel(
     store: Store<ReduxState>,
     callingViewModelProvider: CallingViewModelFactory,
-    private val networkManager: NetworkManager
+    private val networkManager: NetworkManager,
+    private val localOptions: CallCompositeLocalOptions,
 ) :
     BaseViewModel(store) {
 
@@ -39,7 +41,8 @@ internal class CallingViewModel(
     private var hasSetupCalled = false
 
     fun switchFloatingHeader() {
-        floatingHeaderViewModel.switchFloatingHeader()
+        if (!localOptions.isHideFloatingHeader)
+            floatingHeaderViewModel.switchFloatingHeader()
     }
 
     fun requestCallEnd() {
@@ -71,17 +74,20 @@ internal class CallingViewModel(
             state.callState.callingStatus,
             state.localParticipantState.cameraState.device,
             state.localParticipantState.cameraState.camerasCount,
+            localOptions.isDetachControlButtons,
         )
 
         floatingHeaderViewModel.init(
             state.callState.callingStatus,
-            state.remoteParticipantState.participantMap.count()
+            state.remoteParticipantState.participantMap.count(),
+            localOptions.isHideFloatingHeader,
         )
         audioDeviceListViewModel.init(
             state.localParticipantState.audioState
         )
         bannerViewModel.init(
-            state.callState
+            state.callState,
+            !localOptions.isNoBannerLink,
         )
 
         participantListViewModel.init(

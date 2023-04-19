@@ -159,7 +159,6 @@ internal class CallingFragment :
         bannerView.start(
             viewModel.bannerViewModel,
             viewLifecycleOwner,
-            localOptions?.isNoBannerLink != true,
         )
         participantGridView.setOnClickListener {
             switchFloatingHeader()
@@ -282,8 +281,7 @@ internal class CallingFragment :
     }
 
     private fun switchFloatingHeader() {
-        if (localOptions?.isHideFloatingHeader != true)
-            viewModel.switchFloatingHeader()
+        viewModel.switchFloatingHeader()
     }
 
     fun switchLocalCamera() {
