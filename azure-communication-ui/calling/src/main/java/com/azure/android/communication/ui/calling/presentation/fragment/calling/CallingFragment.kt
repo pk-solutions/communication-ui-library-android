@@ -93,7 +93,7 @@ internal class CallingFragment :
         )
 
         val controlStub: ViewStub
-        if (holder.container.configuration.callCompositeLocalOptions?.isDetachControlButtons == true) {
+        if (localOptions?.isDetachControlButtons == true) {
             controlStub = view.findViewById(R.id.azure_communication_ui_calling_control_buttons_detached_stub)
             controlStub.layoutResource = R.layout.azure_communication_ui_calling_control_buttons_detached_view
         } else {
@@ -159,6 +159,7 @@ internal class CallingFragment :
         bannerView.start(
             viewModel.bannerViewModel,
             viewLifecycleOwner,
+            localOptions?.isNoBannerLink != true,
         )
         participantGridView.setOnClickListener {
             switchFloatingHeader()

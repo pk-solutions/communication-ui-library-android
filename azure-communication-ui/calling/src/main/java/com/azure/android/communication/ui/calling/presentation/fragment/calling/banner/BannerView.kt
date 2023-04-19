@@ -12,6 +12,9 @@ import android.view.View.OnClickListener
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.text.parseAsHtml
+import androidx.core.text.toHtml
+import androidx.core.text.toSpanned
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -31,13 +34,14 @@ internal class BannerView : ConstraintLayout {
     fun start(
         viewModel: BannerViewModel,
         viewLifecycleOwner: LifecycleOwner,
+        isBannerClickable: Boolean,
     ) {
         this.viewModel = viewModel
 
         // Start callbacks
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.bannerInfoTypeStateFlow.collect {
-                updateNoticeBox(it)
+                updateNoticeBox(it, isBannerClickable)
             }
         }
 
@@ -63,11 +67,12 @@ internal class BannerView : ConstraintLayout {
         }
     }
 
-    private fun updateNoticeBox(bannerInfoType: BannerInfoType) {
+    private fun updateNoticeBox(bannerInfoType: BannerInfoType, isClickable: Boolean) {
         if (bannerInfoType != BannerInfoType.BLANK) {
             viewModel.setDisplayedBannerType(bannerInfoType)
-            bannerText.text = getBannerInfo(bannerInfoType)
-            bannerText.setOnClickListener(getBannerClickDestination(bannerInfoType))
+            bannerText.text = getBannerInfo(bannerInfoType, isClickable)
+            if (isClickable)
+                bannerText.setOnClickListener(getBannerClickDestination(bannerInfoType))
 
             val textToAnnounce = "${context.getString(R.string.azure_communication_ui_calling_alert_title)}: ${context.getString(R.string.azure_communication_ui_calling_view_button_close_button_full_accessibility_label)}, ${bannerText.text} ${context.getString(R.string.azure_communication_ui_calling_view_link)}"
             announceForAccessibility(textToAnnounce)
@@ -78,8 +83,9 @@ internal class BannerView : ConstraintLayout {
         // and screen is rotated, blank banner is displayed.
         // We can not remove reset state in view model on stop as that cause incorrect message order
         else if (bannerText.text.isNullOrBlank() && viewModel.displayedBannerType != BannerInfoType.BLANK) {
-            bannerText.text = getBannerInfo(viewModel.displayedBannerType)
-            bannerText.setOnClickListener(getBannerClickDestination(bannerInfoType))
+            bannerText.text = getBannerInfo(viewModel.displayedBannerType, isClickable)
+            if (isClickable)
+                bannerText.setOnClickListener(getBannerClickDestination(bannerInfoType))
 
             val textToAnnounce = "${context.getString(R.string.azure_communication_ui_calling_alert_title)}: ${context.getString(R.string.azure_communication_ui_calling_view_button_close_button_full_accessibility_label)}, ${bannerText.text} ${context.getString(R.string.azure_communication_ui_calling_view_link)}"
             announceForAccessibility(textToAnnounce)
@@ -123,8 +129,8 @@ internal class BannerView : ConstraintLayout {
         }
     }
 
-    private fun getBannerInfo(bannerInfoType: BannerInfoType): CharSequence {
-        return when (bannerInfoType) {
+    private fun getBannerInfo(bannerInfoType: BannerInfoType, isClickable: Boolean): CharSequence {
+        val info = when (bannerInfoType) {
             BannerInfoType.RECORDING_AND_TRANSCRIPTION_STARTED ->
                 context.getText(R.string.azure_communication_ui_calling_view_banner_recording_and_transcribing_started)
             BannerInfoType.RECORDING_STARTED ->
@@ -143,6 +149,11 @@ internal class BannerView : ConstraintLayout {
                 context.getText(R.string.azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped)
             else -> ""
         }
+        return if (isClickable) info else removeUnderlinedText(info)
+    }
+
+    private fun removeUnderlinedText(styledText: CharSequence): CharSequence {
+        return styledText.toSpanned().toHtml().replace(Regex("<u>.*</u>"), "").parseAsHtml()
     }
 
     private fun getBannerTitle(bannerText: CharSequence): CharSequence {

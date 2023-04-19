@@ -46,6 +46,7 @@ public final class CallCompositeLocalOptions {
     private boolean detachControlButtons = false;
     private boolean hideFloatingHeader = false;
     private boolean ignoreProximitySensor = false;
+    private boolean noBannerLink = false;
     private Set<Integer> backKeys = null;
     private Set<Integer> confirmKeys = null;
     private Set<Integer> upKeys = null;
@@ -213,6 +214,16 @@ public final class CallCompositeLocalOptions {
             final boolean ignoreProximitySensor
     ) {
         this.ignoreProximitySensor = ignoreProximitySensor;
+        return this;
+    }
+
+    public boolean isNoBannerLink() {
+        return this.noBannerLink;
+    }
+    public CallCompositeLocalOptions setNoBannerLink(
+            final boolean noBannerLink
+    ) {
+        this.noBannerLink = noBannerLink;
         return this;
     }
 
