@@ -42,7 +42,7 @@ internal class ControlBarViewModel(private val dispatch: (Action) -> Unit) {
         audioOperationalStatusStateFlow = MutableStateFlow(audioState.operation)
         audioDeviceSelectionStatusStateFlow = MutableStateFlow(audioState.device)
         shouldEnableMicButtonStateFlow =
-            MutableStateFlow(shouldEnableMicButton(audioState))
+            MutableStateFlow(shouldEnableMicButton(audioState, callState.callingStatus))
         onHoldCallStatusStateFlow = MutableStateFlow(false)
         requestCallEnd = requestCallEndCallback
         openAudioDeviceSelectionMenu = openAudioDeviceSelectionMenuCallback
