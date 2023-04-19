@@ -59,7 +59,7 @@ internal class ControlBarViewModel(private val dispatch: (Action) -> Unit) {
         cameraStateFlow.value = CameraModel(permissionState.cameraPermissionState, cameraState)
         audioOperationalStatusStateFlow.value = audioState.operation
         audioDeviceSelectionStatusStateFlow.value = audioState.device
-        shouldEnableMicButtonStateFlow.value = shouldEnableMicButton(audioState)
+        shouldEnableMicButtonStateFlow.value = shouldEnableMicButton(audioState, callingStatus)
         onHoldCallStatusStateFlow.value = callingStatus == CallingStatus.LOCAL_HOLD
     }
 
@@ -103,8 +103,8 @@ internal class ControlBarViewModel(private val dispatch: (Action) -> Unit) {
         dispatchAction(action = LocalParticipantAction.CameraOffTriggered())
     }
 
-    private fun shouldEnableMicButton(audioState: AudioState): Boolean {
-        return (audioState.operation != AudioOperationalStatus.PENDING)
+    private fun shouldEnableMicButton(audioState: AudioState, callingStatus: CallingStatus): Boolean {
+        return (audioState.operation != AudioOperationalStatus.PENDING && callingStatus != CallingStatus.RINGING)
     }
 
     private fun dispatchAction(action: Action) {
