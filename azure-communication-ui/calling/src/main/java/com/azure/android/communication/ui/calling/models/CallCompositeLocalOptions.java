@@ -47,6 +47,7 @@ public final class CallCompositeLocalOptions {
     private boolean hideFloatingHeader = false;
     private boolean ignoreProximitySensor = false;
     private boolean noBannerLink = false;
+    private boolean enableParticipantMenuDrawer = false;
     private Set<Integer> backKeys = null;
     private Set<Integer> confirmKeys = null;
     private Set<Integer> upKeys = null;
@@ -224,6 +225,16 @@ public final class CallCompositeLocalOptions {
             final boolean noBannerLink
     ) {
         this.noBannerLink = noBannerLink;
+        return this;
+    }
+
+    public boolean isEnableParticipantMenuDrawer() {
+        return this.enableParticipantMenuDrawer;
+    }
+    public CallCompositeLocalOptions setEnableParticipantMenuDrawer(
+            final boolean enableParticipantMenuDrawer
+    ) {
+        this.enableParticipantMenuDrawer = enableParticipantMenuDrawer;
         return this;
     }
 

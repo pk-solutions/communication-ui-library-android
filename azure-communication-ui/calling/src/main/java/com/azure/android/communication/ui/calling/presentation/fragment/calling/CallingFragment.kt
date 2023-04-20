@@ -160,8 +160,14 @@ internal class CallingFragment :
             viewModel.bannerViewModel,
             viewLifecycleOwner,
         )
-        participantGridView.setOnClickListener {
-            switchFloatingHeader()
+        if (localOptions?.isEnableParticipantMenuDrawer == true) {
+            localParticipantView.setOnLongClickListener {
+                showLocalMenuDrawer()
+            }
+        } else {
+            participantGridView.setOnClickListener {
+                switchFloatingHeader()
+            }
         }
 
         errorInfoView = ErrorInfoView(view)
@@ -278,6 +284,10 @@ internal class CallingFragment :
 
     private fun displayParticipantList() {
         viewModel.participantListViewModel.displayParticipantList()
+    }
+
+    private fun showLocalMenuDrawer(): Boolean {
+        return viewModel.showLocalMenuDrawer()
     }
 
     private fun switchFloatingHeader() {

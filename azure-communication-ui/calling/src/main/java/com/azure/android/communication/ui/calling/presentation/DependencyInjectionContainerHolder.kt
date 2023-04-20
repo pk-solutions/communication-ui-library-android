@@ -93,6 +93,7 @@ internal class DependencyInjectionContainerHolder(
             ),
             container.networkManager,
             container.configuration.callCompositeLocalOptions ?: CallCompositeLocalOptions(),
+            container.logger,
         )
     }
 }

@@ -3,6 +3,7 @@
 
 package com.azure.android.communication.ui.calling.presentation.fragment.calling
 
+import com.azure.android.communication.ui.calling.logger.Logger
 import com.azure.android.communication.ui.calling.models.CallCompositeLocalOptions
 import com.azure.android.communication.ui.calling.presentation.fragment.BaseViewModel
 import com.azure.android.communication.ui.calling.presentation.fragment.factories.CallingViewModelFactory
@@ -21,6 +22,7 @@ internal class CallingViewModel(
     callingViewModelProvider: CallingViewModelFactory,
     private val networkManager: NetworkManager,
     private val localOptions: CallCompositeLocalOptions,
+    private val logger: Logger,
 ) :
     BaseViewModel(store) {
 
@@ -39,6 +41,11 @@ internal class CallingViewModel(
     val errorInfoViewModel = callingViewModelProvider.snackBarViewModel
 
     private var hasSetupCalled = false
+
+    fun showLocalMenuDrawer(): Boolean {
+        logger.info("Showing local menu drawer")
+        return true
+    }
 
     fun switchFloatingHeader() {
         if (!localOptions.isHideFloatingHeader)
