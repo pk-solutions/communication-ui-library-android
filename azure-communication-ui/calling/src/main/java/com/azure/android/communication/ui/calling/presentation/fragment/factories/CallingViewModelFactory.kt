@@ -16,6 +16,7 @@ import com.azure.android.communication.ui.calling.presentation.fragment.common.a
 import com.azure.android.communication.ui.calling.presentation.fragment.setup.components.ErrorInfoViewModel
 import com.azure.android.communication.ui.calling.presentation.fragment.calling.controlbar.more.MoreCallOptionsListViewModel
 import com.azure.android.communication.ui.calling.presentation.fragment.calling.lobby.ConnectingLobbyOverlayViewModel
+import com.azure.android.communication.ui.calling.presentation.fragment.calling.participantmenu.ParticipantMenuViewModel
 import com.azure.android.communication.ui.calling.presentation.manager.DebugInfoManager
 import com.azure.android.communication.ui.calling.redux.Store
 import com.azure.android.communication.ui.calling.redux.state.ReduxState
@@ -79,5 +80,9 @@ internal class CallingViewModelFactory(
 
     val snackBarViewModel by lazy {
         ErrorInfoViewModel()
+    }
+
+    val participantMenuViewModel by lazy {
+        ParticipantMenuViewModel()
     }
 }

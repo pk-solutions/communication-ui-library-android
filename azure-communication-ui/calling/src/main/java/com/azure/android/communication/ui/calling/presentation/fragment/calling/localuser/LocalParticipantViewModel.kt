@@ -30,7 +30,8 @@ internal class LocalParticipantViewModel(
     private lateinit var isOverlayDisplayedFlow: MutableStateFlow<Boolean>
     private lateinit var numberOfRemoteParticipantsFlow: MutableStateFlow<Int>
     private lateinit var isCameraSwitchDetachedFlow: MutableStateFlow<Boolean>
-    private lateinit var enableParticipantMenuDrawerFlow: MutableStateFlow<Boolean>
+    private lateinit var enableParticipantMenuFlow: MutableStateFlow<Boolean>
+    lateinit var openParticipantMenu: () -> Unit
 
     fun getVideoStatusFlow(): StateFlow<VideoModel> = videoStatusFlow
     fun getDisplayFullScreenAvatarFlow(): StateFlow<Boolean> = displayFullScreenAvatarFlow
@@ -86,7 +87,8 @@ internal class LocalParticipantViewModel(
         cameraDeviceSelectionStatus: CameraDeviceSelectionStatus,
         camerasCount: Int,
         isDetachControlButtons: Boolean,
-        enableParticipantMenuDrawer: Boolean,
+        enableParticipantMenu: Boolean,
+        openParticipantMenuCallback: () -> Unit,
     ) {
 
         val viewMode = getLocalParticipantViewMode(numberOfRemoteParticipants)
@@ -111,7 +113,8 @@ internal class LocalParticipantViewModel(
         isOverlayDisplayedFlow = MutableStateFlow(isOverlayDisplayed(callingState))
         numberOfRemoteParticipantsFlow = MutableStateFlow(numberOfRemoteParticipants)
         isCameraSwitchDetachedFlow = MutableStateFlow(isDetachControlButtons)
-        enableParticipantMenuDrawerFlow = MutableStateFlow(enableParticipantMenuDrawer)
+        enableParticipantMenuFlow = MutableStateFlow(enableParticipantMenu)
+        openParticipantMenu = openParticipantMenuCallback
     }
 
     fun switchCamera() = dispatch(LocalParticipantAction.CameraSwitchTriggered())
@@ -122,7 +125,7 @@ internal class LocalParticipantViewModel(
 
     fun getIsCameraSwitchDetachedFlow(): StateFlow<Boolean> = isCameraSwitchDetachedFlow
 
-    fun getEnableParticipantMenuDrawerFlow(): StateFlow<Boolean> = enableParticipantMenuDrawerFlow
+    fun getEnableParticipantMenuFlow(): StateFlow<Boolean> = enableParticipantMenuFlow
 
     fun updateIsOverlayDisplayed(callingStatus: CallingStatus) {
         isOverlayDisplayedFlow.value = isOverlayDisplayed(callingStatus)

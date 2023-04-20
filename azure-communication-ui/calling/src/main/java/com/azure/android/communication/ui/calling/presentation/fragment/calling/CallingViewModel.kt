@@ -3,7 +3,6 @@
 
 package com.azure.android.communication.ui.calling.presentation.fragment.calling
 
-import com.azure.android.communication.ui.calling.logger.Logger
 import com.azure.android.communication.ui.calling.models.CallCompositeLocalOptions
 import com.azure.android.communication.ui.calling.presentation.fragment.BaseViewModel
 import com.azure.android.communication.ui.calling.presentation.fragment.factories.CallingViewModelFactory
@@ -38,6 +37,7 @@ internal class CallingViewModel(
     val connectingLobbyOverlayViewModel = callingViewModelProvider.connectingLobbyOverlayViewModel
     val holdOverlayViewModel = callingViewModelProvider.onHoldOverlayViewModel
     val errorInfoViewModel = callingViewModelProvider.snackBarViewModel
+    val participantMenuViewModel = callingViewModelProvider.participantMenuViewModel
 
     private var hasSetupCalled = false
 
@@ -75,7 +75,8 @@ internal class CallingViewModel(
             state.localParticipantState.cameraState.device,
             state.localParticipantState.cameraState.camerasCount,
             localOptions.isDetachControlButtons,
-            localOptions.isEnableParticipantMenuDrawer,
+            localOptions.isEnableParticipantMenu,
+            participantMenuViewModel::display,
         )
 
         floatingHeaderViewModel.init(

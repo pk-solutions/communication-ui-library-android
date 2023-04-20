@@ -13,7 +13,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Guideline
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
-import androidx.core.view.marginBottom
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -80,6 +79,15 @@ internal class LocalParticipantView : ConstraintLayout {
         pipSwitchCameraButton.setOnClickListener { viewModel.switchCamera() }
         dragTouchListener = DragTouchListener()
 
+        localPipWrapper.setOnLongClickListener {
+            viewModel.openParticipantMenu()
+            true
+        }
+        this.setOnLongClickListener {
+            viewModel.openParticipantMenu()
+            true
+        }
+
         if (isAndroidTV(context)) {
             pipAvatar.avatarSize = AvatarSize.MEDIUM
             // guideline.setGuidelinePercent(0.85f)
@@ -106,6 +114,7 @@ internal class LocalParticipantView : ConstraintLayout {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getVideoStatusFlow().collect {
                 setLocalParticipantVideo(it)
+                setMenuDrawerTriggers(viewModel.getEnableParticipantMenuFlow().value, it.viewMode)
             }
         }
 
@@ -197,7 +206,7 @@ internal class LocalParticipantView : ConstraintLayout {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getNumberOfRemoteParticipantsFlow().collect {
-                if ((!accessibilityManager.isEnabled || isAndroidTV(context)) && it >= 1 && !viewModel.getEnableParticipantMenuDrawerFlow().value) {
+                if ((!accessibilityManager.isEnabled || isAndroidTV(context)) && it >= 1 && !viewModel.getEnableParticipantMenuFlow().value) {
                     dragTouchListener.setView(localPipWrapper)
                     localPipWrapper.setOnTouchListener(dragTouchListener)
                 } else {
@@ -211,6 +220,12 @@ internal class LocalParticipantView : ConstraintLayout {
                 setPipMargin(it, viewModel.getDisplaySwitchCameraButtonFlow().value)
                 switchCameraButton.layoutParams.width = if (it) 60 else 36
                 switchCameraButton.layoutParams.height = if (it) 60 else 36
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.getEnableParticipantMenuFlow().collect {
+                setMenuDrawerTriggers(it, viewModel.getVideoStatusFlow().value.viewMode)
             }
         }
     }
@@ -271,6 +286,19 @@ internal class LocalParticipantView : ConstraintLayout {
     private fun setPipMargin(isCameraSwitchDetached: Boolean, displaySwitchCameraButton: Boolean) {
         localParticipantPip.updateLayoutParams<MarginLayoutParams> {
             this.bottomMargin = if (isCameraSwitchDetached && displaySwitchCameraButton) 64 else 0
+        }
+    }
+
+    private fun setMenuDrawerTriggers(enableMenuDrawer: Boolean, viewMode: LocalParticipantViewMode) {
+        when (viewMode) {
+            LocalParticipantViewMode.PIP -> {
+                localPipWrapper.isLongClickable = enableMenuDrawer
+                this.isLongClickable = false
+            }
+            LocalParticipantViewMode.FULL_SCREEN -> {
+                localPipWrapper.isLongClickable = false
+                this.isLongClickable = enableMenuDrawer
+            }
         }
     }
 }

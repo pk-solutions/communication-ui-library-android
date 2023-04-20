@@ -38,6 +38,7 @@ import com.azure.android.communication.ui.calling.presentation.fragment.calling.
 import com.azure.android.communication.ui.calling.presentation.fragment.common.audiodevicelist.AudioDeviceListView
 import com.azure.android.communication.ui.calling.presentation.fragment.calling.controlbar.more.MoreCallOptionsListView
 import com.azure.android.communication.ui.calling.presentation.fragment.calling.lobby.ConnectingLobbyOverlayView
+import com.azure.android.communication.ui.calling.presentation.fragment.calling.participantmenu.ParticipantMenuView
 import com.azure.android.communication.ui.calling.presentation.fragment.setup.components.ErrorInfoView
 import com.azure.android.communication.ui.calling.presentation.navigation.BackNavigation
 
@@ -74,6 +75,7 @@ internal class CallingFragment :
     private lateinit var accessibilityManager: AccessibilityManager
     private lateinit var wakeLock: PowerManager.WakeLock
     private lateinit var moreCallOptionsListView: MoreCallOptionsListView
+    private lateinit var participantMenuView: ParticipantMenuView
 
     private val localOptions
         get() = holder.container.configuration.callCompositeLocalOptions
@@ -160,7 +162,7 @@ internal class CallingFragment :
             viewModel.bannerViewModel,
             viewLifecycleOwner,
         )
-        if (localOptions?.isEnableParticipantMenuDrawer != true) {
+        if (localOptions?.isEnableParticipantMenu != true) {
             participantGridView.setOnClickListener {
                 switchFloatingHeader()
             }
@@ -176,6 +178,12 @@ internal class CallingFragment :
         moreCallOptionsListView.layoutDirection =
             activity?.window?.decorView?.layoutDirection ?: LayoutDirection.LOCALE
         moreCallOptionsListView.start(viewLifecycleOwner)
+
+        participantMenuView = ParticipantMenuView(
+            this.requireContext(),
+            viewModel.participantMenuViewModel,
+        )
+        participantMenuView.start(viewLifecycleOwner)
     }
 
     override fun onResume() {
@@ -230,6 +238,7 @@ internal class CallingFragment :
         if (this::holdOverlay.isInitialized) holdOverlay.stop()
         if (this::errorInfoView.isInitialized) errorInfoView.stop()
         if (this::moreCallOptionsListView.isInitialized) moreCallOptionsListView.stop()
+        if (this::participantMenuView.isInitialized) participantMenuView.stop()
     }
 
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
