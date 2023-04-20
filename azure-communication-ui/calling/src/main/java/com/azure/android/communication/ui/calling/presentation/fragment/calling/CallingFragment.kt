@@ -161,7 +161,7 @@ internal class CallingFragment :
             viewLifecycleOwner,
         )
         if (localOptions?.isEnableParticipantMenuDrawer == true) {
-            localParticipantView.setOnLongClickListener {
+            localParticipantView.setOnClickListener {
                 showLocalMenuDrawer()
             }
         } else {
