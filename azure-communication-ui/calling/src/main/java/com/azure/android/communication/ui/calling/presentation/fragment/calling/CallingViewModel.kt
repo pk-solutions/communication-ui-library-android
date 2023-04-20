@@ -22,7 +22,6 @@ internal class CallingViewModel(
     callingViewModelProvider: CallingViewModelFactory,
     private val networkManager: NetworkManager,
     private val localOptions: CallCompositeLocalOptions,
-    private val logger: Logger,
 ) :
     BaseViewModel(store) {
 
@@ -41,11 +40,6 @@ internal class CallingViewModel(
     val errorInfoViewModel = callingViewModelProvider.snackBarViewModel
 
     private var hasSetupCalled = false
-
-    fun showLocalMenuDrawer(): Boolean {
-        logger.info("Showing local menu drawer")
-        return true
-    }
 
     fun switchFloatingHeader() {
         if (!localOptions.isHideFloatingHeader)
