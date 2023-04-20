@@ -23,7 +23,6 @@ internal class AppStateReducer(
             state.localParticipantState.displayName,
             cameraOnByDefault = state.localParticipantState.initialCallJoinState.startWithCameraOn,
             microphoneOnByDefault = state.localParticipantState.initialCallJoinState.startWithMicrophoneOn,
-            confirmExit = state.localParticipantState.initialCallJoinState.confirmExit,
         )
 
         appState.callState = callStateReducer.reduce(

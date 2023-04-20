@@ -7,7 +7,6 @@ internal class AppReduxState(
     displayName: String?,
     cameraOnByDefault: Boolean,
     microphoneOnByDefault: Boolean,
-    confirmExit: Boolean,
 ) : ReduxState {
 
     override var callState: CallingState = CallingState(CallingStatus.NONE, OperationStatus.NONE)
@@ -36,7 +35,6 @@ internal class AppReduxState(
             initialCallJoinState = InitialCallControllerState(
                 cameraOnByDefault,
                 microphoneOnByDefault,
-                confirmExit,
             )
         )
 

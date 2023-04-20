@@ -53,8 +53,7 @@ internal class CallingViewModel(
     }
 
     fun requestCallEnd() {
-        val state = store.getCurrentState()
-        if (state.localParticipantState.initialCallJoinState.confirmExit)
+        if (localOptions.isConfirmExit)
             confirmLeaveOverlayViewModel.requestExitConfirmation()
         else
             confirmLeaveOverlayViewModel.confirm()
