@@ -149,6 +149,7 @@ internal class LocalParticipantView : ConstraintLayout {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getDisplaySwitchCameraButtonFlow().collect {
                 switchCameraButton.visibility = if (it) View.VISIBLE else View.GONE
+                setPipMargin(viewModel.getIsCameraSwitchDetachedFlow().value, it)
             }
         }
 
@@ -207,19 +208,9 @@ internal class LocalParticipantView : ConstraintLayout {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getIsCameraSwitchDetachedFlow().collect {
-                if (it) {
-                    switchCameraButton.layoutParams.width = 60
-                    switchCameraButton.layoutParams.height = 60
-                    localParticipantPip.updateLayoutParams<MarginLayoutParams> {
-                        this.bottomMargin = if (viewModel.getDisplaySwitchCameraButtonFlow().value) 64 else 0
-                    }
-                } else {
-                    switchCameraButton.layoutParams.width = 36
-                    switchCameraButton.layoutParams.height = 36
-                    localParticipantPip.updateLayoutParams<MarginLayoutParams> {
-                        this.bottomMargin = 0
-                    }
-                }
+                setPipMargin(it, viewModel.getDisplaySwitchCameraButtonFlow().value)
+                switchCameraButton.layoutParams.width = if (it) 60 else 36
+                switchCameraButton.layoutParams.height = if (it) 60 else 36
             }
         }
     }
@@ -274,6 +265,12 @@ internal class LocalParticipantView : ConstraintLayout {
                 )
             }
             videoHolder.addView(view, 0)
+        }
+    }
+
+    private fun setPipMargin(isCameraSwitchDetached: Boolean, displaySwitchCameraButton: Boolean) {
+        localParticipantPip.updateLayoutParams<MarginLayoutParams> {
+            this.bottomMargin = if (isCameraSwitchDetached && displaySwitchCameraButton) 64 else 0
         }
     }
 }
