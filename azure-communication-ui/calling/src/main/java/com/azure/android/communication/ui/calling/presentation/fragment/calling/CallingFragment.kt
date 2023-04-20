@@ -261,7 +261,7 @@ internal class CallingFragment :
     }
 
     override fun onBackPressed() {
-        requestCallEnd()
+        viewModel.onBackPressed()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -283,10 +283,6 @@ internal class CallingFragment :
                 PARTICIPANT_LIST_VIEW_KEY to viewModel.participantListViewModel::displayParticipantList
             ).forEach { (key, showDialog) -> if (it.getBoolean(key)) showDialog() }
         }
-    }
-
-    private fun requestCallEnd() {
-        viewModel.requestCallEnd()
     }
 
     private fun displayParticipantList() {

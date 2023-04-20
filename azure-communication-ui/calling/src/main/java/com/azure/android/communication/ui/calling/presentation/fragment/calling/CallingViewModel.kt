@@ -46,7 +46,14 @@ internal class CallingViewModel(
             floatingHeaderViewModel.switchFloatingHeader()
     }
 
-    fun requestCallEnd() {
+    fun onBackPressed() {
+        if (participantMenuViewModel.getDisplayStateFlow().value) participantMenuViewModel.close()
+        else if (moreCallOptionsListViewModel.displayStateFlow.value) moreCallOptionsListViewModel.close()
+        else if (participantListViewModel.getDisplayParticipantListStateFlow().value) participantListViewModel.closeParticipantList()
+        else requestCallEnd()
+    }
+
+    private fun requestCallEnd() {
         if (localOptions.isConfirmExit)
             confirmLeaveOverlayViewModel.requestExitConfirmation()
         else
