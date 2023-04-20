@@ -75,8 +75,8 @@ internal class ParticipantGridCellViewModel(
         this.isMutedStateFlow.value = participant.isMuted
         this.isOnHoldStateFlow.value = isOnHold(participant.participantStatus)
 
-        this.isNameIndicatorVisibleStateFlow.value =
-            !(participant.displayName.isBlank() && !participant.isMuted)
+        // we always want to show the name indicator
+        this.isNameIndicatorVisibleStateFlow.value = true
 
         this.videoViewModelStateFlow.value = getVideoStreamModel(
             createVideoViewModel(participant.cameraVideoStreamModel),
