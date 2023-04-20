@@ -30,6 +30,7 @@ internal class LocalParticipantViewModel(
     private lateinit var isOverlayDisplayedFlow: MutableStateFlow<Boolean>
     private lateinit var numberOfRemoteParticipantsFlow: MutableStateFlow<Int>
     private lateinit var isCameraSwitchDetachedFlow: MutableStateFlow<Boolean>
+    private lateinit var enableParticipantMenuDrawerFlow: MutableStateFlow<Boolean>
 
     fun getVideoStatusFlow(): StateFlow<VideoModel> = videoStatusFlow
     fun getDisplayFullScreenAvatarFlow(): StateFlow<Boolean> = displayFullScreenAvatarFlow
@@ -85,6 +86,7 @@ internal class LocalParticipantViewModel(
         cameraDeviceSelectionStatus: CameraDeviceSelectionStatus,
         camerasCount: Int,
         isDetachControlButtons: Boolean,
+        enableParticipantMenuDrawer: Boolean,
     ) {
 
         val viewMode = getLocalParticipantViewMode(numberOfRemoteParticipants)
@@ -109,6 +111,7 @@ internal class LocalParticipantViewModel(
         isOverlayDisplayedFlow = MutableStateFlow(isOverlayDisplayed(callingState))
         numberOfRemoteParticipantsFlow = MutableStateFlow(numberOfRemoteParticipants)
         isCameraSwitchDetachedFlow = MutableStateFlow(isDetachControlButtons)
+        enableParticipantMenuDrawerFlow = MutableStateFlow(enableParticipantMenuDrawer)
     }
 
     fun switchCamera() = dispatch(LocalParticipantAction.CameraSwitchTriggered())
@@ -118,6 +121,8 @@ internal class LocalParticipantViewModel(
     fun getNumberOfRemoteParticipantsFlow(): StateFlow<Int> = numberOfRemoteParticipantsFlow
 
     fun getIsCameraSwitchDetachedFlow(): StateFlow<Boolean> = isCameraSwitchDetachedFlow
+
+    fun getEnableParticipantMenuDrawerFlow(): StateFlow<Boolean> = enableParticipantMenuDrawerFlow
 
     fun updateIsOverlayDisplayed(callingStatus: CallingStatus) {
         isOverlayDisplayedFlow.value = isOverlayDisplayed(callingStatus)

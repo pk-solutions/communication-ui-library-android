@@ -81,6 +81,7 @@ internal class CallingViewModel(
             state.localParticipantState.cameraState.device,
             state.localParticipantState.cameraState.camerasCount,
             localOptions.isDetachControlButtons,
+            localOptions.isEnableParticipantMenuDrawer,
         )
 
         floatingHeaderViewModel.init(
