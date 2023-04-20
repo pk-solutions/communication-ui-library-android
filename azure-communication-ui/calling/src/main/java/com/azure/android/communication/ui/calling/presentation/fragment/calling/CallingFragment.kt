@@ -183,6 +183,8 @@ internal class CallingFragment :
             this.requireContext(),
             viewModel.participantMenuViewModel,
         )
+        participantMenuView.layoutDirection =
+            activity?.window?.decorView?.layoutDirection ?: LayoutDirection.LOCALE
         participantMenuView.start(viewLifecycleOwner)
     }
 
