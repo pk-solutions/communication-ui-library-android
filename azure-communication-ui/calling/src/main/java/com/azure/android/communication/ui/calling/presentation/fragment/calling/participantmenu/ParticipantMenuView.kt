@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.widget.RelativeLayout
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -77,7 +78,10 @@ internal class ParticipantMenuView(
         get() {
             val bottomCellItems = listOf(
                 BottomCellItem(
-                    icon = null,
+                    icon = ContextCompat.getDrawable(
+                        context,
+                        R.drawable.azure_communication_ui_calling_toggle_selector_camera_for_call
+                    ),
                     title = context.getString(R.string.azure_communication_ui_calling_view_button_toggle_video_accessibility_label),
                     contentDescription = null,
                     accessoryImage = null,
@@ -95,6 +99,11 @@ internal class ParticipantMenuView(
                     }
                 },
             )
+            // TODO: need to rework the drawer to optionally fill the whole screen. see TODO in CustomKeysHandler.
+            // TODO: need to either split this into Local and non-local menus, or use a toggle
+            // TODO: need to add remove-from-meeting button when editing a remote user
+            // TODO: spotlight user? beta feature.
+            // TODO: consider reworking from "toggle video" to dynamic text like ControlBarView
 
             return bottomCellItems
         }
