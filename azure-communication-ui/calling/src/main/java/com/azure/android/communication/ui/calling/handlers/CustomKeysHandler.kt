@@ -20,82 +20,110 @@ internal class CustomKeysHandler(
     private val audioSessionManager: AudioSessionManager,
     private val logger: Logger,
 ) {
+    private enum class KeyKind {
+        BACK,
+        CONFIRM,
+        UP,
+        DOWN,
+        PTT,
+        VOLUME_UP,
+        VOLUME_DOWN,
+    }
 
     private var lastKey = -1
-    fun dispatchKeyEvent(activity: CallCompositeActivity, event: KeyEvent?): Boolean? {
-        if (localOptions == null) return null
 
+    fun dispatchKeyEvent(activity: CallCompositeActivity, event: KeyEvent?): Boolean {
+        // No custom keys mapped.
+        if (localOptions == null) return false
+
+        // Key event lacks a code.
         val keyCode = event?.keyCode
-        if (keyCode?.let { it > 0 } != true) return null
+        if (keyCode?.let { it > 0 } != true) return false
 
-        val isBackKey = localOptions.backKeys?.contains(keyCode) == true
-        val isConfirmKey = localOptions.confirmKeys?.contains(keyCode) == true
-        val isUpKey = localOptions.upKeys?.contains(keyCode) == true
-        val isDownKey = localOptions.downKeys?.contains(keyCode) == true
-        val isPttKey = localOptions.pttKeys?.contains(keyCode) == true
-        val isVolumeUpKey = localOptions.volumeUpKeys?.contains(keyCode) == true
-        val isVolumeDownKey = localOptions.volumeDownKeys?.contains(keyCode) == true
+        // Get custom kind, or don't handle the code.
+        val kind = getKind(keyCode) ?: return false
 
         if (event.action == KeyEvent.ACTION_DOWN && lastKey != keyCode) {
-            lastKey = keyCode // Prevent duplicate vibrates if continuously held down.
+            lastKey = keyCode // Prevent duplicate events if continuously held down.
 
-            // Vibrate on key down for some custom keys
-            if (isBackKey || isConfirmKey || isUpKey || isDownKey || isPttKey) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    val v = activity.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-                    v.defaultVibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
-                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    @Suppress("DEPRECATION")
-                    val v = activity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-                    v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
-                } else {
-                    @Suppress("DEPRECATION")
-                    val v = activity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-                    @Suppress("DEPRECATION")
-                    v.vibrate(100)
+            doVibrate(activity, kind)
+
+            // Custom key down behaviors
+            when (kind) {
+                KeyKind.PTT -> {
+                    val fragment = activity.supportFragmentManager.fragments.firstOrNull()
+                    (fragment as? CallingFragment)?.clickMicOn()
                 }
+                else -> {}
             }
-
-            // Custom key down behavior
-            if (isPttKey) {
-                val fragment = activity.supportFragmentManager.fragments.firstOrNull()
-                (fragment as? CallingFragment)?.clickMicOn()
-            }
-
-            return true
 
         } else if (event.action == KeyEvent.ACTION_UP) {
             lastKey = -1
 
-            // Custom key up behavior
+            // Custom key up behaviors
             val fragment = activity.supportFragmentManager.fragments.firstOrNull()
-            if (isBackKey) {
-                (fragment as? BackNavigation)?.onBackPressed()
-            } else if (isConfirmKey) {
-                if (fragment is CallingFragment)
-                    fragment.switchLocalCamera()
-                else if (fragment is SetupFragment)
-                    fragment.attemptJoinCall()
-            } else if (isUpKey || isDownKey) {
-                // TODO
-            } else if (isPttKey) {
-                (fragment as? CallingFragment)?.clickMicOff()
-            } else if (isVolumeUpKey || isVolumeDownKey) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    localOptions.volumeChanger?.let {
-                        audioSessionManager.adjustVolume(it, isVolumeUpKey)
+            when (kind) {
+                KeyKind.BACK -> (fragment as? BackNavigation)?.onBackPressed()
+                KeyKind.CONFIRM -> {
+                    if (fragment is CallingFragment)
+                        fragment.switchLocalCamera()
+                    else if (fragment is SetupFragment)
+                        fragment.attemptJoinCall()
+                }
+                KeyKind.UP, KeyKind.DOWN -> {} // TODO
+                KeyKind.PTT -> (fragment as? CallingFragment)?.clickMicOff()
+                KeyKind.VOLUME_UP, KeyKind.VOLUME_DOWN -> {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        localOptions.volumeChanger?.let {
+                            audioSessionManager.adjustVolume(it, kind == KeyKind.VOLUME_UP)
+                        }
                     }
                 }
             }
-
-            return true
         }
 
-        return null
+        return true
     }
 
     fun onDialogKey(dialog: DialogInterface, keyCode: Int, event: KeyEvent): Boolean {
-        logger.info("Dialog key $keyCode was pressed from ${dialog.hashCode()} with event ${event.action}!")
+        val kind = getKind(keyCode)
         return true
     }
+
+    private fun getKind(keyCode: Int): KeyKind? {
+        if (localOptions == null) return null
+
+        return when {
+            localOptions.backKeys?.contains(keyCode) == true -> KeyKind.BACK
+            localOptions.confirmKeys?.contains(keyCode) == true -> KeyKind.CONFIRM
+            localOptions.upKeys?.contains(keyCode) == true -> KeyKind.UP
+            localOptions.downKeys?.contains(keyCode) == true -> KeyKind.DOWN
+            localOptions.pttKeys?.contains(keyCode) == true -> KeyKind.PTT
+            localOptions.volumeUpKeys?.contains(keyCode) == true -> KeyKind.VOLUME_UP
+            localOptions.volumeDownKeys?.contains(keyCode) == true -> KeyKind.VOLUME_DOWN
+            else -> null
+        }
+    }
+
+    private fun doVibrate(context: Context, kind: KeyKind) {
+        if (shouldVibrate(kind)) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val v = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+                v.defaultVibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                @Suppress("DEPRECATION")
+                val v = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else {
+                @Suppress("DEPRECATION")
+                val v = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                @Suppress("DEPRECATION")
+                v.vibrate(100)
+            }
+        }
+    }
+
+    private fun shouldVibrate(kind: KeyKind): Boolean =
+        kind in listOf(KeyKind.BACK, KeyKind.CONFIRM, KeyKind.UP, KeyKind.DOWN, KeyKind.PTT)
 }

@@ -168,7 +168,7 @@ internal class CallCompositeActivity : AppCompatActivity() {
     }
 
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
-        return customKeysHandler.dispatchKeyEvent(this, event) ?: super.dispatchKeyEvent(event)
+        return customKeysHandler.dispatchKeyEvent(this, event) || super.dispatchKeyEvent(event)
     }
 
     @SuppressLint("SourceLockedOrientationActivity")
