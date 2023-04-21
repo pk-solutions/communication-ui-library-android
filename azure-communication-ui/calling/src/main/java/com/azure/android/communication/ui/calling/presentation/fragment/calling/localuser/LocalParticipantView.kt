@@ -222,9 +222,6 @@ internal class LocalParticipantView : ConstraintLayout {
                 setPipMargin(it, viewModel.getDisplaySwitchCameraButtonFlow().value)
                 switchCameraButton.layoutParams.width = if (it) 60 else 36
                 switchCameraButton.layoutParams.height = if (it) 60 else 36
-                switchCameraButton.updateLayoutParams<MarginLayoutParams> {
-                    this.setMargins(if (it) 1 else 4)
-                }
             }
         }
 
