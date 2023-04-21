@@ -68,22 +68,24 @@
     <!--    Compliance Banner-->
     <string name="azure_communication_ui_calling_view_banner_recording_started"><b>Началась запись.</b> Присоединяясь, вы
         даете согласие на транскрибирование этого собрания.
-         <u>Политика конфиденциальности</u></string>
+         </string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped"><b>Запись сохраняется.</b> Запись остановлена.
-         <u>Подробнее</u></string>
+         </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_started"><b>Запущено транскрибирование.</b> Присоединяясь, вы
-        даете согласие на транскрибирование этого собрания. <u>Политика конфиденциальности</u></string>
+        даете согласие на транскрибирование этого собрания. </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped"><b>Транскрибирование сохраняется.</b> Транскрибирование
-        остановлено. <u>Подробнее</u></string>
+        остановлено. </string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_started"><b>Запись и транскрибирование
         начаты.</b> Присоединяясь, вы даете согласие на транскрибирование этого собрания
-        . <u>Политика конфиденциальности</u></string>
+        . </string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped"><b>Запись и транскрибирование
-        сохраняются.</b> Запись и транскрибирование остановлены. <u>Подробнее</u></string>
+        сохраняются.</b> Запись и транскрибирование остановлены. </string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped_still_transcribing"><b>Запись остановлена.</b> Теперь вы
-        только транскрибируете это собрание. <u>Политика конфиденциальности</u></string>
+        только транскрибируете это собрание. </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped_still_recording"><b>Транскрибирование остановлено.
-    </b> Теперь вы только записываете это собрание. <u>Политика конфиденциальности</u></string>
+    </b> Теперь вы только записываете это собрание. </string>
+    <string name="azure_communication_ui_calling_view_link_learn_more_label">Подробнее</string>
+    <string name="azure_communication_ui_calling_view_link_privacy_policy_label">Политика конфиденциальности</string>
     <string name="azure_communication_ui_calling_view_link">Ссылка</string>
 
     <!--    PopUp warning-->

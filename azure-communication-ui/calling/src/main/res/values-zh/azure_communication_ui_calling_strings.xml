@@ -68,22 +68,24 @@
     <!--    Compliance Banner-->
     <string name="azure_communication_ui_calling_view_banner_recording_started"><b>录制已开始。</b>加入即表示你
 同意誊写此会议。
- <u>隐私策略</u></string>
+ </string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped"><b>正在保存录制。</b>录制已停止。
-<u>了解详细信息</u></string>
+</string>
     <string name="azure_communication_ui_calling_view_banner_transcription_started"><b>听录已开始。</b>加入即表示你
-同意誊写此会议。<u>隐私策略</u></string>
+同意誊写此会议。</string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped"><b>正在保存听录。</b>听录
-已停止。<u>了解详细信息</u></string>
+已停止。</string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_started"><b>录制和听录已
 已启动。</b>加入即表示你同意誊写此会议
-。<u>隐私策略</u></string>
+。</string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped"><b>正在
-保存录制和听录。</b>录制和听录已停止。<u>了解详细信息</u></string>
+保存录制和听录。</b>录制和听录已停止。</string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped_still_transcribing"><b>录制已停止。</b>你
-现在仅在誊写此会议。<u>隐私策略</u></string>
+现在仅在誊写此会议。</string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped_still_recording"><b>听录已停止。
-</b>你现在仅在录制此会议。<u>隐私策略</u></string>
+</b>你现在仅在录制此会议。</string>
+    <string name="azure_communication_ui_calling_view_link_learn_more_label">了解详细信息</string>
+    <string name="azure_communication_ui_calling_view_link_privacy_policy_label">隐私策略</string>
     <string name="azure_communication_ui_calling_view_link">链接</string>
 
     <!--    PopUp warning-->

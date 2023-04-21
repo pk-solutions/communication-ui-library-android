@@ -91,6 +91,7 @@ internal class CustomKeysHandler(
         if (event.action == KeyEvent.ACTION_UP) {
             when (kind) {
                 KeyKind.BACK -> dialog.dismiss()
+                // TODO: need to use up/down and confirm buttons within dialog.  custom DialogInterface impl.
                 else -> {}
             }
         }

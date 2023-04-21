@@ -67,23 +67,22 @@
 
     <!--    Compliance Banner-->
     <string name="azure_communication_ui_calling_view_banner_recording_started"><b>لقد بدأ التسجيل.</b> من خلال الانضمام، فأنت
-        توافق على كتابة الحديث لهذا الاجتماع.
-         <u>نهج الخصوصية</u></string>
-    <string name="azure_communication_ui_calling_view_banner_recording_stopped"><b>يتم حفظ التسجيل.</b> تم إيقاف التسجيل.
-        <u>تعرَّف على المزيد</u></string>
+        توافق على كتابة الحديث لهذا الاجتماع.</string>
+    <string name="azure_communication_ui_calling_view_banner_recording_stopped"><b>يتم حفظ التسجيل.</b> تم إيقاف التسجيل.</string>
     <string name="azure_communication_ui_calling_view_banner_transcription_started"><b>لقد بدأ كتابة الحديث.</b> بالانضمام، أنت
-        توافق على النسخ النص لهذا الاجتماع. <u>نهج الخصوصية</u></string>
+        توافق على النسخ النص لهذا الاجتماع. </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped"><b>يتم حفظ كتابة الحديث.</b> تم إيقاف
-        النسخ. <u>تعرَّف على المزيد</u></string>
+        النسخ. </string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_started"><b>لقد بدء التسجيل والنسخ
        النصي.</b> بالانضمام، فأنت توافق على كتابة الحديث لهذا الاجتماع
-        . <u>نهج الخصوصية</u></string>
+        .</string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped"><b>يتم حفظ التسجيل والنسخ
-        النصي.</b> تم إيقاف التسجيل وكتابة الحديث. <u>تعرَّف على المزيد</u></string>
-    <string name="azure_communication_ui_calling_view_banner_recording_stopped_still_transcribing"><b>تم إيقاف التسجيل.</b> تقوم الآن
-        بكتابة الحديث لهذا الاجتماع. <u>نهج الخصوصية</u></string>
+        النصي.</b> تم إيقاف التسجيل وكتابة الحديث. </string>
+    <string name="azure_communication_ui_calling_view_banner_recording_stopped_still_transcribing"><b>تم إيقاف التسجيل.</b> تقوم الآن         بكتابة الحديث لهذا الاجتماع. </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped_still_recording"><b>تم إيقاف كتابة الحديث.
-    </b> أنت الآن تسجل هذا الاجتماع فقط. <u>نهج الخصوصية</u></string>
+    </b> أنت الآن تسجل هذا الاجتماع فقط. </string>
+    <string name="azure_communication_ui_calling_view_link_learn_more_label">تعرَّف على المزيد</string>
+    <string name="azure_communication_ui_calling_view_link_privacy_policy_label">نهج الخصوصية</string>
     <string name="azure_communication_ui_calling_view_link">رابط</string>
 
     <!--    PopUp warning-->

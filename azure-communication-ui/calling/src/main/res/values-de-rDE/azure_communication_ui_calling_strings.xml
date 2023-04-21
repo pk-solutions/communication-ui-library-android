@@ -68,22 +68,24 @@
     <!--    Compliance Banner-->
     <string name="azure_communication_ui_calling_view_banner_recording_started"><b>Die Transkription hat begonnen.</b> Indem Sie sich anmelden, erklären Sie
  sich damit einverstanden, dass diese Besprechung transkribiert wird.
- <u>Datenschutzrichtlinie</u></string>
+</string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped"><b>Die Aufnahme wird gespeichert.</b> Die Aufzeichnung wurde beendet.
-         <u>Weitere Informationen</u></string>
+        </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_started"><b>Die Transkription hat begonnen.</b> Indem Sie sich anmelden, erklären Sie
- sich damit einverstanden, dass dieses Treffen transkribiert wird. <u>Datenschutzrichtlinie</u></string>
+ sich damit einverstanden, dass dieses Treffen transkribiert wird.</string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped"><b>Die Transkription wird gespeichert.</b> Die Transkription
-        wurde beendet. <u>Weitere Informationen</u></string>
+        wurde beendet.</string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_started"><b>Aufzeichnung und Transkription haben
       begonnen.</b> Mit Ihrer Teilnahme erklären Sie sich damit einverstanden, dass diese Besprechung transkribiert wird
-     . <u>Datenschutzbestimmungen</u></string>
+     .</string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped"><b>Aufnahme und Transkription werden
-        gespeichert.</b> Aufzeichnung und Transkription wurden beendet. <u>Weitere Informationen</u></string>
+        gespeichert.</b> Aufzeichnung und Transkription wurden beendet.</string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped_still_transcribing"><b>Die Aufzeichnung wurde gestoppt.</b> Sie
- transkribieren jetzt nur diese Besprechung. <u>Datenschutzbestimmungen</u></string>
+ transkribieren jetzt nur diese Besprechung.</string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped_still_recording"><b>Die Transkription wurde beendet.
-    </b> Sie nehmen jetzt nur diese Besprechung auf. <u>Datenschutzrichtlinie</u></string>
+    </b> Sie nehmen jetzt nur diese Besprechung auf.</string>
+    <string name="azure_communication_ui_calling_view_link_learn_more_label">Weitere Informationen</string>
+    <string name="azure_communication_ui_calling_view_link_privacy_policy_label">Datenschutzrichtlinie</string>
     <string name="azure_communication_ui_calling_view_link">Link</string>
 
     <!--    PopUp warning-->

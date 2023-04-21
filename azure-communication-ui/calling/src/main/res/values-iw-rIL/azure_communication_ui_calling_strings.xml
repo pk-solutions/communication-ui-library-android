@@ -68,22 +68,24 @@
     <!--    Compliance Banner-->
     <string name="azure_communication_ui_calling_view_banner_recording_started"><b>ההקלטה התחילה.</b> על-ידי הצטרפות, אתה
         נותן את הסכמתך לתעתוק של פגישה זו.
-         <u>מדיניות פרטיות</u></string>
+         </string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped"><b>ההקלטה נשמרת. </b> ההקלטה הופסקה.
-         <u>מידע נוסף</u></string>
+         </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_started"><b>התעתוק התחיל.</b> על-ידי הצטרפות, אתה
-        נותן את הסכמתך לתעתוק של פגישה זו. <u>מדיניות פרטיות</u></string>
+        נותן את הסכמתך לתעתוק של פגישה זו. </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped"><b>התעתוק נשמר.</b> התעתוק
-        הופסק. <u>מידע נוסף</u></string>
+        הופסק. </string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_started"><b>ההקלטה והתעתוק
         התחילו.</b> על-ידי הצטרפות, אתה נותן את הסכמתך לתעתוק של פגישה זו
-        . <u>מדיניות פרטיות</u></string>
+        . </string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped"><b>ההקלטה והתעתוק
-        נשמרים.</b> ההקלטה והתעתוק הפסיקו. <u>מידע נוסף</u></string>
+        נשמרים.</b> ההקלטה והתעתוק הפסיקו. </string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped_still_transcribing"><b>ההקלטה הופסקה.</b> אתה
-        מתעתק כעת רק את פגישה זו. <u>מדיניות הפרטיות של</u></string>
+        מתעתק כעת רק את פגישה זו. </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped_still_recording"><b>התעתוק הופסק.
-    </b> אתה מתעתק כעת רק הקלטה של פגישה זו. <u>מדיניות פרטיות</u></string>
+    </b> אתה מתעתק כעת רק הקלטה של פגישה זו. </string>
+    <string name="azure_communication_ui_calling_view_link_learn_more_label">מידע נוסף</string>
+    <string name="azure_communication_ui_calling_view_link_privacy_policy_label">מדיניות פרטיות</string>
     <string name="azure_communication_ui_calling_view_link">קישור</string>
 
     <!--    PopUp warning-->

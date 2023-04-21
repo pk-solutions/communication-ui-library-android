@@ -68,22 +68,24 @@
     <!--    Compliance Banner-->
     <string name="azure_communication_ui_calling_view_banner_recording_started"><b>Inspelning har startat.</b> Genom att ansluta
         ger du medgivande för att det här mötet transkriberas.
-         <u>Sekretesspolicy</u></string>
+         </string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped"><b>Inspelningen sparas.</b> Inspelningen har stoppats.
-         <u>Läs mer</u></string>
+         </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_started"><b>Transcription har startat.</b> Genom att gå med ger du
-        medgivande för att det här mötet transkriberas. <u>Sekretesspolicy</u></string>
+        medgivande för att det här mötet transkriberas. </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped"><b>Transkription sparas.</b> Transkription
-        har stoppats. <u>Läs mer</u></string>
+        har stoppats. </string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_started"><b>Inspelning och transkription har
         startat.</b> Genom att ansluta ger du ditt medgivande till att det här mötet transkriberas
-        . <u>Sekretesspolicy</u></string>
+        . </string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped"><b>Inspelning och transkription 
-        sparas.</b> Inspelning och transkription har stoppats. <u>Läs mer</u></string>
+        sparas.</b> Inspelning och transkription har stoppats. </string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped_still_transcribing"><b>Inspelning har stoppats.</b> Du
-        transkriberar nu bara mötet. <u>Privacy-princip</u></string>
+        transkriberar nu bara mötet. </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped_still_recording"><b>Transkription har stoppats.
-    </b> Du spelar nu bara in det här mötet. <u>Sekretesspolicy</u></string>
+    </b> Du spelar nu bara in det här mötet. </string>
+    <string name="azure_communication_ui_calling_view_link_learn_more_label">Läs mer</string>
+    <string name="azure_communication_ui_calling_view_link_privacy_policy_label">Sekretesspolicy</string>
     <string name="azure_communication_ui_calling_view_link">Länk</string>
 
     <!--    PopUp warning-->

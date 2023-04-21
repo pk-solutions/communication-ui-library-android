@@ -68,22 +68,24 @@
     <!--    Compliance Banner-->
     <string name="azure_communication_ui_calling_view_banner_recording_started"><b>La transcription a démarré.</b> En participant, vous
         autorisez la transcription de cette réunion.
-        <u>Politique de confidentialité</u></string>
+       </string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped"><b>L\'enregistrement est en cours d’enregistrement.</b>L\'enregistrement s’est arrêté.
-         <u>En savoir plus</u></string>
+        </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_started"><b>La transcription a démarré.</b> En participant, vous
-        autorisez la transcription de cette réunion. <u>Politique de confidentialité</u></string>
+        autorisez la transcription de cette réunion.</string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped"><b>La transcription est en cours d’enregistrement.</b> La transcription
-        s’est arrêtée. <u>En savoir plus</u></string>
+        s’est arrêtée.</string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_started"><b>L’enregistrement et la transcription ont
        démarré.</b> En participant, vous autorisez la transcription de cette réunion
-         . <u>Politique de confidentialité</u></string>
+         .</string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped"><b>L’enregistrement et la transcription sont
-        en cours d’enregistrement.</b> L’enregistrement et la transcription se sont arrêtés. <u>En savoir plus</u></string>
+        en cours d’enregistrement.</b> L’enregistrement et la transcription se sont arrêtés.</string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped_still_transcribing"><b>L\'enregistrement s’est arrêté.</b> Vous
-        transcrivez uniquement cette réunion à présent. <u>Politique de confidentialité</u></string>
+        transcrivez uniquement cette réunion à présent.</string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped_still_recording"><b>La transcription s’est arrêtée.
-     </b> Vous        enregistrez cette réunion uniquement à présent. <u>Politique de confidentialité</u></string>
+     </b> Vous        enregistrez cette réunion uniquement à présent.</string>
+    <string name="azure_communication_ui_calling_view_link_learn_more_label">En savoir plus</string>
+    <string name="azure_communication_ui_calling_view_link_privacy_policy_label">Politique de confidentialité</string>
     <string name="azure_communication_ui_calling_view_link">Lien</string>
 
     <!--    PopUp warning-->

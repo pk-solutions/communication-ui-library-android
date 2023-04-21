@@ -68,22 +68,24 @@
     <!--    Compliance Banner-->
     <string name="azure_communication_ui_calling_view_banner_recording_started"><b>Opname is gestart.</b> Door deel te nemen geeft
         u toestemming om een transcriptie te maken van deze vergadering.
-         <u>Privacybeleid</u></string>
+        </string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped"><b>Opname wordt opgeslagen.</b> Opname is gestopt.
-         <u>Meer informatie</u></string>
+        </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_started"><b>Transcriptie is gestart.</b> Door deel te nemen geeft
-        u toestemming om een transcriptie te maken van deze vergadering. <u>Privacybeleid</u></string>
+        u toestemming om een transcriptie te maken van deze vergadering.</string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped"><b>Transcriptie wordt opgeslagen.</b> Transcriptie
-        is gestopt. <u>Meer informatie</u></string>
+        is gestopt.</string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_started"><b>Opname en transcriptie zijn
         gestart.</b> Door deel te nemen geeft u toestemming om een transcriptie te maken van deze vergadering
-        . <u>Privacybeleid</u></string>
+        .</string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped"><b>Opname en transcriptie
-        worden opgeslagen.</b> Opname en transcriptie zijn gestopt. <u>Meer informatie</u></string>
+        worden opgeslagen.</b> Opname en transcriptie zijn gestopt.</string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped_still_transcribing"><b>Opname is gestopt.</b> U
-        maakt nu alleen een transcriptie van deze vergadering. <u>Privacybeleid</u></string>
+        maakt nu alleen een transcriptie van deze vergadering.</string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped_still_recording"><b>Transcriptie is gestopt.
-        </b>U maakt nu alleen een opname van deze vergadering. <u>Privacybeleid</u></string>
+        </b>U maakt nu alleen een opname van deze vergadering.</string>
+    <string name="azure_communication_ui_calling_view_link_learn_more_label">Meer informatie</string>
+    <string name="azure_communication_ui_calling_view_link_privacy_policy_label">Privacybeleid</string>
     <string name="azure_communication_ui_calling_view_link">Koppeling</string>
 
     <!--    PopUp warning-->

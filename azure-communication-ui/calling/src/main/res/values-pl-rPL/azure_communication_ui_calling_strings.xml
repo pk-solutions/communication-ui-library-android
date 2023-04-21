@@ -68,22 +68,24 @@
     <!--    Compliance Banner-->
     <string name="azure_communication_ui_calling_view_banner_recording_started"><b>Rozpoczęto nagrywanie.</b> Dołączając, 
  wyrażasz zgodę na transkrybowanie tego spotkania.
- <u> Zasady ochrony prywatności</u></string>
+</string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped"><b>Trwa zapisywanie nagrywania.</b> Nagrywanie zostało zatrzymane.
-         <u>Dowiedz się więcej</u></string>
+        </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_started"><b>Transkrypcja została uruchomiona.</b>Dołączając,
-        wyrażasz zgodę na transkrypcję tego spotkania. <u> Zasady prywatności</u></string>
+        wyrażasz zgodę na transkrypcję tego spotkania.</string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped"><b>Trwa zapisywanie transkrypcji.</b> Zatrzymano
-        transkrypcję. <u>Dowiedz się więcej</u></string>
+        transkrypcję.</string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_started"><b>Rozpoczęto nagrywanie i transkrypcję
 .</b> Dołączając, wyrażasz zgodę na transkrypcję tego spotkania
-        . <u> Zasady ochrony prywatności</u></string>
+        .</string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped"><b>Rejestrowanie i transkrypcja są
- zapisywane.</b> Nagrywanie i transkrypcja zostały zatrzymane. <u>Dowiedz się więcej</u></string>
+ zapisywane.</b> Nagrywanie i transkrypcja zostały zatrzymane.</string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped_still_transcribing"><b>Nagrywanie zostało zatrzymane.</b>
-        Teraz tylko transkrybują to spotkanie. <u>Zasad ochrony prywatności</u></string>
+        Teraz tylko transkrybują to spotkanie.</string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped_still_recording"><b>Transkrypcja została zatrzymana.
-    </b> Nagrywasz teraz tylko to spotkanie. <u>Zasady ochrony prywatności</u></string>
+    </b> Nagrywasz teraz tylko to spotkanie.</string>
+    <string name="azure_communication_ui_calling_view_link_learn_more_label">Dowiedz się więcej</string>
+    <string name="azure_communication_ui_calling_view_link_privacy_policy_label">Zasady ochrony prywatności</string>
     <string name="azure_communication_ui_calling_view_link">Link</string>
 
     <!--    PopUp warning-->

@@ -68,22 +68,24 @@
     <!--    Compliance Banner-->
     <string name="azure_communication_ui_calling_view_banner_recording_started"><b>La registrazione è stata avviata.</b> Partecipando,
         fornisci il consenso per la trascrizione della riunione 
-         <u>Informativa sulla privacy</u></string>
+        </string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped"><b>È in corso il salvataggio della registrazione. </b> La registrazione è stata arrestata.
-         <u>Altre informazioni</u></string>
+        </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_started"><b>trascrizione è stata avviata.</b> Partecipando,
         fornisci il consenso per la trascrizione della riunione.<u>Informativa sulla privacy</u></string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped"><b>È in corso il salvataggio della trascrizione.</b> La trascrizione
-        è stata arrestata. <u>Altre informazioni</u></string>
+        è stata arrestata.</string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_started"><b>Registrazione e trascrizione sono
         avviati.</b> Partecipando, fornisci il consenso per la trascrizione della riunione.
-        . <u>Informativa sulla privacy</u></string>
+        .</string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped"><b>Registrazione e trascrizione sono
-        in fase di salvataggio.</b> La registrazione e la trascrizione sono state arrestate. <u>Altre informazioni</u></string>
+        in fase di salvataggio.</b> La registrazione e la trascrizione sono state arrestate.</string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped_still_transcribing"><b>La registrazione è stata arrestata.</b>Ora
-        stai solo trascrivendo questa riunione. <u>Informativa sulla privacy</u></string>
+        stai solo trascrivendo questa riunione.</string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped_still_recording"><b>La trascrizione è stata arrestata.
-    </b>Ora stai solo registrando questa riunione. <u>Informativa sulla privacy</u></string>
+    </b>Ora stai solo registrando questa riunione.</string>
+    <string name="azure_communication_ui_calling_view_link_learn_more_label">Altre informazioni</string>
+    <string name="azure_communication_ui_calling_view_link_privacy_policy_label">Informativa sulla privacy</string>
     <string name="azure_communication_ui_calling_view_link">Collegamento</string>
 
     <!--    PopUp warning-->

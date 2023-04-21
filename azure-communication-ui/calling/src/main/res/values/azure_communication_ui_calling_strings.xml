@@ -66,27 +66,19 @@
     <string name="azure_communication_ui_calling_view_share_diagnostics_title">Diagnostics info</string>
 
     <!--    Compliance Banner-->
-    <string name="azure_communication_ui_calling_view_banner_recording_started"><b>Recording has started.</b> By joining, you are
-        giving consent for this meeting to be transcribed.
-         <u>Privacy policy</u></string>
-    <string name="azure_communication_ui_calling_view_banner_recording_stopped"><b>Recording is being saved.</b> Recording has stopped.
-         <u>Learn More</u></string>
-    <string name="azure_communication_ui_calling_view_banner_transcription_started"><b>Transcription has started.</b> By joining, you
-        are giving consent for this meeting to be transcribed. <u>Privacy policy</u></string>
-    <string name="azure_communication_ui_calling_view_banner_transcription_stopped"><b>Transcription is being saved.</b> Transcription
-        has stopped. <u>Learn More</u></string>
-    <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_started"><b>Recording and transcription have
-        started.</b> By joining, you are giving consent for this meeting to be transcribed
-        . <u>Privacy policy</u></string>
-    <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped"><b>Recording and transcription are
-        being saved.</b> Recording and transcription have stopped. <u>Learn More</u></string>
-    <string name="azure_communication_ui_calling_view_banner_recording_stopped_still_transcribing"><b>Recording has stopped.</b> You
-        are now only transcribing this meeting. <u>Privacy policy</u></string>
-    <string name="azure_communication_ui_calling_view_banner_transcription_stopped_still_recording"><b>Transcription has stopped.
-    </b> You are now only recording this meeting. <u>Privacy policy</u></string>
+    <string name="azure_communication_ui_calling_view_banner_recording_started"><b>Recording has started.</b> By joining, you are giving consent for this meeting to be transcribed.</string>
+    <string name="azure_communication_ui_calling_view_banner_recording_stopped"><b>Recording is being saved.</b> Recording has stopped.</string>
+    <string name="azure_communication_ui_calling_view_banner_transcription_started"><b>Transcription has started.</b> By joining, you are giving consent for this meeting to be transcribed.</string>
+    <string name="azure_communication_ui_calling_view_banner_transcription_stopped"><b>Transcription is being saved.</b> Transcription has stopped.</string>
+    <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_started"><b>Recording and transcription have started.</b> By joining, you are giving consent for this meeting to be transcribed.</string>
+    <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped"><b>Recording and transcription are being saved.</b> Recording and transcription have stopped.</string>
+    <string name="azure_communication_ui_calling_view_banner_recording_stopped_still_transcribing"><b>Recording has stopped.</b> You are now only transcribing this meeting.</string>
+    <string name="azure_communication_ui_calling_view_banner_transcription_stopped_still_recording"><b>Transcription has stopped.</b> You are now only recording this meeting.</string>
+    <string name="azure_communication_ui_calling_view_link_learn_more_label">Learn more</string>
     <string name="azure_communication_ui_calling_view_link_learn_more_url" translatable="false">
         https://support.microsoft.com/office/record-a-meeting-in-teams-34dfbe7f-b07d-4a27-b4c6-de62f1348c24
     </string>
+    <string name="azure_communication_ui_calling_view_link_privacy_policy_label">Privacy policy</string>
     <string name="azure_communication_ui_calling_view_link_privacy_policy_url" translatable="false">
         https://privacy.microsoft.com/privacystatement#mainnoticetoendusersmodule
     </string>

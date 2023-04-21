@@ -84,6 +84,8 @@
         transcrivez uniquement cette réunion à présent. <u>Politique de confidentialité</u></string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped_still_recording"><b>La transcription s’est arrêtée.
      </b> Vous        enregistrez cette réunion uniquement à présent. <u>Politique de confidentialité</u></string>
+    <string name="azure_communication_ui_calling_view_link_learn_more_label">En savoir plus</string>
+    <string name="azure_communication_ui_calling_view_link_privacy_policy_label">Politique de confidentialité</string>
     <string name="azure_communication_ui_calling_view_link">Lien</string>
 
     <!--    PopUp warning-->
