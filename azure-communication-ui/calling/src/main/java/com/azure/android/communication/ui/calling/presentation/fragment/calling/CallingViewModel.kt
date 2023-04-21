@@ -47,11 +47,7 @@ internal class CallingViewModel(
     }
 
     fun onBackPressed() {
-        // TODO: this doesn't work, when the dialogs are open they don't respond to our custom key-down operations.
-        if (participantMenuViewModel.getDisplayStateFlow().value) participantMenuViewModel.close()
-        else if (moreCallOptionsListViewModel.displayStateFlow.value) moreCallOptionsListViewModel.close()
-        else if (participantListViewModel.getDisplayParticipantListStateFlow().value) participantListViewModel.closeParticipantList()
-        else requestCallEnd()
+        requestCallEnd()
     }
 
     private fun requestCallEnd() {
@@ -105,6 +101,11 @@ internal class CallingViewModel(
             state.localParticipantState
         )
 
+        participantMenuViewModel.init(
+            state.permissionState,
+            state.localParticipantState.cameraState,
+        )
+
         waitingLobbyOverlayViewModel.init(state.callState.callingStatus)
 
         connectingLobbyOverlayViewModel.init(
@@ -155,6 +156,11 @@ internal class CallingViewModel(
 
         audioDeviceListViewModel.update(
             state.localParticipantState.audioState,
+        )
+
+        participantMenuViewModel.update(
+            state.permissionState,
+            state.localParticipantState.cameraState,
         )
 
         waitingLobbyOverlayViewModel.update(state.callState.callingStatus)

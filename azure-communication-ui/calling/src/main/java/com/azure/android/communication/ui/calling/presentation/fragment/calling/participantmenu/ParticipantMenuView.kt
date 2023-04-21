@@ -43,6 +43,12 @@ internal class ParticipantMenuView(
                 }
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.getCameraStateFlow().collect {
+                bottomCellAdapter.enableBottomCellItem(context.getString(R.string.azure_communication_ui_calling_view_button_toggle_video_accessibility_label))
+            }
+        }
     }
 
     fun stop() {
@@ -69,10 +75,26 @@ internal class ParticipantMenuView(
 
     private val bottomCellItems: List<BottomCellItem>
         get() {
-            val bottomCellItems = mutableListOf<BottomCellItem>()
-
-            // TODO: populate with options. See MoreCallOptionsListView and LeaveConfirmView
-            // TODO: add a new toggle to change the list view into a large button view.  then confirm exit, more options, and this menu will all have the same look-and-feel.  need to possibly rework just the listview layout and make the drawer go all the way to the top.
+            val bottomCellItems = listOf(
+                BottomCellItem(
+                    icon = null,
+                    title = context.getString(R.string.azure_communication_ui_calling_view_button_toggle_video_accessibility_label),
+                    contentDescription = null,
+                    accessoryImage = null,
+                    accessoryColor = null,
+                    accessoryImageDescription = context.getString(R.string.azure_communication_ui_calling_view_button_toggle_video_accessibility_label),
+                    enabled = false,
+                    participantViewData = null,
+                    isOnHold = false,
+                ) {
+                    participantMenuDrawer.dismiss()
+                    if (it.isEnabled) {
+                        viewModel.turnCameraOff()
+                    } else {
+                        viewModel.turnCameraOn()
+                    }
+                },
+            )
 
             return bottomCellItems
         }
