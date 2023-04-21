@@ -47,6 +47,7 @@ internal class CallingViewModel(
     }
 
     fun onBackPressed() {
+        // TODO: this doesn't work, when the dialogs are open they don't respond to our custom key-down operations.
         if (participantMenuViewModel.getDisplayStateFlow().value) participantMenuViewModel.close()
         else if (moreCallOptionsListViewModel.displayStateFlow.value) moreCallOptionsListViewModel.close()
         else if (participantListViewModel.getDisplayParticipantListStateFlow().value) participantListViewModel.closeParticipantList()
@@ -54,10 +55,10 @@ internal class CallingViewModel(
     }
 
     private fun requestCallEnd() {
-        if (localOptions.isConfirmExit)
-            confirmLeaveOverlayViewModel.requestExitConfirmation()
-        else
+        if (localOptions.isExitWithoutPrompt)
             confirmLeaveOverlayViewModel.confirm()
+        else
+            confirmLeaveOverlayViewModel.requestExitConfirmation()
     }
 
     override fun init(coroutineScope: CoroutineScope) {
