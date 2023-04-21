@@ -13,6 +13,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Guideline
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.marginBottom
+import androidx.core.view.setMargins
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -220,6 +222,9 @@ internal class LocalParticipantView : ConstraintLayout {
                 setPipMargin(it, viewModel.getDisplaySwitchCameraButtonFlow().value)
                 switchCameraButton.layoutParams.width = if (it) 60 else 36
                 switchCameraButton.layoutParams.height = if (it) 60 else 36
+                switchCameraButton.updateLayoutParams<MarginLayoutParams> {
+                    this.setMargins(if (it) 1 else 4)
+                }
             }
         }
 
