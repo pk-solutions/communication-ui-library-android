@@ -42,7 +42,7 @@ public final class CallCompositeLocalOptions {
     private boolean microphoneOn = false;
     private boolean skipSetupScreen = false;
     private boolean lockRotation = false;
-    private boolean exitWithoutPrompt = false;
+    private boolean skipExitPrompt = false;
     private boolean detachControlButtons = false;
     private boolean hideFloatingHeader = false;
     private boolean ignoreProximitySensor = false;
@@ -178,13 +178,13 @@ public final class CallCompositeLocalOptions {
         return this;
     }
 
-    public boolean isExitWithoutPrompt() {
-        return exitWithoutPrompt;
+    public boolean isSkipExitPrompt() {
+        return skipExitPrompt;
     }
-    public CallCompositeLocalOptions setExitWithoutPrompt(
-            final boolean exitWithoutPrompt
+    public CallCompositeLocalOptions setSkipExitPrompt(
+            final boolean skipExitPrompt
     ) {
-        this.exitWithoutPrompt = exitWithoutPrompt;
+        this.skipExitPrompt = skipExitPrompt;
         return this;
     }
 

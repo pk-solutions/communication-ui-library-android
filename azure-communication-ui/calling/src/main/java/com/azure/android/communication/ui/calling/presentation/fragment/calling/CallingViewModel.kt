@@ -55,7 +55,7 @@ internal class CallingViewModel(
     }
 
     private fun requestCallEnd() {
-        if (localOptions.isExitWithoutPrompt)
+        if (localOptions.isSkipExitPrompt)
             confirmLeaveOverlayViewModel.confirm()
         else
             confirmLeaveOverlayViewModel.requestExitConfirmation()
