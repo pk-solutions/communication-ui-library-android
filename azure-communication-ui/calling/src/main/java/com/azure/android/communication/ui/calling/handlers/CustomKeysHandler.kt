@@ -70,7 +70,7 @@ internal class CustomKeysHandler(
                     else if (fragment is SetupFragment)
                         fragment.attemptJoinCall()
                 }
-                KeyKind.UP, KeyKind.DOWN -> {} // TODO
+                KeyKind.UP, KeyKind.DOWN -> logger.debug("UP and DOWN not implemented") // TODO
                 KeyKind.PTT -> (fragment as? CallingFragment)?.clickMicOff()
                 KeyKind.VOLUME_UP, KeyKind.VOLUME_DOWN -> {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -86,7 +86,15 @@ internal class CustomKeysHandler(
     }
 
     fun onDialogKey(dialog: DialogInterface, keyCode: Int, event: KeyEvent): Boolean {
-        val kind = getKind(keyCode)
+        val kind = getKind(keyCode) ?: return false
+
+        if (event.action == KeyEvent.ACTION_UP) {
+            when (kind) {
+                KeyKind.BACK -> dialog.dismiss()
+                else -> {}
+            }
+        }
+
         return true
     }
 
