@@ -2,6 +2,7 @@ package com.azure.android.communication.ui.calling.presentation.fragment.calling
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.widget.RelativeLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -30,8 +31,11 @@ internal class ParticipantMenuView(
         this.setBackgroundResource(R.color.azure_communication_ui_calling_color_bottom_drawer_background)
     }
 
-    fun start(viewLifecycleOwner: LifecycleOwner) {
-        initializeDrawer()
+    fun start(
+        viewLifecycleOwner: LifecycleOwner,
+        onKeyListener: DialogInterface.OnKeyListener,
+    ) {
+        initializeDrawer(onKeyListener)
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getDisplayStateFlow().collect {
                 if (it) {
@@ -49,12 +53,13 @@ internal class ParticipantMenuView(
         this.removeAllViews()
     }
 
-    private fun initializeDrawer() {
+    private fun initializeDrawer(onKeyListener: DialogInterface.OnKeyListener) {
         participantMenuDrawer = DrawerDialog(context, DrawerDialog.BehaviorType.BOTTOM)
         participantMenuDrawer.setContentView(this)
         participantMenuDrawer.setOnDismissListener {
             viewModel.close()
         }
+        participantMenuDrawer.setOnKeyListener(onKeyListener)
 
         bottomCellAdapter = BottomCellAdapter()
         bottomCellAdapter.setBottomCellItems(bottomCellItems)
@@ -67,6 +72,7 @@ internal class ParticipantMenuView(
             val bottomCellItems = mutableListOf<BottomCellItem>()
 
             // TODO: populate with options. See MoreCallOptionsListView and LeaveConfirmView
+            // TODO: add a new toggle to change the list view into a large button view.  then confirm exit, more options, and this menu will all have the same look-and-feel.  need to possibly rework just the listview layout and make the drawer go all the way to the top.
 
             return bottomCellItems
         }

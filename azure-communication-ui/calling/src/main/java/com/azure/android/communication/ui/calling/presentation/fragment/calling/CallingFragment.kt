@@ -91,7 +91,8 @@ internal class CallingFragment :
         confirmLeaveOverlayView.layoutDirection =
             activity?.window?.decorView?.layoutDirection ?: LayoutDirection.LOCALE
         confirmLeaveOverlayView.start(
-            viewLifecycleOwner
+            viewLifecycleOwner,
+            holder.container.customKeysHandler::onDialogKey,
         )
 
         val controlStub: ViewStub
@@ -146,7 +147,10 @@ internal class CallingFragment :
             AudioDeviceListView(viewModel.audioDeviceListViewModel, this.requireContext())
         audioDeviceListView.layoutDirection =
             activity?.window?.decorView?.layoutDirection ?: LayoutDirection.LOCALE
-        audioDeviceListView.start(viewLifecycleOwner)
+        audioDeviceListView.start(
+            viewLifecycleOwner,
+            holder.container.customKeysHandler::onDialogKey,
+        )
 
         participantListView = ParticipantListView(
             viewModel.participantListViewModel,
@@ -155,7 +159,10 @@ internal class CallingFragment :
         )
         participantListView.layoutDirection =
             activity?.window?.decorView?.layoutDirection ?: LayoutDirection.LOCALE
-        participantListView.start(viewLifecycleOwner)
+        participantListView.start(
+            viewLifecycleOwner,
+            holder.container.customKeysHandler::onDialogKey,
+        )
 
         bannerView = view.findViewById(R.id.azure_communication_ui_call_banner)
         bannerView.start(
@@ -177,7 +184,10 @@ internal class CallingFragment :
         )
         moreCallOptionsListView.layoutDirection =
             activity?.window?.decorView?.layoutDirection ?: LayoutDirection.LOCALE
-        moreCallOptionsListView.start(viewLifecycleOwner)
+        moreCallOptionsListView.start(
+            viewLifecycleOwner,
+            holder.container.customKeysHandler::onDialogKey,
+        )
 
         participantMenuView = ParticipantMenuView(
             this.requireContext(),
@@ -185,7 +195,10 @@ internal class CallingFragment :
         )
         participantMenuView.layoutDirection =
             activity?.window?.decorView?.layoutDirection ?: LayoutDirection.LOCALE
-        participantMenuView.start(viewLifecycleOwner)
+        participantMenuView.start(
+            viewLifecycleOwner,
+            holder.container.customKeysHandler::onDialogKey,
+        )
     }
 
     override fun onResume() {

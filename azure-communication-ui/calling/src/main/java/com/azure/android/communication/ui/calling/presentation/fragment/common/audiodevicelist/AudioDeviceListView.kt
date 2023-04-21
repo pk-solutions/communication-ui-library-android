@@ -4,6 +4,7 @@
 package com.azure.android.communication.ui.calling.presentation.fragment.common.audiodevicelist
 
 import android.content.Context
+import android.content.DialogInterface
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
@@ -35,8 +36,11 @@ internal class AudioDeviceListView(
         this.setBackgroundResource(R.color.azure_communication_ui_calling_color_bottom_drawer_background)
     }
 
-    fun start(viewLifecycleOwner: LifecycleOwner) {
-        initializeAudioDeviceDrawer()
+    fun start(
+        viewLifecycleOwner: LifecycleOwner,
+        onKeyListener: DialogInterface.OnKeyListener,
+    ) {
+        initializeAudioDeviceDrawer(onKeyListener)
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.audioStateFlow.collect {
                 updateSelectedAudioDevice(it)
@@ -73,12 +77,13 @@ internal class AudioDeviceListView(
         audioDeviceDrawer.show()
     }
 
-    private fun initializeAudioDeviceDrawer() {
+    private fun initializeAudioDeviceDrawer(onKeyListener: DialogInterface.OnKeyListener) {
         audioDeviceDrawer = DrawerDialog(context, DrawerDialog.BehaviorType.BOTTOM)
         audioDeviceDrawer.setContentView(this)
         audioDeviceDrawer.setOnDismissListener {
             viewModel.closeAudioDeviceSelectionMenu()
         }
+        audioDeviceDrawer.setOnKeyListener(onKeyListener)
 
         bottomCellAdapter = BottomCellAdapter()
         bottomCellAdapter.setBottomCellItems(bottomCellItems)

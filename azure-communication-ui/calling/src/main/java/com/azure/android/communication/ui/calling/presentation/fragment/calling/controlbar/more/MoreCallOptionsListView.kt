@@ -4,6 +4,7 @@
 package com.azure.android.communication.ui.calling.presentation.fragment.calling.controlbar.more
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
@@ -33,8 +34,11 @@ internal class MoreCallOptionsListView(
         this.setBackgroundResource(R.color.azure_communication_ui_calling_color_bottom_drawer_background)
     }
 
-    fun start(viewLifecycleOwner: LifecycleOwner) {
-        initializeDrawer()
+    fun start(
+        viewLifecycleOwner: LifecycleOwner,
+        onKeyListener: DialogInterface.OnKeyListener
+    ) {
+        initializeDrawer(onKeyListener)
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.displayStateFlow.collect {
                 if (it) {
@@ -52,12 +56,13 @@ internal class MoreCallOptionsListView(
         this.removeAllViews()
     }
 
-    private fun initializeDrawer() {
+    private fun initializeDrawer(onKeyListener: DialogInterface.OnKeyListener) {
         menuDrawer = DrawerDialog(context, DrawerDialog.BehaviorType.BOTTOM)
         menuDrawer.setContentView(this)
         menuDrawer.setOnDismissListener {
             viewModel.close()
         }
+        menuDrawer.setOnKeyListener(onKeyListener)
 
         bottomCellAdapter = BottomCellAdapter()
         bottomCellAdapter.setBottomCellItems(bottomCellItems)

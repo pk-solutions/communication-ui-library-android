@@ -4,6 +4,7 @@
 package com.azure.android.communication.ui.calling.presentation.fragment.calling.participantlist
 
 import android.content.Context
+import android.content.DialogInterface
 import android.view.accessibility.AccessibilityManager
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
@@ -37,8 +38,11 @@ internal class ParticipantListView(
         this.setBackgroundResource(R.color.azure_communication_ui_calling_color_bottom_drawer_background)
     }
 
-    fun start(viewLifecycleOwner: LifecycleOwner) {
-        initializeParticipantListDrawer()
+    fun start(
+        viewLifecycleOwner: LifecycleOwner,
+        onKeyListener: DialogInterface.OnKeyListener,
+    ) {
+        initializeParticipantListDrawer(onKeyListener)
 
         viewLifecycleOwner.lifecycleScope.launch {
             avatarViewManager.getRemoteParticipantsPersonaSharedFlow().collect {
@@ -96,14 +100,17 @@ internal class ParticipantListView(
         }
     }
 
-    private fun initializeParticipantListDrawer() {
+    private fun initializeParticipantListDrawer(onKeyListener: DialogInterface.OnKeyListener) {
         accessibilityManager =
             context?.applicationContext?.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
+
         participantListDrawer = DrawerDialog(context, DrawerDialog.BehaviorType.BOTTOM)
         participantListDrawer.setOnDismissListener {
             viewModel.closeParticipantList()
         }
         participantListDrawer.setContentView(this)
+        participantListDrawer.setOnKeyListener(onKeyListener)
+
         bottomCellAdapter = BottomCellAdapter()
         participantTable.adapter = bottomCellAdapter
         updateRemoteParticipantListContent(0)
