@@ -148,7 +148,8 @@ internal class BannerView : ConstraintLayout {
                 context.getText(R.string.azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped)
             else -> ""
         }
-        return if (isClickable) info else removeUnderlinedText(info)
+        //return if (isClickable) info else removeUnderlinedText(info)
+        return info
     }
 
     private fun removeUnderlinedText(styledText: CharSequence): CharSequence {
