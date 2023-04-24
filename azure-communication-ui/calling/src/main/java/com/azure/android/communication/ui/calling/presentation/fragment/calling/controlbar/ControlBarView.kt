@@ -81,6 +81,12 @@ internal class ControlBarView : ConstraintLayout {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.getShouldDisplayMicButtonStateFlow().collect {
+                micToggle.visibility = if (it) View.VISIBLE else View.GONE
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getOnHoldCallStatusStateFlowStateFlow().collect {
                 if (it) {
                     cameraToggle.isEnabled = false
@@ -96,7 +102,7 @@ internal class ControlBarView : ConstraintLayout {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getCallStateFlow().collect() {
-                if (it == CallingStatus.NONE || it == CallingStatus.CONNECTING) {
+                if (it == CallingStatus.NONE || it == CallingStatus.CONNECTING || it == CallingStatus.RINGING) {
                     cameraToggle.isEnabled = false
                     micToggle.isEnabled = false
                     callAudioDeviceButton.isEnabled = false

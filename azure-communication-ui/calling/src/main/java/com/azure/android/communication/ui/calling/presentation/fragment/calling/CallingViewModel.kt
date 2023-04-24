@@ -68,6 +68,7 @@ internal class CallingViewModel(
             this::requestCallEnd,
             audioDeviceListViewModel::displayAudioDeviceSelectionMenu,
             moreCallOptionsListViewModel::display,
+            localOptions.isDetachControlButtons,
         )
 
         localParticipantViewModel.init(
