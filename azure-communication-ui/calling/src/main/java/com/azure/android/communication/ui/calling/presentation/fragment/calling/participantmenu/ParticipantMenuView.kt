@@ -146,6 +146,7 @@ internal class ParticipantMenuView(
             // TODO: spotlight user? beta feature.
             // TODO: need to add remove-from-meeting button when editing a remote user
         ))
+        participantMenuTable.adapter = bottomCellAdapter
     }
 
 }
