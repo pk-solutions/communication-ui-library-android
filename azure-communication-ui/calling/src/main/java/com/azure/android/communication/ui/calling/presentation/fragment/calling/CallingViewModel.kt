@@ -3,6 +3,7 @@
 
 package com.azure.android.communication.ui.calling.presentation.fragment.calling
 
+import com.azure.android.communication.ui.calling.models.CallCompositeLocalOptions
 import com.azure.android.communication.ui.calling.presentation.fragment.BaseViewModel
 import com.azure.android.communication.ui.calling.presentation.fragment.factories.CallingViewModelFactory
 import com.azure.android.communication.ui.calling.presentation.manager.NetworkManager
@@ -18,7 +19,8 @@ import kotlinx.coroutines.CoroutineScope
 internal class CallingViewModel(
     store: Store<ReduxState>,
     callingViewModelProvider: CallingViewModelFactory,
-    private val networkManager: NetworkManager
+    private val networkManager: NetworkManager,
+    private val localOptions: CallCompositeLocalOptions,
 ) :
     BaseViewModel(store) {
 
@@ -35,19 +37,24 @@ internal class CallingViewModel(
     val connectingLobbyOverlayViewModel = callingViewModelProvider.connectingLobbyOverlayViewModel
     val holdOverlayViewModel = callingViewModelProvider.onHoldOverlayViewModel
     val errorInfoViewModel = callingViewModelProvider.snackBarViewModel
+    val participantMenuViewModel = callingViewModelProvider.participantMenuViewModel
 
     private var hasSetupCalled = false
 
     fun switchFloatingHeader() {
-        floatingHeaderViewModel.switchFloatingHeader()
+        if (!localOptions.isHideFloatingHeader)
+            floatingHeaderViewModel.switchFloatingHeader()
     }
 
-    fun requestCallEnd() {
-        val state = store.getCurrentState()
-        if (state.localParticipantState.initialCallJoinState.confirmExit)
-            confirmLeaveOverlayViewModel.requestExitConfirmation()
-        else
+    fun onBackPressed() {
+        requestCallEnd()
+    }
+
+    private fun requestCallEnd() {
+        if (localOptions.isSkipExitPrompt)
             confirmLeaveOverlayViewModel.confirm()
+        else
+            confirmLeaveOverlayViewModel.requestExitConfirmation()
     }
 
     override fun init(coroutineScope: CoroutineScope) {
@@ -61,6 +68,7 @@ internal class CallingViewModel(
             this::requestCallEnd,
             audioDeviceListViewModel::displayAudioDeviceSelectionMenu,
             moreCallOptionsListViewModel::display,
+            localOptions.isDetachControlButtons,
         )
 
         localParticipantViewModel.init(
@@ -71,22 +79,33 @@ internal class CallingViewModel(
             state.callState.callingStatus,
             state.localParticipantState.cameraState.device,
             state.localParticipantState.cameraState.camerasCount,
+            localOptions.isDetachControlButtons,
+            localOptions.isEnableParticipantMenu,
+            participantMenuViewModel::displayLocal,
         )
 
         floatingHeaderViewModel.init(
             state.callState.callingStatus,
-            state.remoteParticipantState.participantMap.count()
+            state.remoteParticipantState.participantMap.count(),
+            localOptions.isHideFloatingHeader,
         )
         audioDeviceListViewModel.init(
             state.localParticipantState.audioState
         )
         bannerViewModel.init(
-            state.callState
+            state.callState,
+            !localOptions.isNoBannerLink,
         )
 
         participantListViewModel.init(
             state.remoteParticipantState.participantMap,
             state.localParticipantState
+        )
+
+        participantMenuViewModel.init(
+            state.permissionState,
+            state.localParticipantState.cameraState,
+            localOptions.isXlBottomDrawer,
         )
 
         waitingLobbyOverlayViewModel.init(state.callState.callingStatus)
@@ -100,7 +119,11 @@ internal class CallingViewModel(
         )
         holdOverlayViewModel.init(state.callState.callingStatus, state.audioSessionState.audioFocusStatus)
 
-        participantGridViewModel.init(state.callState.callingStatus)
+        participantGridViewModel.init(
+            state.callState.callingStatus,
+            localOptions.isEnableParticipantMenu,
+            participantMenuViewModel::displayRemote,
+        )
         super.init(coroutineScope)
     }
 
@@ -139,6 +162,11 @@ internal class CallingViewModel(
 
         audioDeviceListViewModel.update(
             state.localParticipantState.audioState,
+        )
+
+        participantMenuViewModel.update(
+            state.permissionState,
+            state.localParticipantState.cameraState,
         )
 
         waitingLobbyOverlayViewModel.update(state.callState.callingStatus)

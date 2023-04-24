@@ -29,6 +29,9 @@ internal class LocalParticipantViewModel(
     private lateinit var cameraDeviceSelectionFlow: MutableStateFlow<CameraDeviceSelectionStatus>
     private lateinit var isOverlayDisplayedFlow: MutableStateFlow<Boolean>
     private lateinit var numberOfRemoteParticipantsFlow: MutableStateFlow<Int>
+    private lateinit var isCameraSwitchDetachedFlow: MutableStateFlow<Boolean>
+    private lateinit var enableParticipantMenuFlow: MutableStateFlow<Boolean>
+    lateinit var openParticipantMenu: () -> Unit
 
     fun getVideoStatusFlow(): StateFlow<VideoModel> = videoStatusFlow
     fun getDisplayFullScreenAvatarFlow(): StateFlow<Boolean> = displayFullScreenAvatarFlow
@@ -61,9 +64,9 @@ internal class LocalParticipantViewModel(
         localUserMutedStateFlow.value = audioOperationalStatus == AudioOperationalStatus.OFF
         displayFullScreenAvatarFlow.value = displayFullScreenAvatar
         displaySwitchCameraButtonFlow.value =
-            displayVideo && viewMode == LocalParticipantViewMode.FULL_SCREEN && camerasCount > 1
+            displayVideo && (viewMode == LocalParticipantViewMode.FULL_SCREEN || isCameraSwitchDetachedFlow.value) && camerasCount > 1
         displayPipSwitchCameraButtonFlow.value =
-            displayVideo && viewMode == LocalParticipantViewMode.PIP && camerasCount > 1
+            displayVideo && (viewMode == LocalParticipantViewMode.PIP && !isCameraSwitchDetachedFlow.value) && camerasCount > 1
         enableCameraSwitchFlow.value =
             cameraDeviceSelectionStatus != CameraDeviceSelectionStatus.SWITCHING &&
             callingState != CallingStatus.LOCAL_HOLD
@@ -82,7 +85,10 @@ internal class LocalParticipantViewModel(
         numberOfRemoteParticipants: Int,
         callingState: CallingStatus,
         cameraDeviceSelectionStatus: CameraDeviceSelectionStatus,
-        camerasCount: Int
+        camerasCount: Int,
+        isDetachControlButtons: Boolean,
+        enableParticipantMenu: Boolean,
+        openParticipantMenuCallback: () -> Unit,
     ) {
 
         val viewMode = getLocalParticipantViewMode(numberOfRemoteParticipants)
@@ -97,15 +103,18 @@ internal class LocalParticipantViewModel(
             MutableStateFlow(audioOperationalStatus == AudioOperationalStatus.OFF)
         displayFullScreenAvatarFlow = MutableStateFlow(displayFullScreenAvatar)
         displaySwitchCameraButtonFlow =
-            MutableStateFlow(displayVideo && viewMode == LocalParticipantViewMode.FULL_SCREEN && camerasCount > 1)
+            MutableStateFlow(displayVideo && (viewMode == LocalParticipantViewMode.FULL_SCREEN || isDetachControlButtons) && camerasCount > 1)
         displayPipSwitchCameraButtonFlow =
-            MutableStateFlow(displayVideo && viewMode == LocalParticipantViewMode.PIP && camerasCount > 1)
+            MutableStateFlow(displayVideo && (viewMode == LocalParticipantViewMode.PIP && !isDetachControlButtons) && camerasCount > 1)
         enableCameraSwitchFlow = MutableStateFlow(
             cameraDeviceSelectionStatus != CameraDeviceSelectionStatus.SWITCHING
         )
         cameraDeviceSelectionFlow = MutableStateFlow(cameraDeviceSelectionStatus)
         isOverlayDisplayedFlow = MutableStateFlow(isOverlayDisplayed(callingState))
         numberOfRemoteParticipantsFlow = MutableStateFlow(numberOfRemoteParticipants)
+        isCameraSwitchDetachedFlow = MutableStateFlow(isDetachControlButtons)
+        enableParticipantMenuFlow = MutableStateFlow(enableParticipantMenu)
+        openParticipantMenu = openParticipantMenuCallback
     }
 
     fun switchCamera() = dispatch(LocalParticipantAction.CameraSwitchTriggered())
@@ -113,6 +122,10 @@ internal class LocalParticipantViewModel(
     fun getIsOverlayDisplayedFlow(): StateFlow<Boolean> = isOverlayDisplayedFlow
 
     fun getNumberOfRemoteParticipantsFlow(): StateFlow<Int> = numberOfRemoteParticipantsFlow
+
+    fun getIsCameraSwitchDetachedFlow(): StateFlow<Boolean> = isCameraSwitchDetachedFlow
+
+    fun getEnableParticipantMenuFlow(): StateFlow<Boolean> = enableParticipantMenuFlow
 
     fun updateIsOverlayDisplayed(callingStatus: CallingStatus) {
         isOverlayDisplayedFlow.value = isOverlayDisplayed(callingStatus)

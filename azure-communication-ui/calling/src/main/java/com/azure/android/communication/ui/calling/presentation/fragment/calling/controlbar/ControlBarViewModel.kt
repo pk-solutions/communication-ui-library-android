@@ -21,8 +21,10 @@ internal class ControlBarViewModel(private val dispatch: (Action) -> Unit) {
     private lateinit var audioOperationalStatusStateFlow: MutableStateFlow<AudioOperationalStatus>
     private lateinit var audioDeviceSelectionStatusStateFlow: MutableStateFlow<AudioDeviceSelectionStatus>
     private lateinit var shouldEnableMicButtonStateFlow: MutableStateFlow<Boolean>
+    private lateinit var shouldDisplayMicButtonStateFlow: MutableStateFlow<Boolean>
     private lateinit var onHoldCallStatusStateFlow: MutableStateFlow<Boolean>
     private lateinit var callStateFlow: MutableStateFlow<CallingStatus>
+    private lateinit var isDetachControlButtonsStateFlow: MutableStateFlow<Boolean>
     lateinit var requestCallEnd: () -> Unit
     lateinit var openAudioDeviceSelectionMenu: () -> Unit
     lateinit var openMoreMenu: () -> Unit
@@ -34,7 +36,8 @@ internal class ControlBarViewModel(private val dispatch: (Action) -> Unit) {
         callState: CallingState,
         requestCallEndCallback: () -> Unit,
         openAudioDeviceSelectionMenuCallback: () -> Unit,
-        openMoreMenuCallback: () -> Unit
+        openMoreMenuCallback: () -> Unit,
+        isDetachControlButtons: Boolean,
     ) {
         callStateFlow = MutableStateFlow(callState.callingStatus)
         cameraStateFlow =
@@ -42,8 +45,11 @@ internal class ControlBarViewModel(private val dispatch: (Action) -> Unit) {
         audioOperationalStatusStateFlow = MutableStateFlow(audioState.operation)
         audioDeviceSelectionStatusStateFlow = MutableStateFlow(audioState.device)
         shouldEnableMicButtonStateFlow =
-            MutableStateFlow(shouldEnableMicButton(audioState, callState.callingStatus))
+            MutableStateFlow(shouldEnableMicButton(audioState))
+        shouldDisplayMicButtonStateFlow =
+            MutableStateFlow(callState.callingStatus != CallingStatus.RINGING || !isDetachControlButtons)
         onHoldCallStatusStateFlow = MutableStateFlow(false)
+        isDetachControlButtonsStateFlow = MutableStateFlow(isDetachControlButtons)
         requestCallEnd = requestCallEndCallback
         openAudioDeviceSelectionMenu = openAudioDeviceSelectionMenuCallback
         openMoreMenu = openMoreMenuCallback
@@ -59,7 +65,8 @@ internal class ControlBarViewModel(private val dispatch: (Action) -> Unit) {
         cameraStateFlow.value = CameraModel(permissionState.cameraPermissionState, cameraState)
         audioOperationalStatusStateFlow.value = audioState.operation
         audioDeviceSelectionStatusStateFlow.value = audioState.device
-        shouldEnableMicButtonStateFlow.value = shouldEnableMicButton(audioState, callingStatus)
+        shouldEnableMicButtonStateFlow.value = shouldEnableMicButton(audioState)
+        shouldDisplayMicButtonStateFlow.value = shouldDisplayMicButton(callingStatus)
         onHoldCallStatusStateFlow.value = callingStatus == CallingStatus.LOCAL_HOLD
     }
 
@@ -83,6 +90,10 @@ internal class ControlBarViewModel(private val dispatch: (Action) -> Unit) {
         return shouldEnableMicButtonStateFlow
     }
 
+    fun getShouldDisplayMicButtonStateFlow(): StateFlow<Boolean> {
+        return shouldDisplayMicButtonStateFlow
+    }
+
     fun getOnHoldCallStatusStateFlowStateFlow(): StateFlow<Boolean> {
         return onHoldCallStatusStateFlow
     }
@@ -103,8 +114,13 @@ internal class ControlBarViewModel(private val dispatch: (Action) -> Unit) {
         dispatchAction(action = LocalParticipantAction.CameraOffTriggered())
     }
 
-    private fun shouldEnableMicButton(audioState: AudioState, callingStatus: CallingStatus): Boolean {
-        return (audioState.operation != AudioOperationalStatus.PENDING && callingStatus != CallingStatus.RINGING)
+    private fun shouldEnableMicButton(audioState: AudioState): Boolean {
+        return (audioState.operation != AudioOperationalStatus.PENDING)
+    }
+
+    private fun shouldDisplayMicButton(callingStatus: CallingStatus): Boolean {
+        return (callingStatus != CallingStatus.RINGING && callingStatus != CallingStatus.CONNECTING && callingStatus != CallingStatus.NONE)
+                || !isDetachControlButtonsStateFlow.value
     }
 
     private fun dispatchAction(action: Action) {

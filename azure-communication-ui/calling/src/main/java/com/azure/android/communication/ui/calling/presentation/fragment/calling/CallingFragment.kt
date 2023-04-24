@@ -38,6 +38,7 @@ import com.azure.android.communication.ui.calling.presentation.fragment.calling.
 import com.azure.android.communication.ui.calling.presentation.fragment.common.audiodevicelist.AudioDeviceListView
 import com.azure.android.communication.ui.calling.presentation.fragment.calling.controlbar.more.MoreCallOptionsListView
 import com.azure.android.communication.ui.calling.presentation.fragment.calling.lobby.ConnectingLobbyOverlayView
+import com.azure.android.communication.ui.calling.presentation.fragment.calling.participantmenu.ParticipantMenuView
 import com.azure.android.communication.ui.calling.presentation.fragment.setup.components.ErrorInfoView
 import com.azure.android.communication.ui.calling.presentation.navigation.BackNavigation
 
@@ -74,6 +75,7 @@ internal class CallingFragment :
     private lateinit var accessibilityManager: AccessibilityManager
     private lateinit var wakeLock: PowerManager.WakeLock
     private lateinit var moreCallOptionsListView: MoreCallOptionsListView
+    private lateinit var participantMenuView: ParticipantMenuView
 
     private val localOptions
         get() = holder.container.configuration.callCompositeLocalOptions
@@ -89,7 +91,8 @@ internal class CallingFragment :
         confirmLeaveOverlayView.layoutDirection =
             activity?.window?.decorView?.layoutDirection ?: LayoutDirection.LOCALE
         confirmLeaveOverlayView.start(
-            viewLifecycleOwner
+            viewLifecycleOwner,
+            holder.container.customKeysHandler::onDialogKey,
         )
 
         val controlStub: ViewStub
@@ -144,7 +147,10 @@ internal class CallingFragment :
             AudioDeviceListView(viewModel.audioDeviceListViewModel, this.requireContext())
         audioDeviceListView.layoutDirection =
             activity?.window?.decorView?.layoutDirection ?: LayoutDirection.LOCALE
-        audioDeviceListView.start(viewLifecycleOwner)
+        audioDeviceListView.start(
+            viewLifecycleOwner,
+            holder.container.customKeysHandler::onDialogKey,
+        )
 
         participantListView = ParticipantListView(
             viewModel.participantListViewModel,
@@ -153,16 +159,20 @@ internal class CallingFragment :
         )
         participantListView.layoutDirection =
             activity?.window?.decorView?.layoutDirection ?: LayoutDirection.LOCALE
-        participantListView.start(viewLifecycleOwner)
+        participantListView.start(
+            viewLifecycleOwner,
+            holder.container.customKeysHandler::onDialogKey,
+        )
 
         bannerView = view.findViewById(R.id.azure_communication_ui_call_banner)
         bannerView.start(
             viewModel.bannerViewModel,
             viewLifecycleOwner,
-            localOptions?.isNoBannerLink != true,
         )
-        participantGridView.setOnClickListener {
-            switchFloatingHeader()
+        if (localOptions?.isEnableParticipantMenu != true) {
+            participantGridView.setOnClickListener {
+                switchFloatingHeader()
+            }
         }
 
         errorInfoView = ErrorInfoView(view)
@@ -174,7 +184,21 @@ internal class CallingFragment :
         )
         moreCallOptionsListView.layoutDirection =
             activity?.window?.decorView?.layoutDirection ?: LayoutDirection.LOCALE
-        moreCallOptionsListView.start(viewLifecycleOwner)
+        moreCallOptionsListView.start(
+            viewLifecycleOwner,
+            holder.container.customKeysHandler::onDialogKey,
+        )
+
+        participantMenuView = ParticipantMenuView(
+            this.requireContext(),
+            viewModel.participantMenuViewModel,
+        )
+        participantMenuView.layoutDirection =
+            activity?.window?.decorView?.layoutDirection ?: LayoutDirection.LOCALE
+        participantMenuView.start(
+            viewLifecycleOwner,
+            holder.container.customKeysHandler::onDialogKey,
+        )
     }
 
     override fun onResume() {
@@ -229,6 +253,7 @@ internal class CallingFragment :
         if (this::holdOverlay.isInitialized) holdOverlay.stop()
         if (this::errorInfoView.isInitialized) errorInfoView.stop()
         if (this::moreCallOptionsListView.isInitialized) moreCallOptionsListView.stop()
+        if (this::participantMenuView.isInitialized) participantMenuView.stop()
     }
 
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
@@ -249,7 +274,7 @@ internal class CallingFragment :
     }
 
     override fun onBackPressed() {
-        requestCallEnd()
+        viewModel.onBackPressed()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -273,17 +298,12 @@ internal class CallingFragment :
         }
     }
 
-    private fun requestCallEnd() {
-        viewModel.requestCallEnd()
-    }
-
     private fun displayParticipantList() {
         viewModel.participantListViewModel.displayParticipantList()
     }
 
     private fun switchFloatingHeader() {
-        if (localOptions?.isHideFloatingHeader != true)
-            viewModel.switchFloatingHeader()
+        viewModel.switchFloatingHeader()
     }
 
     fun switchLocalCamera() {

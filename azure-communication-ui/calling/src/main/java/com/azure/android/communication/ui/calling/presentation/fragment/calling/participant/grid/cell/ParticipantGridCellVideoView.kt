@@ -39,6 +39,7 @@ internal class ParticipantGridCellVideoView(
     private val showFloatingHeaderCallBack: () -> Unit,
     private val getScreenShareVideoStreamRendererCallback: () -> VideoStreamRenderer?,
     private val getParticipantViewDataCallback: (participantID: String) -> CallCompositeParticipantViewData?,
+    private val openParticipantMenuCallback: (participantID: String) -> Unit,
 ) {
     private var videoStream: View? = null
     private var screenShareZoomFrameLayout: ScreenShareZoomFrameLayout? = null
@@ -76,6 +77,16 @@ internal class ParticipantGridCellVideoView(
                     videoContainer.visibility = VISIBLE
                 } else {
                     videoContainer.visibility = INVISIBLE
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            participantViewModel.getEnableParticipantMenuStateFlow().collect {
+                videoContainer.isLongClickable = it
+                videoContainer.setOnLongClickListener {
+                    openParticipantMenuCallback(participantViewModel.getParticipantUserIdentifier())
+                    true
                 }
             }
         }

@@ -6,15 +6,14 @@ package com.azure.android.communication.ui.calling.presentation.fragment.calling
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.text.SpannableStringBuilder
 import android.util.AttributeSet
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.text.parseAsHtml
-import androidx.core.text.toHtml
-import androidx.core.text.toSpanned
+import androidx.core.text.*
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -34,14 +33,13 @@ internal class BannerView : ConstraintLayout {
     fun start(
         viewModel: BannerViewModel,
         viewLifecycleOwner: LifecycleOwner,
-        isBannerClickable: Boolean,
     ) {
         this.viewModel = viewModel
 
         // Start callbacks
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.bannerInfoTypeStateFlow.collect {
-                updateNoticeBox(it, isBannerClickable)
+                updateNoticeBox(it, viewModel.getIsBannerClickableFlow().value)
             }
         }
 
@@ -130,7 +128,7 @@ internal class BannerView : ConstraintLayout {
     }
 
     private fun getBannerInfo(bannerInfoType: BannerInfoType, isClickable: Boolean): CharSequence {
-        val info = when (bannerInfoType) {
+        val mainText = when (bannerInfoType) {
             BannerInfoType.RECORDING_AND_TRANSCRIPTION_STARTED ->
                 context.getText(R.string.azure_communication_ui_calling_view_banner_recording_and_transcribing_started)
             BannerInfoType.RECORDING_STARTED ->
@@ -149,7 +147,32 @@ internal class BannerView : ConstraintLayout {
                 context.getText(R.string.azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped)
             else -> ""
         }
-        return if (isClickable) info else removeUnderlinedText(info)
+        val info = SpannableStringBuilder()
+            .append(mainText)
+        if (isClickable) {
+            info.underline {
+                append(
+                    when (bannerInfoType) {
+                        BannerInfoType.RECORDING_AND_TRANSCRIPTION_STARTED,
+                        BannerInfoType.RECORDING_STARTED,
+                        BannerInfoType.TRANSCRIPTION_STARTED,
+                        BannerInfoType.RECORDING_STOPPED_STILL_TRANSCRIBING,
+                        BannerInfoType.TRANSCRIPTION_STOPPED_STILL_RECORDING,
+                        -> {
+                            context.getString(R.string.azure_communication_ui_calling_view_link_privacy_policy_label)
+                        }
+                        BannerInfoType.TRANSCRIPTION_STOPPED,
+                        BannerInfoType.RECORDING_STOPPED,
+                        BannerInfoType.RECORDING_AND_TRANSCRIPTION_STOPPED,
+                        -> {
+                            context.getString(R.string.azure_communication_ui_calling_view_link_learn_more_label)
+                        }
+                        else -> ""
+                    }
+                )
+            }
+        }
+        return info
     }
 
     private fun removeUnderlinedText(styledText: CharSequence): CharSequence {

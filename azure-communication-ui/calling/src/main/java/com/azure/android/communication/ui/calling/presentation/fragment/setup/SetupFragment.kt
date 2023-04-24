@@ -90,7 +90,10 @@ internal class SetupFragment :
             AudioDeviceListView(viewModel.audioDeviceListViewModel, this.requireContext())
         audioDeviceListView.layoutDirection =
             activity?.window?.decorView?.layoutDirection ?: LayoutDirection.LOCALE
-        audioDeviceListView.start(viewLifecycleOwner)
+        audioDeviceListView.start(
+            viewLifecycleOwner,
+            holder.container.customKeysHandler::onDialogKey,
+        )
 
         setupControlsView = view.findViewById(R.id.azure_communication_ui_setup_buttons)
         setupControlsView.start(

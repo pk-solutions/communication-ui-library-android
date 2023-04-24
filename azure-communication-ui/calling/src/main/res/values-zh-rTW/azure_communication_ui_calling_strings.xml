@@ -68,22 +68,24 @@
     <!--    Compliance Banner-->
     <string name="azure_communication_ui_calling_view_banner_recording_started"><b>錄製已開始。</b>一旦加入，即表示您
         同意轉譯此會議。
-         <u>隱私權原則</u></string>
+         </string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped"><b>錄製已儲存。</b>錄製已停止。
-         <u>深入了解</u></string>
+         </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_started"><b>轉錄已開始。</b>一旦加入，即表示您
-        同意轉譯此會議。<u>隱私權原則</u></string>
+        同意轉譯此會議。</string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped"><b>轉錄已儲存。</b>轉錄
-        已停止。<u>深入了解</u></string>
+        已停止。</string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_started"><b>錄製和轉錄
         已開始。</b>一旦加入，即表示您同意轉譯此會議
-        。<u>隱私權原則</u></string>
+        。</string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped"><b>錄製和轉錄
-        已儲存。</b>錄製和轉錄已停止。<u>深入了解</u></string>
+        已儲存。</b>錄製和轉錄已停止。</string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped_still_transcribing"><b>錄製已停止。</b> 您
-        現在只能轉譯此會議。<u>隱私權原則</u></string>
+        現在只能轉譯此會議。</string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped_still_recording"><b>轉錄已停止。</b> 您
-        現在只能錄製此會議。<u>隱私權原則</u></string>
+        現在只能錄製此會議。</string>
+    <string name="azure_communication_ui_calling_view_link_learn_more_label">深入了解</string>
+    <string name="azure_communication_ui_calling_view_link_privacy_policy_label">隱私權原則</string>
     <string name="azure_communication_ui_calling_view_link">連結</string>
 
     <!--    PopUp warning-->

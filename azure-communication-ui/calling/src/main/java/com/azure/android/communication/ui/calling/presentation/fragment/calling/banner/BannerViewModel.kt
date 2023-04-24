@@ -6,6 +6,7 @@ package com.azure.android.communication.ui.calling.presentation.fragment.calling
 import com.azure.android.communication.ui.calling.redux.state.CallingState
 import com.azure.android.communication.ui.calling.redux.state.CallingStatus
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 internal class BannerViewModel {
 
@@ -16,6 +17,7 @@ internal class BannerViewModel {
     var isOverlayDisplayedFlow = _isOverlayDisplayedFlow
     private var _shouldShowBannerStateFlow = MutableStateFlow(false)
     var shouldShowBannerStateFlow = _shouldShowBannerStateFlow
+    private lateinit var isBannerClickableFlow: MutableStateFlow<Boolean>
 
     private var recordingState: ComplianceState = ComplianceState.OFF
     private var transcriptionState: ComplianceState = ComplianceState.OFF
@@ -27,7 +29,9 @@ internal class BannerViewModel {
             _displayedBannerType = value
         }
 
-    fun init(callingState: CallingState) {
+    fun getIsBannerClickableFlow(): StateFlow<Boolean> = isBannerClickableFlow
+
+    fun init(callingState: CallingState, isBannerClickable: Boolean) {
         bannerInfoTypeStateFlow = MutableStateFlow(
             createBannerInfoType(
                 callingState.isRecording,
@@ -35,6 +39,7 @@ internal class BannerViewModel {
             )
         )
         _isOverlayDisplayedFlow = MutableStateFlow(isOverlayDisplayed(callingState.callingStatus))
+        isBannerClickableFlow = MutableStateFlow(isBannerClickable);
     }
 
     fun updateIsOverlayDisplayed(callingStatus: CallingStatus) {

@@ -34,7 +34,6 @@
         android:contentDescription="@string/azure_communication_ui_calling_button_switch_camera_accessibility_label"
         android:accessibilityTraversalAfter="@id/azure_communication_ui_call_floating_header"
         android:padding="5dp"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/azure_communication_ui_calling_ic_fluent_camera_switch_24_regular_composite_button_enabled"
@@ -109,4 +108,5 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </com.azure.android.communication.ui.calling.presentation.fragment.calling.localuser.LocalParticipantView>

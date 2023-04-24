@@ -22,12 +22,18 @@ internal class ParticipantGridViewModel(
 
     private var updateVideoStreamsCallback: ((List<Pair<String, String>>) -> Unit)? = null
     private var remoteParticipantStateModifiedTimeStamp: Number = 0
+    private var enableParticipantMenu = false
     private lateinit var isLobbyOverlayDisplayedFlow: MutableStateFlow<Boolean>
+    lateinit var openParticipantMenu: (String) -> Unit
 
     fun init(
         callingStatus: CallingStatus,
+        enableParticipantMenu: Boolean,
+        openParticipantMenuCallback: (String) -> Unit,
     ) {
         isLobbyOverlayDisplayedFlow = MutableStateFlow(isLobbyOverlayDisplayed(callingStatus))
+        this.enableParticipantMenu = enableParticipantMenu
+        openParticipantMenu = openParticipantMenuCallback
     }
 
     fun clear() {
@@ -152,6 +158,7 @@ internal class ParticipantGridViewModel(
             displayedRemoteParticipantsViewModelMap[id] =
                 participantGridCellViewModelFactory.ParticipantGridCellViewModel(
                     participantInfoModel,
+                    this.enableParticipantMenu,
                 )
         }
 

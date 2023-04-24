@@ -5,6 +5,7 @@ package com.azure.android.communication.ui.calling.presentation.fragment.calling
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.view.View
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
@@ -48,14 +49,15 @@ internal class LeaveConfirmView(
     }
 
     fun start(
-        viewLifecycleOwner: LifecycleOwner
+        viewLifecycleOwner: LifecycleOwner,
+        onKeyListener: DialogInterface.OnKeyListener,
     ) {
         bottomCellAdapter = BottomCellAdapter()
         bottomCellAdapter.setBottomCellItems(bottomCellItems)
         leaveConfirmMenuTable.adapter = bottomCellAdapter
         leaveConfirmMenuTable.layoutManager = AccessibilityManipulatingLinearLayoutManager(context)
 
-        initializeLeaveConfirmMenuDrawer()
+        initializeLeaveConfirmMenuDrawer(onKeyListener)
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.shouldDisplayLeaveConfirmStateFlow.collect {
                 if (it) {
@@ -71,12 +73,13 @@ internal class LeaveConfirmView(
         }
     }
 
-    private fun initializeLeaveConfirmMenuDrawer() {
+    private fun initializeLeaveConfirmMenuDrawer(onKeyListener: DialogInterface.OnKeyListener) {
         leaveConfirmMenuDrawer = DrawerDialog(context, DrawerDialog.BehaviorType.BOTTOM)
         leaveConfirmMenuDrawer.setContentView(this)
         leaveConfirmMenuDrawer.setOnDismissListener {
             viewModel.cancel()
         }
+        leaveConfirmMenuDrawer.setOnKeyListener(onKeyListener)
     }
 
     private fun cancelLeaveConfirm() {

@@ -68,22 +68,24 @@
     <!--    Compliance Banner-->
     <string name="azure_communication_ui_calling_view_banner_recording_started"><b>Opptak er startet.</b> Ved å bli med, gir du
  samtykke til at dette møtet transkriberes.
- <u>Personvernerklæring</u></string>
+</string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped"><b>Opptak lagres.</b> Opptak har stoppet.
- <u>Mer informasjon</u></string>
+</string>
     <string name="azure_communication_ui_calling_view_banner_transcription_started"><b>Transkripsjon har startet.</b> Ved å bli med,
-        samtykker du til at dette møtet blir transkribert. <u>Personvernerklæring</u></string>
+        samtykker du til at dette møtet blir transkribert.</string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped"><b>Transkripsjon lagres.</b> Transkripsjon
- har stoppet. <u>Mer informasjon</u></string>
+ har stoppet.</string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_started"><b>Opptak og transkripsjon har
  startet.</b> Ved å bli med gir du samtykke til at dette møtet transkriberes
- . <u>Personvernerklæring</u></string>
+ .</string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped"><b>Opptak og transkripsjon
- lagres.</b> Opptak og transkripsjon er stoppet. <u>Mer informasjon</u></string>
+ lagres.</b> Opptak og transkripsjon er stoppet.</string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped_still_transcribing"><b>Opptak er stoppet.</b> Du
- transkriberer nå bare dette møtet. <u>Personvernerklæring</u></string>
+ transkriberer nå bare dette møtet.</string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped_still_recording"><b>Transkripsjon har stoppet.
- </b> Du tar nå bare opp dette møtet. <u>Personvernerklæring</u></string>
+ </b> Du tar nå bare opp dette møtet.</string>
+    <string name="azure_communication_ui_calling_view_link_learn_more_label">Mer informasjon</string>
+    <string name="azure_communication_ui_calling_view_link_privacy_policy_label">Personvernerklæring</string>
     <string name="azure_communication_ui_calling_view_link">Kobling</string>
 
     <!--    PopUp warning-->

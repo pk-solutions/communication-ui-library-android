@@ -8,6 +8,7 @@ import com.azure.android.communication.ui.calling.CallComposite
 import com.azure.android.communication.ui.calling.data.CallHistoryRepositoryImpl
 import com.azure.android.communication.ui.calling.error.ErrorHandler
 import com.azure.android.communication.ui.calling.getConfig
+import com.azure.android.communication.ui.calling.handlers.CustomKeysHandler
 import com.azure.android.communication.ui.calling.handlers.RemoteParticipantHandler
 import com.azure.android.communication.ui.calling.logger.DefaultLogger
 import com.azure.android.communication.ui.calling.logger.Logger
@@ -170,6 +171,10 @@ internal class DependencyInjectionContainerImpl(
         RemoteParticipantHandler(configuration, appStore, callingSDKWrapper)
     }
 
+    override val customKeysHandler by lazy {
+        CustomKeysHandler(localOptions, audioSessionManager, logger)
+    }
+
     override val callHistoryRepository by lazy {
         CallHistoryRepositoryImpl(applicationContext, logger)
     }
@@ -185,7 +190,6 @@ internal class DependencyInjectionContainerImpl(
             configuration.callConfig?.displayName,
             localOptions?.isCameraOn == true,
             localOptions?.isMicrophoneOn == true,
-            localOptions?.isConfirmExit == true,
         )
     }
 

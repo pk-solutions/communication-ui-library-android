@@ -42,11 +42,13 @@ public final class CallCompositeLocalOptions {
     private boolean microphoneOn = false;
     private boolean skipSetupScreen = false;
     private boolean lockRotation = false;
-    private boolean confirmExit = true;
+    private boolean skipExitPrompt = false;
     private boolean detachControlButtons = false;
     private boolean hideFloatingHeader = false;
     private boolean ignoreProximitySensor = false;
     private boolean noBannerLink = false;
+    private boolean enableParticipantMenu = false;
+    private boolean xlBottomDrawer = false;
     private Set<Integer> backKeys = null;
     private Set<Integer> confirmKeys = null;
     private Set<Integer> upKeys = null;
@@ -177,13 +179,13 @@ public final class CallCompositeLocalOptions {
         return this;
     }
 
-    public boolean isConfirmExit() {
-        return confirmExit;
+    public boolean isSkipExitPrompt() {
+        return skipExitPrompt;
     }
-    public CallCompositeLocalOptions setConfirmExit(
-            final boolean confirmExit
+    public CallCompositeLocalOptions setSkipExitPrompt(
+            final boolean skipExitPrompt
     ) {
-        this.confirmExit = confirmExit;
+        this.skipExitPrompt = skipExitPrompt;
         return this;
     }
 
@@ -224,6 +226,26 @@ public final class CallCompositeLocalOptions {
             final boolean noBannerLink
     ) {
         this.noBannerLink = noBannerLink;
+        return this;
+    }
+
+    public boolean isEnableParticipantMenu() {
+        return this.enableParticipantMenu;
+    }
+    public CallCompositeLocalOptions setEnableParticipantMenu(
+            final boolean enableParticipantMenu
+    ) {
+        this.enableParticipantMenu = enableParticipantMenu;
+        return this;
+    }
+
+    public boolean isXlBottomDrawer() {
+        return this.xlBottomDrawer;
+    }
+    public CallCompositeLocalOptions setXlBottomDrawer(
+            final boolean xlBottomDrawer
+    ) {
+        this.xlBottomDrawer = xlBottomDrawer;
         return this;
     }
 

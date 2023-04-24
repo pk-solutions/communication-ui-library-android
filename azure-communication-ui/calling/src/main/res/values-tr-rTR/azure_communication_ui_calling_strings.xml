@@ -68,22 +68,24 @@
     <!--    Compliance Banner-->
     <string name="azure_communication_ui_calling_view_banner_recording_started"><b>Kayıt başlatıldı.</b> Katılarak,
     bu toplantının dökümünün alınmasına izin veriyorsunuz.
-       <u>Gizlilik ilkesi</u></string>
+       </string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped"><b>Kayıt kaydediliyor.</b> Kayıt durduruldu.
-         <u>Daha fazla bilgi edinin</u></string>
+         </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_started"><b>Döküm başlatıldı.</b> Katılarak,
-    bu toplantının dökümünün alınmasına izin veriyorsunuz. <u>Gizlilik ilkesi</u></string>
+    bu toplantının dökümünün alınmasına izin veriyorsunuz. </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped"><b>Döküm kaydediliyor.</b> Döküm
-        durduruldu. <u>Daha fazla bilgi edinin</u></string>
+        durduruldu. </string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_started"><b>Kayıt ve döküm başlatıldı.</b> Katılarak,
     bu toplantının dökümünün alınmasına izin veriyorsunuz
-      . <u>Gizlilik ilkesi</u></string>
+      . </string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped"><b>Kayıt ve döküm
-        kaydediliyor.</b> Kayıt ve döküm durduruldu. <u>Daha fazla bilgi edinin</u></string>
+        kaydediliyor.</b> Kayıt ve döküm durduruldu. </string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped_still_transcribing"><b>Kayıt durduruldu.</b>
-    Şu anda yalnızca bu toplantının dökümünü alıyorsunuz. <u>Gizlilik ilkesi</u></string>
+    Şu anda yalnızca bu toplantının dökümünü alıyorsunuz. </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped_still_recording"><b>Döküm durduruldu.</b>
-    Şu anda yalnızca bu toplantıyı kaydediyorsunuz. <u>Gizlilik ilkesi</u></string>
+    Şu anda yalnızca bu toplantıyı kaydediyorsunuz. </string>
+    <string name="azure_communication_ui_calling_view_link_learn_more_label">Daha fazla bilgi edinin</string>
+    <string name="azure_communication_ui_calling_view_link_privacy_policy_label">Gizlilik ilkesi</string>
     <string name="azure_communication_ui_calling_view_link">Bağlantı</string>
 
     <!--    PopUp warning-->
