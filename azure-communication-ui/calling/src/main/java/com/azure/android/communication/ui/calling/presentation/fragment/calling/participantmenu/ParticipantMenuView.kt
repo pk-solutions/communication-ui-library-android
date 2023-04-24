@@ -82,15 +82,21 @@ internal class ParticipantMenuView(
     private fun createCameraToggleCellItem(isCameraOn: Boolean, isClickable: Boolean): BottomCellItem
         {
             val title = if (isCameraOn)
-                context.getString(R.string.azure_communication_ui_calling_setup_view_button_video_on)
-            else
                 context.getString(R.string.azure_communication_ui_calling_setup_view_button_video_off)
+            else
+                context.getString(R.string.azure_communication_ui_calling_setup_view_button_video_on)
+
+            val icon = ContextCompat.getDrawable(
+                context,
+                R.drawable.azure_communication_ui_calling_toggle_selector_camera_for_call
+            )
+            val iconStates = mutableListOf<Int>()
+            iconStates.add((if (isCameraOn) -1 else 1) * android.R.attr.state_selected)
+            iconStates.add((if (isClickable) 1 else -1) * android.R.attr.state_enabled)
+            icon?.state = iconStates.toIntArray()
 
             val item = BottomCellItem(
-                icon = ContextCompat.getDrawable(
-                    context,
-                    R.drawable.azure_communication_ui_calling_toggle_selector_camera_for_call
-                ),
+                icon = icon,
                 title = title,
                 contentDescription = null,
                 accessoryImage = null,
