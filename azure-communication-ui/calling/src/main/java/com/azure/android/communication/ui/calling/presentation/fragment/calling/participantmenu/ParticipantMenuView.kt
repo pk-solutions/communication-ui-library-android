@@ -37,7 +37,6 @@ internal class ParticipantMenuView(
     private lateinit var bottomCellAdapter: BottomCellAdapter
 
     init {
-        // TODO: need to rework this inflate to optionally fill the whole screen. see TODO in CustomKeysHandler.
         inflate(context, R.layout.azure_communication_ui_calling_listview, this)
         participantMenuTable = findViewById(R.id.bottom_drawer_table)
         this.setBackgroundResource(R.color.azure_communication_ui_calling_color_bottom_drawer_background)
