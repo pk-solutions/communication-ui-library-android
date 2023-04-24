@@ -10,6 +10,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.azure.android.communication.ui.R
+import com.azure.android.communication.ui.calling.presentation.fragment.calling.controlbar.ControlBarViewModel
+import com.azure.android.communication.ui.calling.redux.state.CameraOperationalStatus
+import com.azure.android.communication.ui.calling.redux.state.PermissionStatus
 import com.azure.android.communication.ui.calling.utilities.BottomCellAdapter
 import com.azure.android.communication.ui.calling.utilities.BottomCellItem
 import com.microsoft.fluentui.drawer.DrawerDialog
@@ -27,6 +30,7 @@ internal class ParticipantMenuView(
     private lateinit var bottomCellAdapter: BottomCellAdapter
 
     init {
+        // TODO: need to rework this inflate to optionally fill the whole screen. see TODO in CustomKeysHandler.
         inflate(context, R.layout.azure_communication_ui_calling_listview, this)
         participantMenuTable = findViewById(R.id.bottom_drawer_table)
         this.setBackgroundResource(R.color.azure_communication_ui_calling_color_bottom_drawer_background)
@@ -47,7 +51,7 @@ internal class ParticipantMenuView(
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getCameraStateFlow().collect {
-                bottomCellAdapter.enableBottomCellItem(context.getString(R.string.azure_communication_ui_calling_view_button_toggle_video_accessibility_label))
+                updateCamera(it)
             }
         }
     }
@@ -69,43 +73,71 @@ internal class ParticipantMenuView(
         participantMenuDrawer.setOnKeyListener(onKeyListener)
 
         bottomCellAdapter = BottomCellAdapter()
-        bottomCellAdapter.setBottomCellItems(bottomCellItems)
+        updateCamera(viewModel.getCameraStateFlow().value)
         participantMenuTable.adapter = bottomCellAdapter
         participantMenuTable.layoutManager = LinearLayoutManager(context)
     }
 
-    private val bottomCellItems: List<BottomCellItem>
-        get() {
-            val bottomCellItems = listOf(
-                BottomCellItem(
-                    icon = ContextCompat.getDrawable(
-                        context,
-                        R.drawable.azure_communication_ui_calling_toggle_selector_camera_for_call
-                    ),
-                    title = context.getString(R.string.azure_communication_ui_calling_view_button_toggle_video_accessibility_label),
-                    contentDescription = null,
-                    accessoryImage = null,
-                    accessoryColor = null,
-                    accessoryImageDescription = context.getString(R.string.azure_communication_ui_calling_view_button_toggle_video_accessibility_label),
-                    enabled = false,
-                    participantViewData = null,
-                    isOnHold = false,
-                ) {
+    // TODO: need to either split this into Local and non-local menus, or use a toggle
+    private fun createCameraToggleCellItem(isCameraOn: Boolean, isClickable: Boolean): BottomCellItem
+        {
+            val title = if (isCameraOn)
+                context.getString(R.string.azure_communication_ui_calling_setup_view_button_video_on)
+            else
+                context.getString(R.string.azure_communication_ui_calling_setup_view_button_video_off)
+
+            val item = BottomCellItem(
+                icon = ContextCompat.getDrawable(
+                    context,
+                    R.drawable.azure_communication_ui_calling_toggle_selector_camera_for_call
+                ),
+                title = title,
+                contentDescription = null,
+                accessoryImage = null,
+                accessoryColor = null,
+                accessoryImageDescription = title,
+                enabled = false,
+                participantViewData = null,
+                isOnHold = false,
+                onClickAction = null,
+            )
+
+            if (isClickable) {
+                item.onClickAction = {
                     participantMenuDrawer.dismiss()
-                    if (it.isEnabled) {
+                    if (isCameraOn) {
                         viewModel.turnCameraOff()
                     } else {
                         viewModel.turnCameraOn()
                     }
-                },
-            )
-            // TODO: need to rework the drawer to optionally fill the whole screen. see TODO in CustomKeysHandler.
-            // TODO: need to either split this into Local and non-local menus, or use a toggle
-            // TODO: need to add remove-from-meeting button when editing a remote user
-            // TODO: spotlight user? beta feature.
-            // TODO: consider reworking from "toggle video" to dynamic text like ControlBarView
+                }
+            }
 
-            return bottomCellItems
+            return item
         }
+
+    private fun updateCamera(cameraState: ControlBarViewModel.CameraModel) {
+        val shouldBeEnabled = (cameraState.cameraPermissionState != PermissionStatus.DENIED)
+
+        val newCameraToggle = when (cameraState.cameraState.operation) {
+            CameraOperationalStatus.ON -> {
+                createCameraToggleCellItem(true, shouldBeEnabled)
+            }
+            CameraOperationalStatus.OFF -> {
+                createCameraToggleCellItem(false, shouldBeEnabled)
+            }
+            else -> {
+                // disable button
+                createCameraToggleCellItem(isCameraOn = false, isClickable = false)
+            }
+        }
+
+        // TODO: for now we're just replacing the entire list of items. need to centralize when more buttons are added.
+        bottomCellAdapter.setBottomCellItems(listOf(
+            newCameraToggle,
+            // TODO: spotlight user? beta feature.
+            // TODO: need to add remove-from-meeting button when editing a remote user
+        ))
+    }
 
 }
