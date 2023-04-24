@@ -3,6 +3,7 @@ package com.azure.android.communication.ui.calling.presentation.fragment.calling
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.drawable.StateListDrawable
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
@@ -79,48 +80,48 @@ internal class ParticipantMenuView(
     }
 
     // TODO: need to either split this into Local and non-local menus, or use a toggle
-    private fun createCameraToggleCellItem(isCameraOn: Boolean, isClickable: Boolean): BottomCellItem
-        {
-            val title = if (isCameraOn)
-                context.getString(R.string.azure_communication_ui_calling_setup_view_button_video_off)
-            else
-                context.getString(R.string.azure_communication_ui_calling_setup_view_button_video_on)
+    private fun createCameraToggleCellItem(isCameraOn: Boolean, isClickable: Boolean): BottomCellItem {
+        val title = if (isCameraOn)
+            context.getString(R.string.azure_communication_ui_calling_setup_view_button_video_off)
+        else
+            context.getString(R.string.azure_communication_ui_calling_setup_view_button_video_on)
 
-            val icon = ContextCompat.getDrawable(
-                context,
-                R.drawable.azure_communication_ui_calling_toggle_selector_camera_for_call
-            )
-            val iconStates = mutableListOf<Int>()
-            iconStates.add((if (isCameraOn) -1 else 1) * android.R.attr.state_selected)
-            iconStates.add((if (isClickable) 1 else -1) * android.R.attr.state_enabled)
-            icon?.state = iconStates.toIntArray()
+        val icon = ContextCompat.getDrawable(
+            context,
+            R.drawable.azure_communication_ui_calling_toggle_selector_camera_for_call,
+        )
+        // TODO: this doesn't work
+        val iconStates = mutableListOf<Int>()
+        iconStates.add((if (isCameraOn) -1 else 1) * android.R.attr.state_selected)
+        iconStates.add((if (isClickable) 1 else -1) * android.R.attr.state_enabled)
+        icon?.state = iconStates.toIntArray()
 
-            val item = BottomCellItem(
-                icon = icon,
-                title = title,
-                contentDescription = null,
-                accessoryImage = null,
-                accessoryColor = null,
-                accessoryImageDescription = title,
-                enabled = false,
-                participantViewData = null,
-                isOnHold = false,
-                onClickAction = null,
-            )
+        val item = BottomCellItem(
+            icon = icon,
+            title = title,
+            contentDescription = null,
+            accessoryImage = null,
+            accessoryColor = null,
+            accessoryImageDescription = title,
+            enabled = false,
+            participantViewData = null,
+            isOnHold = false,
+            onClickAction = null,
+        )
 
-            if (isClickable) {
-                item.onClickAction = {
-                    participantMenuDrawer.dismiss()
-                    if (isCameraOn) {
-                        viewModel.turnCameraOff()
-                    } else {
-                        viewModel.turnCameraOn()
-                    }
+        if (isClickable) {
+            item.onClickAction = {
+                participantMenuDrawer.dismiss()
+                if (isCameraOn) {
+                    viewModel.turnCameraOff()
+                } else {
+                    viewModel.turnCameraOn()
                 }
             }
-
-            return item
         }
+
+        return item
+    }
 
     private fun updateCamera(cameraState: ControlBarViewModel.CameraModel) {
         val shouldBeEnabled = (cameraState.cameraPermissionState != PermissionStatus.DENIED)
