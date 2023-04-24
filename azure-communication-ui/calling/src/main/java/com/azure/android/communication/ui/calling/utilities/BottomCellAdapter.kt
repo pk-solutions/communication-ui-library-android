@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.azure.android.communication.ui.R
 
-internal class BottomCellAdapter : RecyclerView.Adapter<BottomCellViewHolder>() {
+internal class BottomCellAdapter(
+    private val isXlTiles: Boolean = false,
+) : RecyclerView.Adapter<BottomCellViewHolder>() {
     private var bottomCellItems: List<BottomCellItem> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BottomCellViewHolder {
@@ -17,11 +19,17 @@ internal class BottomCellAdapter : RecyclerView.Adapter<BottomCellViewHolder>() 
         val inflater = LayoutInflater.from(parent.context)
         return when (bottomCellType) {
             BottomCellItemType.BottomMenuAction -> {
-                val view = inflater.inflate(R.layout.azure_communication_ui_calling_bottom_drawer_cell, parent, false)
-                if (isAndroidTV(parent.context)) {
+                val view = if (isXlTiles)
+                    inflater.inflate(R.layout.azure_communication_ui_calling_bottom_drawer_xl_tile, parent, false)
+                else
+                    inflater.inflate(R.layout.azure_communication_ui_calling_bottom_drawer_cell, parent, false)
+                if (isAndroidTV(parent.context) || isXlTiles) {
                     view.setOnFocusChangeListener { v, hasFocus ->
-                        if (hasFocus) v.setBackgroundColor(v.context.resources.getColor(R.color.azure_communication_ui_calling_color_focus_tint))
-                        else v.setBackgroundColor(Color.TRANSPARENT)
+                        if (hasFocus) {
+                            v.setBackgroundColor(v.context.resources.getColor(if (isXlTiles) R.color.azure_communication_ui_calling_color_primary else R.color.azure_communication_ui_calling_color_focus_tint))
+                        } else {
+                            v.setBackgroundColor(if (isXlTiles) v.context.resources.getColor(R.color.azure_communication_ui_calling_color_surface) else Color.TRANSPARENT)
+                        }
                     }
                 }
                 BottomCellActionViewHolder(view)

@@ -151,7 +151,7 @@ internal class ParticipantMenuView(
 
         // TODO: for now we're just replacing the entire list of items. need to centralize when more buttons are added.
         // rebind the list of items
-        bottomCellAdapter = BottomCellAdapter()
+        bottomCellAdapter = BottomCellAdapter(viewModel.getXlBottomDrawerStateFlow().value)
         bottomCellAdapter.setBottomCellItems(listOf(
             newCameraToggle,
             // TODO: spotlight user? beta feature.
