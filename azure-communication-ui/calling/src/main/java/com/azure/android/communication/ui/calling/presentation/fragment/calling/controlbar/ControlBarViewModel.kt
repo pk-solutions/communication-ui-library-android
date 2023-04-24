@@ -119,7 +119,8 @@ internal class ControlBarViewModel(private val dispatch: (Action) -> Unit) {
     }
 
     private fun shouldDisplayMicButton(callingStatus: CallingStatus): Boolean {
-        return callingStatus != CallingStatus.RINGING || !isDetachControlButtonsStateFlow.value
+        return (callingStatus != CallingStatus.RINGING && callingStatus != CallingStatus.CONNECTING && callingStatus != CallingStatus.NONE)
+                || !isDetachControlButtonsStateFlow.value
     }
 
     private fun dispatchAction(action: Action) {
