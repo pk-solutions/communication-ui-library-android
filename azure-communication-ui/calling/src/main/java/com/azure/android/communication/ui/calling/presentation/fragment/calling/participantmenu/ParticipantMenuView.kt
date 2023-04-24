@@ -3,11 +3,12 @@ package com.azure.android.communication.ui.calling.presentation.fragment.calling
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
-import android.graphics.drawable.StateListDrawable
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.azure.android.communication.ui.R
@@ -73,10 +74,19 @@ internal class ParticipantMenuView(
         }
         participantMenuDrawer.setOnKeyListener(onKeyListener)
 
-        bottomCellAdapter = BottomCellAdapter()
+        //bottomCellAdapter = BottomCellAdapter() // TODO: updateCamera already does this. need to refactor into less confusing setup.
         updateCamera(viewModel.getCameraStateFlow().value)
-        participantMenuTable.adapter = bottomCellAdapter
-        participantMenuTable.layoutManager = LinearLayoutManager(context)
+        //participantMenuTable.adapter = bottomCellAdapter
+
+        // TODO: should collect() this instead of one-time set.
+        if (viewModel.getXlBottomDrawerStateFlow().value) {
+            participantMenuTable.layoutManager = GridLayoutManager(context, 2)
+            participantMenuTable.updateLayoutParams {
+                this.height = LayoutParams.MATCH_PARENT
+            }
+        } else {
+            participantMenuTable.layoutManager = LinearLayoutManager(context)
+        }
     }
 
     // TODO: need to either split this into Local and non-local menus, or use a toggle

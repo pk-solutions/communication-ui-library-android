@@ -105,6 +105,7 @@ internal class CallingViewModel(
         participantMenuViewModel.init(
             state.permissionState,
             state.localParticipantState.cameraState,
+            localOptions.isXlBottomDrawer,
         )
 
         waitingLobbyOverlayViewModel.init(state.callState.callingStatus)
