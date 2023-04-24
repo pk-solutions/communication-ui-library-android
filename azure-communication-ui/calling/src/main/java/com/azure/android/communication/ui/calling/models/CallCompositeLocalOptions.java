@@ -48,6 +48,7 @@ public final class CallCompositeLocalOptions {
     private boolean ignoreProximitySensor = false;
     private boolean noBannerLink = false;
     private boolean enableParticipantMenu = false;
+    private boolean xlBottomDrawer = false;
     private Set<Integer> backKeys = null;
     private Set<Integer> confirmKeys = null;
     private Set<Integer> upKeys = null;
@@ -235,6 +236,16 @@ public final class CallCompositeLocalOptions {
             final boolean enableParticipantMenu
     ) {
         this.enableParticipantMenu = enableParticipantMenu;
+        return this;
+    }
+
+    public boolean isXlBottomDrawer() {
+        return this.xlBottomDrawer;
+    }
+    public CallCompositeLocalOptions setXlBottomDrawer(
+            final boolean xlBottomDrawer
+    ) {
+        this.xlBottomDrawer = xlBottomDrawer;
         return this;
     }
 
