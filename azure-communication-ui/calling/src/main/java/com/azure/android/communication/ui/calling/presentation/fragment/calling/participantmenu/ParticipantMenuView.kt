@@ -17,6 +17,11 @@ import com.azure.android.communication.ui.calling.redux.state.CameraOperationalS
 import com.azure.android.communication.ui.calling.redux.state.PermissionStatus
 import com.azure.android.communication.ui.calling.utilities.BottomCellAdapter
 import com.azure.android.communication.ui.calling.utilities.BottomCellItem
+import com.google.android.flexbox.AlignItems
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import com.microsoft.fluentui.drawer.DrawerDialog
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -80,7 +85,12 @@ internal class ParticipantMenuView(
 
         // TODO: should collect() this instead of one-time set.
         if (viewModel.getXlBottomDrawerStateFlow().value) {
-            participantMenuTable.layoutManager = GridLayoutManager(context, 2)
+            participantMenuTable.layoutManager = FlexboxLayoutManager(context).apply {
+                flexDirection = FlexDirection.ROW
+                flexWrap = FlexWrap.WRAP
+                justifyContent = JustifyContent.SPACE_EVENLY
+                alignItems = AlignItems.CENTER
+            }
             participantMenuTable.updateLayoutParams {
                 this.height = LayoutParams.MATCH_PARENT
             }

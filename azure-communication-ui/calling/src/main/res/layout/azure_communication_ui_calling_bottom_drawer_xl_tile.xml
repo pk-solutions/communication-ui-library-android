@@ -5,52 +5,60 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="70dp"
-    android:layout_height="70dp"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:background="@drawable/azure_communication_ui_calling_corner_radius_rectangle_8dp_primary_background"
     android:focusable="true"
-    android:background="@drawable/azure_communication_ui_calling_corner_radius_rectangle_5dp_primary_background"
     app:layout_constraintDimensionRatio="1:1"
     >
 
     <ImageView
         android:id="@+id/azure_communication_ui_cell_icon"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="14dp"
-        tools:src="@drawable/azure_communication_ui_calling_ic_fluent_video_off_24_filled_composite_button_filled"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.4"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/azure_communication_ui_cell_xl_tile_guideline"
+        tools:src="@drawable/azure_communication_ui_calling_ic_fluent_video_off_24_filled_composite_button_filled"
         />
+
     <com.microsoft.fluentui.persona.AvatarView
         android:id="@+id/azure_communication_ui_participant_list_avatar"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="14dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:visibility="visible"
-        tools:visibility="gone"
-        app:fluentui_avatarSize="small"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:fluentui_avatarSize="large"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/azure_communication_ui_cell_xl_tile_guideline"
+        tools:visibility="gone"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/azure_communication_ui_cell_xl_tile_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7"
         />
 
     <TextView
         android:id="@+id/azure_communication_ui_cell_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="5dp"
         android:ellipsize="end"
-        android:lines="2"
         android:gravity="center"
-        tools:text="Turn off video"
+        android:lines="2"
         android:textColor="@color/azure_communication_ui_calling_color_on_background"
-        android:textSize="11sp"
+        android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        tools:text="Spotlight for everyone"
         />
 
     <TextView
@@ -58,15 +66,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
-        android:visibility="gone"
-        tools:visibility="visible"
         android:singleLine="true"
         android:text="@string/azure_communication_ui_calling_remote_participant_on_hold"
         android:textColor="@color/azure_communication_ui_calling_color_participant_list_mute_mic"
         android:textSize="11sp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible"
         />
 
     <ImageView
@@ -77,10 +85,10 @@
         android:contentDescription="@string/azure_communication_ui_calling_setup_view_audio_device_selected_accessibility_label"
         android:src="@drawable/ms_ic_checkmark_24_filled"
         android:visibility="gone"
-        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="@color/azure_communication_ui_calling_toggle_selector"
+        tools:visibility="visible"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
