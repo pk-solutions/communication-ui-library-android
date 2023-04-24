@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.DialogInterface
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginTop
 import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -91,8 +93,9 @@ internal class ParticipantMenuView(
                 justifyContent = JustifyContent.SPACE_EVENLY
                 alignItems = AlignItems.CENTER
             }
+            participantMenuTable.updatePadding(top = 30)
             participantMenuTable.updateLayoutParams {
-                this.height = LayoutParams.MATCH_PARENT
+                this.height = LayoutParams.MATCH_PARENT // Fill screen
             }
         } else {
             participantMenuTable.layoutManager = LinearLayoutManager(context)
