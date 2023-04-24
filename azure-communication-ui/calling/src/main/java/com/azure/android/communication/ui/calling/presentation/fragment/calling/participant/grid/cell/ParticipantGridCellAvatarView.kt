@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.lifecycleScope
 import com.azure.android.communication.ui.R
 import com.azure.android.communication.ui.calling.models.CallCompositeParticipantViewData
 import com.azure.android.communication.ui.calling.presentation.fragment.calling.participant.grid.ParticipantGridCellViewModel
@@ -27,6 +28,7 @@ internal class ParticipantGridCellAvatarView(
     private val displayNameAudioTextView: TextView,
     private val micIndicatorAudioImageView: ImageView,
     private val getParticipantViewDataCallback: (participantID: String) -> CallCompositeParticipantViewData?,
+    private val openParticipantMenuCallback: (participantID: String) -> Unit,
     private val participantViewModel: ParticipantGridCellViewModel,
     private val onHoldTextView: TextView,
     private val context: Context,
@@ -74,6 +76,16 @@ internal class ParticipantGridCellAvatarView(
                     participantContainer.visibility = INVISIBLE
                 } else {
                     participantContainer.visibility = VISIBLE
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            participantViewModel.getEnableParticipantMenuStateFlow().collect {
+                participantContainer.isLongClickable = it
+                participantContainer.setOnLongClickListener {
+                    openParticipantMenuCallback(participantViewModel.getParticipantUserIdentifier())
+                    true
                 }
             }
         }

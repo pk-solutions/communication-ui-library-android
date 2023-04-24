@@ -49,6 +49,7 @@ internal class ParticipantGridView : GridLayout {
     private lateinit var accessibilityManager: AccessibilityManager
     private lateinit var displayedRemoteParticipantsView: MutableList<ParticipantGridCellView>
     private lateinit var getParticipantViewDataCallback: (participantID: String) -> CallCompositeParticipantViewData?
+    private lateinit var openParticipantMenuCallback: (participantID: String) -> Unit
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -102,6 +103,10 @@ internal class ParticipantGridView : GridLayout {
 
         this.getParticipantViewDataCallback = { participantID: String ->
             avatarViewManager.getRemoteParticipantViewData(participantID)
+        }
+
+        this.openParticipantMenuCallback = { participantID: String ->
+            this.participantGridViewModel.openParticipantMenu(participantID)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -465,6 +470,7 @@ internal class ParticipantGridView : GridLayout {
             showFloatingHeaderCallBack,
             getVideoStreamCallback,
             getScreenShareVideoStreamRendererCallback,
-            getParticipantViewDataCallback
+            getParticipantViewDataCallback,
+            openParticipantMenuCallback,
         )
 }

@@ -81,7 +81,7 @@ internal class CallingViewModel(
             state.localParticipantState.cameraState.camerasCount,
             localOptions.isDetachControlButtons,
             localOptions.isEnableParticipantMenu,
-            participantMenuViewModel::display,
+            participantMenuViewModel::displayLocal,
         )
 
         floatingHeaderViewModel.init(
@@ -119,7 +119,11 @@ internal class CallingViewModel(
         )
         holdOverlayViewModel.init(state.callState.callingStatus, state.audioSessionState.audioFocusStatus)
 
-        participantGridViewModel.init(state.callState.callingStatus)
+        participantGridViewModel.init(
+            state.callState.callingStatus,
+            localOptions.isEnableParticipantMenu,
+            participantMenuViewModel::displayRemote,
+        )
         super.init(coroutineScope)
     }
 

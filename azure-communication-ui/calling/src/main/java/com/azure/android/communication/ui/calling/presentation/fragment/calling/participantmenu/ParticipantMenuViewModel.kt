@@ -40,7 +40,19 @@ internal class ParticipantMenuViewModel(private val dispatch: (Action) -> Unit) 
     fun getCameraStateFlow(): StateFlow<ControlBarViewModel.CameraModel> = cameraStateFlow
     fun getXlBottomDrawerStateFlow(): StateFlow<Boolean> = xlBottomDrawerStateFlow
 
-    fun display() {
+    /**
+     * Displays the menu for the local participant.
+     */
+    fun displayLocal() {
+        displayStateFlow.value = true
+    }
+
+    /**
+     * Displays the menu for a remote participant
+     *
+     * @param id The remote participant's id, see [com.azure.android.communication.ui.calling.service.ParticipantIdentifierHelper]
+     */
+    fun displayRemote(id: String) {
         displayStateFlow.value = true
     }
 

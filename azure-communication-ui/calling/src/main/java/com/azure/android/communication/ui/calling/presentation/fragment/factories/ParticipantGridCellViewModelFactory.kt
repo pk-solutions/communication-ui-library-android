@@ -9,6 +9,7 @@ import com.azure.android.communication.ui.calling.presentation.fragment.calling.
 internal class ParticipantGridCellViewModelFactory {
     fun ParticipantGridCellViewModel(
         participantInfoModel: ParticipantInfoModel,
+        enableParticipantMenu: Boolean,
     ): ParticipantGridCellViewModel =
         ParticipantGridCellViewModel(
             participantInfoModel.userIdentifier,
@@ -19,5 +20,6 @@ internal class ParticipantGridCellViewModelFactory {
             participantInfoModel.isSpeaking,
             participantInfoModel.modifiedTimestamp,
             participantInfoModel.participantStatus,
+            enableParticipantMenu,
         )
 }

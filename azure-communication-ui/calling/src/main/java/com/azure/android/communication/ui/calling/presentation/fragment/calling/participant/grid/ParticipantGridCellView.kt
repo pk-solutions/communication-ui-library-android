@@ -28,6 +28,7 @@ internal class ParticipantGridCellView(
     private val getVideoStreamCallback: (String, String) -> View?,
     private val getScreenShareVideoStreamRendererCallback: () -> VideoStreamRenderer?,
     private val getParticipantViewDataCallback: (participantID: String) -> CallCompositeParticipantViewData?,
+    private val openParticipantMenuCallback: (participantID: String) -> Unit,
 ) : RelativeLayout(context) {
 
     private lateinit var avatarView: ParticipantGridCellAvatarView
@@ -77,6 +78,7 @@ internal class ParticipantGridCellView(
             displayNameAudioTextView,
             micIndicatorAudioImageView,
             getParticipantViewDataCallback,
+            openParticipantMenuCallback,
             participantViewModel,
             onHoldTextView,
             context,
@@ -113,6 +115,7 @@ internal class ParticipantGridCellView(
             showFloatingHeaderCallBack,
             getScreenShareVideoStreamRendererCallback,
             getParticipantViewDataCallback,
+            openParticipantMenuCallback,
         )
     }
 }
