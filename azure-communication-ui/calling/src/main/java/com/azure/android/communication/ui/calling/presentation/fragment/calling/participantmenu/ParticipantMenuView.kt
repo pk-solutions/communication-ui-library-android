@@ -5,12 +5,10 @@ import android.content.Context
 import android.content.DialogInterface
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginTop
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.azure.android.communication.ui.R
@@ -50,9 +48,11 @@ internal class ParticipantMenuView(
         onKeyListener: DialogInterface.OnKeyListener,
     ) {
         initializeDrawer(onKeyListener)
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getDisplayStateFlow().collect {
-                if (it) {
+                if (it.show) {
+                    updateItems(it.remoteParticipantId, viewModel.getCameraStateFlow().value)
                     participantMenuDrawer.show()
                 }
             }
@@ -60,7 +60,30 @@ internal class ParticipantMenuView(
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getCameraStateFlow().collect {
-                updateCamera(it)
+                updateItems(viewModel.getDisplayStateFlow().value.remoteParticipantId, it)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.getXlBottomDrawerStateFlow().collect {
+                if (it) {
+                    participantMenuTable.layoutManager = FlexboxLayoutManager(context).apply {
+                        flexDirection = FlexDirection.ROW
+                        flexWrap = FlexWrap.WRAP
+                        justifyContent = JustifyContent.SPACE_EVENLY
+                        alignItems = AlignItems.CENTER
+                    }
+                    participantMenuTable.updatePadding(top = 30)
+                    participantMenuTable.updateLayoutParams {
+                        this.height = LayoutParams.MATCH_PARENT // Fill screen
+                    }
+                } else {
+                    participantMenuTable.layoutManager = LinearLayoutManager(context)
+                    participantMenuTable.updatePadding(top = 0)
+                    participantMenuTable.updateLayoutParams {
+                        this.height = LayoutParams.WRAP_CONTENT
+                    }
+                }
             }
         }
     }
@@ -81,28 +104,44 @@ internal class ParticipantMenuView(
         }
         participantMenuDrawer.setOnKeyListener(onKeyListener)
 
-        //bottomCellAdapter = BottomCellAdapter() // TODO: updateCamera already does this. need to refactor into less confusing setup.
-        updateCamera(viewModel.getCameraStateFlow().value)
-        //participantMenuTable.adapter = bottomCellAdapter
-
-        // TODO: should collect() this instead of one-time set.
-        if (viewModel.getXlBottomDrawerStateFlow().value) {
-            participantMenuTable.layoutManager = FlexboxLayoutManager(context).apply {
-                flexDirection = FlexDirection.ROW
-                flexWrap = FlexWrap.WRAP
-                justifyContent = JustifyContent.SPACE_EVENLY
-                alignItems = AlignItems.CENTER
-            }
-            participantMenuTable.updatePadding(top = 30)
-            participantMenuTable.updateLayoutParams {
-                this.height = LayoutParams.MATCH_PARENT // Fill screen
-            }
-        } else {
-            participantMenuTable.layoutManager = LinearLayoutManager(context)
-        }
+        bottomCellAdapter = BottomCellAdapter()
+        bottomCellAdapter.setBottomCellItems(emptyList())
+        participantMenuTable.adapter = bottomCellAdapter
     }
 
-    // TODO: need to either split this into Local and non-local menus, or use a toggle
+    private fun updateItems(remoteParticipantId: String?, cameraState: ControlBarViewModel.CameraModel) {
+        bottomCellAdapter = BottomCellAdapter(viewModel.getXlBottomDrawerStateFlow().value)
+
+        val items = mutableListOf<BottomCellItem>()
+        if (remoteParticipantId == null)
+            items.add(getCameraToggle(cameraState))
+
+        // TODO: spotlight user? seems to be a beta/JS-only feature right now.
+        // TODO: remove-from-meeting button
+
+        bottomCellAdapter.setBottomCellItems(items)
+        participantMenuTable.adapter = bottomCellAdapter
+    }
+
+    private fun getCameraToggle(cameraState: ControlBarViewModel.CameraModel): BottomCellItem {
+        val shouldBeEnabled = (cameraState.cameraPermissionState != PermissionStatus.DENIED)
+
+        val newCameraToggle = when (cameraState.cameraState.operation) {
+            CameraOperationalStatus.ON -> {
+                createCameraToggleCellItem(true, shouldBeEnabled)
+            }
+            CameraOperationalStatus.OFF -> {
+                createCameraToggleCellItem(false, shouldBeEnabled)
+            }
+            else -> {
+                // disable button
+                createCameraToggleCellItem(isCameraOn = false, isClickable = false)
+            }
+        }
+
+        return newCameraToggle
+    }
+
     private fun createCameraToggleCellItem(isCameraOn: Boolean, isClickable: Boolean): BottomCellItem {
         val title = if (isCameraOn)
             context.getString(R.string.azure_communication_ui_calling_setup_view_button_video_off)
@@ -144,33 +183,6 @@ internal class ParticipantMenuView(
         }
 
         return item
-    }
-
-    private fun updateCamera(cameraState: ControlBarViewModel.CameraModel) {
-        val shouldBeEnabled = (cameraState.cameraPermissionState != PermissionStatus.DENIED)
-
-        val newCameraToggle = when (cameraState.cameraState.operation) {
-            CameraOperationalStatus.ON -> {
-                createCameraToggleCellItem(true, shouldBeEnabled)
-            }
-            CameraOperationalStatus.OFF -> {
-                createCameraToggleCellItem(false, shouldBeEnabled)
-            }
-            else -> {
-                // disable button
-                createCameraToggleCellItem(isCameraOn = false, isClickable = false)
-            }
-        }
-
-        // TODO: for now we're just replacing the entire list of items. need to centralize when more buttons are added.
-        // rebind the list of items
-        bottomCellAdapter = BottomCellAdapter(viewModel.getXlBottomDrawerStateFlow().value)
-        bottomCellAdapter.setBottomCellItems(listOf(
-            newCameraToggle,
-            // TODO: spotlight user? beta feature.
-            // TODO: need to add remove-from-meeting button when editing a remote user
-        ))
-        participantMenuTable.adapter = bottomCellAdapter
     }
 
 }

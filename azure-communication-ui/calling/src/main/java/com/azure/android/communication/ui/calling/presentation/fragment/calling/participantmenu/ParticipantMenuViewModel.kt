@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 internal class ParticipantMenuViewModel(private val dispatch: (Action) -> Unit) {
 
-    private val displayStateFlow = MutableStateFlow(false)
+    private val displayStateFlow = MutableStateFlow(DisplayParticipantMenuModel(false, null))
     private lateinit var cameraStateFlow: MutableStateFlow<ControlBarViewModel.CameraModel>
     private lateinit var xlBottomDrawerStateFlow: MutableStateFlow<Boolean>
 
@@ -36,7 +36,7 @@ internal class ParticipantMenuViewModel(private val dispatch: (Action) -> Unit) 
         cameraStateFlow.value = ControlBarViewModel.CameraModel(permissionState.cameraPermissionState, cameraState)
     }
 
-    fun getDisplayStateFlow(): StateFlow<Boolean> = displayStateFlow
+    fun getDisplayStateFlow(): StateFlow<DisplayParticipantMenuModel> = displayStateFlow
     fun getCameraStateFlow(): StateFlow<ControlBarViewModel.CameraModel> = cameraStateFlow
     fun getXlBottomDrawerStateFlow(): StateFlow<Boolean> = xlBottomDrawerStateFlow
 
@@ -44,7 +44,7 @@ internal class ParticipantMenuViewModel(private val dispatch: (Action) -> Unit) 
      * Displays the menu for the local participant.
      */
     fun displayLocal() {
-        displayStateFlow.value = true
+        displayStateFlow.value = DisplayParticipantMenuModel(true, null)
     }
 
     /**
@@ -53,11 +53,11 @@ internal class ParticipantMenuViewModel(private val dispatch: (Action) -> Unit) 
      * @param id The remote participant's id, see [com.azure.android.communication.ui.calling.service.ParticipantIdentifierHelper]
      */
     fun displayRemote(id: String) {
-        displayStateFlow.value = true
+        displayStateFlow.value = DisplayParticipantMenuModel(true, id)
     }
 
     fun close() {
-        displayStateFlow.value = false
+        displayStateFlow.value = DisplayParticipantMenuModel(false, null)
     }
 
     fun turnCameraOn() {
@@ -71,4 +71,9 @@ internal class ParticipantMenuViewModel(private val dispatch: (Action) -> Unit) 
     private fun dispatchAction(action: Action) {
         dispatch(action)
     }
+
+    internal data class DisplayParticipantMenuModel(
+        val show: Boolean,
+        val remoteParticipantId: String?,
+    )
 }
