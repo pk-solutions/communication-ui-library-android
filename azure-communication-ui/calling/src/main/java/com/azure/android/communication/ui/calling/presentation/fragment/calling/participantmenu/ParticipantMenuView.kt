@@ -35,6 +35,7 @@ internal class ParticipantMenuView(
     private var participantMenuTable: RecyclerView
     private lateinit var participantMenuDrawer: DrawerDialog
     private lateinit var bottomCellAdapter: BottomCellAdapter
+    private var isXlBottomDrawer = false
 
     init {
         inflate(context, R.layout.azure_communication_ui_calling_listview, this)
@@ -45,8 +46,9 @@ internal class ParticipantMenuView(
     fun start(
         viewLifecycleOwner: LifecycleOwner,
         onKeyListener: DialogInterface.OnKeyListener,
+        isXlBottomDrawer: Boolean,
     ) {
-        initializeDrawer(onKeyListener)
+        initializeDrawer(onKeyListener, isXlBottomDrawer)
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getDisplayStateFlow().collect {
@@ -62,29 +64,6 @@ internal class ParticipantMenuView(
                 updateItems(viewModel.getDisplayStateFlow().value.remoteParticipantId, it)
             }
         }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getXlBottomDrawerStateFlow().collect {
-                if (it) {
-                    participantMenuTable.layoutManager = FlexboxLayoutManager(context).apply {
-                        flexDirection = FlexDirection.ROW
-                        flexWrap = FlexWrap.WRAP
-                        justifyContent = JustifyContent.SPACE_EVENLY
-                        alignItems = AlignItems.CENTER
-                    }
-                    participantMenuTable.updatePadding(top = 30)
-                    participantMenuTable.updateLayoutParams {
-                        this.height = LayoutParams.MATCH_PARENT // Fill screen
-                    }
-                } else {
-                    participantMenuTable.layoutManager = LinearLayoutManager(context)
-                    participantMenuTable.updatePadding(top = 0)
-                    participantMenuTable.updateLayoutParams {
-                        this.height = LayoutParams.WRAP_CONTENT
-                    }
-                }
-            }
-        }
     }
 
     fun stop() {
@@ -95,21 +74,41 @@ internal class ParticipantMenuView(
         this.removeAllViews()
     }
 
-    private fun initializeDrawer(onKeyListener: DialogInterface.OnKeyListener) {
-        participantMenuDrawer = DrawerDialog(context, DrawerDialog.BehaviorType.BOTTOM)
+    private fun initializeDrawer(
+        onKeyListener: DialogInterface.OnKeyListener,
+        isXlBottomDrawer: Boolean,
+    ) {
+        this.isXlBottomDrawer = isXlBottomDrawer
+
+        val dimValue = if (isXlBottomDrawer) 0f else 0.5f
+        val titleBehavior = if (isXlBottomDrawer) DrawerDialog.TitleBehavior.BELOW_TITLE else DrawerDialog.TitleBehavior.DEFAULT
+
+        participantMenuDrawer = DrawerDialog(context, DrawerDialog.BehaviorType.BOTTOM, dimValue = dimValue, titleBehavior = titleBehavior)
         participantMenuDrawer.setContentView(this)
         participantMenuDrawer.setOnDismissListener {
             viewModel.close()
         }
         participantMenuDrawer.setOnKeyListener(onKeyListener)
 
-        bottomCellAdapter = BottomCellAdapter()
+        bottomCellAdapter = BottomCellAdapter(isXlBottomDrawer)
         bottomCellAdapter.setBottomCellItems(emptyList())
         participantMenuTable.adapter = bottomCellAdapter
+
+        if (isXlBottomDrawer) {
+            participantMenuTable.layoutManager = FlexboxLayoutManager(context).apply {
+                flexDirection = FlexDirection.ROW
+                flexWrap = FlexWrap.WRAP
+                justifyContent = JustifyContent.SPACE_EVENLY
+                alignItems = AlignItems.CENTER
+            }
+            participantMenuTable.updatePadding(top = 30)
+        } else {
+            participantMenuTable.layoutManager = LinearLayoutManager(context)
+        }
     }
 
     private fun updateItems(remoteParticipantId: String?, cameraState: ControlBarViewModel.CameraModel) {
-        bottomCellAdapter = BottomCellAdapter(viewModel.getXlBottomDrawerStateFlow().value)
+        bottomCellAdapter = BottomCellAdapter(isXlBottomDrawer)
 
         val items = mutableListOf<BottomCellItem>()
         if (remoteParticipantId == null)

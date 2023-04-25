@@ -198,6 +198,7 @@ internal class CallingFragment :
         participantMenuView.start(
             viewLifecycleOwner,
             holder.container.customKeysHandler::onDialogKey,
+            localOptions?.isXlBottomDrawer == true,
         )
     }
 
