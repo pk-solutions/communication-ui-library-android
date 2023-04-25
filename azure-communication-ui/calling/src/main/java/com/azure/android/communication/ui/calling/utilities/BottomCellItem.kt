@@ -13,15 +13,54 @@ internal enum class BottomCellItemType {
 }
 
 internal data class BottomCellItem(
-    var icon: Drawable?, // The always-present icon for the item.
+    /**
+     * The always-present icon for the item.
+     */
+    var icon: Drawable?,
+    /**
+     * The display title. Should be unique.
+     */
     var title: String?,
+    /**
+     * The accessibility description for this item.
+     */
     var contentDescription: String?,
-    var accessoryImage: Drawable?, // The image shown if enabled is true.
+
+    /**
+     * An image shown if [accessoryVisible] is true.
+     */
+    var accessoryImage: Drawable?,
+    /**
+     * The accessory image's color.
+     */
     var accessoryColor: Int?,
+    /**
+     * The accessibility description for the accessory image.
+     */
     var accessoryImageDescription: String?,
-    var enabled: Boolean?, // NOTE: this only determines if the accessory image is VISIBLE and NOT if the item is clickable. e.g. for a list of audio devices, this shows the checkmark for the selected device.
-    var participantViewData: CallCompositeParticipantViewData?, // If icon is null, then the avatar bitmap is used instead.
-    var isOnHold: Boolean, // If true, "on hold" is displayed for this item (e.g. in a participant list, if this particular user is on hold).
+    /**
+     * If true, then the accessibility image will be shown.
+     * e.g. a checkbox in a list of audio devices.
+     */
+    var accessoryVisible: Boolean?,
+
+    /**
+     * If [icon] is null, then the avatar bitmap of this property is displayed instead.
+     */
+    var participantViewData: CallCompositeParticipantViewData?,
+    /**
+     * If true, "On Hold" is displayed for this item.
+     * e.g. in a participant list, if this particular user is on hold.
+     */
+    var isOnHold: Boolean,
+
+    /**
+     * The item type.
+     */
     val itemType: BottomCellItemType = BottomCellItemType.BottomMenuAction,
-    var onClickAction: ((View) -> Unit)?, // The behavior when clicked. If null, then the item is NOT clickable.
+    /**
+     * The behavior when clicked.
+     * If null, then then this item is NOT clickable.
+     */
+    var onClickAction: ((View) -> Unit)?,
 )

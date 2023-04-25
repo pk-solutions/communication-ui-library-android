@@ -83,7 +83,7 @@ internal class MoreCallOptionsListView(
                     accessoryImage = null,
                     accessoryColor = null,
                     accessoryImageDescription = context.getString(R.string.azure_communication_ui_calling_view_share_diagnostics),
-                    enabled = false,
+                    accessoryVisible = false,
                     participantViewData = null,
                     isOnHold = false,
                 ) {

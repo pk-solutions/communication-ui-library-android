@@ -54,7 +54,7 @@ internal class BottomCellAdapter(
 
     fun enableBottomCellItem(bottomCellItemName: String) {
         for (bottomCellItem in bottomCellItems) {
-            bottomCellItem.enabled = bottomCellItem.title == bottomCellItemName
+            bottomCellItem.accessoryVisible = bottomCellItem.title == bottomCellItemName
         }
         super.notifyDataSetChanged()
     }

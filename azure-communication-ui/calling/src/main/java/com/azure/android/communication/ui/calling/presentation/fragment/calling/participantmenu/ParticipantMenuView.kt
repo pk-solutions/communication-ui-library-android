@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -163,7 +162,7 @@ internal class ParticipantMenuView(
             accessoryImage = null,
             accessoryColor = null,
             accessoryImageDescription = title,
-            enabled = false,
+            accessoryVisible = false,
             participantViewData = null,
             isOnHold = false,
             onClickAction = null,
