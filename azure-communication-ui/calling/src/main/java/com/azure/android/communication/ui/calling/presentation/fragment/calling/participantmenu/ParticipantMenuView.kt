@@ -114,7 +114,7 @@ internal class ParticipantMenuView(
 
         val items = mutableListOf<BottomCellItem>()
         if (remoteParticipantId == null) {
-            items.add(getYouTitle())
+            //items.add(getYouTitle())
             items.add(getCameraToggle(cameraState))
         }
 
