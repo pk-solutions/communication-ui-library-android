@@ -6,8 +6,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.azure.android.communication.ui.calling.presentation.CallCompositeActivity"
     >
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/azure_communication_ui_action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/azure_communication_ui_calling_color_primary"
+        android:elevation="4dp"
+        android:theme="@style/AzureCommunicationUICalling.ActionBar"
+        />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/azure_communication_ui_fragment_container_view"
         android:layout_width="match_parent"
