@@ -24,6 +24,7 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.microsoft.fluentui.drawer.DrawerDialog
 import com.microsoft.fluentui.util.activity
+import com.microsoft.fluentui.util.displaySize
 import com.microsoft.fluentui.util.statusBarHeight
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -105,10 +106,18 @@ internal class ParticipantMenuView(
             participantMenuTable.updateLayoutParams<MarginLayoutParams> {
                 height = LayoutParams.MATCH_PARENT
 
-                val actionBar = context.activity?.supportActionBar
-                if (actionBar != null)
-                    topMargin = context.statusBarHeight + actionBar.height
             }
+            val layoutParams = participantMenuDrawer.window?.attributes
+
+            var topMargin = 0
+            val actionBar = context.activity?.supportActionBar
+            if (actionBar != null)
+                topMargin = context.statusBarHeight + actionBar.height
+            layoutParams?.y = topMargin
+
+            participantMenuDrawer.window?.attributes = layoutParams
+            participantMenuDrawer.window?.setLayout(context.displaySize.x, context.displaySize.y - topMargin)
+
         } else {
             participantMenuTable.layoutManager = LinearLayoutManager(context)
         }
