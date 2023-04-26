@@ -68,22 +68,22 @@
     <!--    Compliance Banner-->
     <string name="azure_communication_ui_calling_view_banner_recording_started"><b>A transcrição foi iniciada.</b> Ingressando, você está
 dando consentimento para que esta reunião seja transcrita.
- <u>Política de privacidade</u></string>
+ </string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped"><b>A gravação está sendo salva.</b> A gravação foi interrompida.
-         <u>Saiba mais</u></string>
+         </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_started"><b>A transcrição foi iniciada.</b> Ingressando, você
-        está dando consentimento para que esta reunião seja transcrita. <u>Política de privacidade</u></string>
+        está dando consentimento para que esta reunião seja transcrita. </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped"><b>A transcrição está sendo salva.</b> A transcrição
-        foi interrompida. <u>Saiba mais</u></string>
+        foi interrompida. </string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_started"><b>A gravação e a transcrição foram
  iniciadas.</b> Ingressando, você está dando consentimento para que esta reunião seja transcrita
-    . <u>Política de privacidade</u></string>
+    . </string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped"><b>A gravação e a transcrição estão
-        sendo salvas.</b> A gravação e a transcrição foram interrompidas. <u>Saiba mais</u></string>
+        sendo salvas.</b> A gravação e a transcrição foram interrompidas. </string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped_still_transcribing"><b>A gravação foi interrompida.</b> Você
-        agora só está transcrevendo esta reunião. <u>Política de privacidade</u></string>
+        agora só está transcrevendo esta reunião. </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped_still_recording"><b>A transcrição foi interrompida.
-    </b> Você agora só está gravando esta reunião. <u>Política de privacidade</u></string>
+    </b> Você agora só está gravando esta reunião. </string>
     <string name="azure_communication_ui_calling_view_link_learn_more_label">Saiba mais</string>
     <string name="azure_communication_ui_calling_view_link_privacy_policy_label">Política de privacidade</string>
     <string name="azure_communication_ui_calling_view_link">Link</string>

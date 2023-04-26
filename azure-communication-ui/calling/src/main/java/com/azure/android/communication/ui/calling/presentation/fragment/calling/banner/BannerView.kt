@@ -175,10 +175,6 @@ internal class BannerView : ConstraintLayout {
         return info
     }
 
-    private fun removeUnderlinedText(styledText: CharSequence): CharSequence {
-        return styledText.toSpanned().toHtml().replace(Regex("<u>.*</u>"), "").parseAsHtml()
-    }
-
     private fun getBannerTitle(bannerText: CharSequence): CharSequence {
         return bannerText
     }
