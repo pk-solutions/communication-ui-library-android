@@ -88,6 +88,7 @@ internal class CallCompositeActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         configureLockRotation()
         configureLocalization()
+        configureActionBar()
         setStatusBarColor()
         //setActionBarVisibility()
 
@@ -96,7 +97,6 @@ internal class CallCompositeActivity : AppCompatActivity() {
         }
 
         setContentView(R.layout.azure_communication_ui_calling_activity_call_composite)
-        configureActionBar()
 
         val activity = this
         permissionManager.start(
