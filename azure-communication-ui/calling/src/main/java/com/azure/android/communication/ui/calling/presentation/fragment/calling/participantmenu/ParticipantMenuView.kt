@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -22,6 +23,8 @@ import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.microsoft.fluentui.drawer.DrawerDialog
+import com.microsoft.fluentui.util.activity
+import com.microsoft.fluentui.util.statusBarHeight
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -47,7 +50,9 @@ internal class ParticipantMenuView(
         onKeyListener: DialogInterface.OnKeyListener,
         isXlBottomDrawer: Boolean,
     ) {
-        initializeDrawer(onKeyListener, isXlBottomDrawer)
+        this.isXlBottomDrawer = isXlBottomDrawer
+
+        initializeDrawer(onKeyListener)
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getDisplayStateFlow().collect {
@@ -75,14 +80,10 @@ internal class ParticipantMenuView(
 
     private fun initializeDrawer(
         onKeyListener: DialogInterface.OnKeyListener,
-        isXlBottomDrawer: Boolean,
     ) {
-        this.isXlBottomDrawer = isXlBottomDrawer
-
         val dimValue = if (isXlBottomDrawer) 0f else 0.5f
-        val titleBehavior = if (isXlBottomDrawer) DrawerDialog.TitleBehavior.BELOW_TITLE else DrawerDialog.TitleBehavior.DEFAULT
 
-        participantMenuDrawer = DrawerDialog(context, DrawerDialog.BehaviorType.BOTTOM, dimValue = dimValue, titleBehavior = titleBehavior)
+        participantMenuDrawer = DrawerDialog(context, DrawerDialog.BehaviorType.BOTTOM, dimValue)
         participantMenuDrawer.setContentView(this)
         participantMenuDrawer.setOnDismissListener {
             viewModel.close()
@@ -101,6 +102,13 @@ internal class ParticipantMenuView(
                 alignItems = AlignItems.CENTER
             }
             participantMenuTable.updatePadding(top = 30)
+            participantMenuTable.updateLayoutParams<MarginLayoutParams> {
+                height = LayoutParams.MATCH_PARENT
+
+                val actionBar = context.activity?.supportActionBar
+                if (actionBar != null)
+                    topMargin = context.statusBarHeight + actionBar.height
+            }
         } else {
             participantMenuTable.layoutManager = LinearLayoutManager(context)
         }
