@@ -135,15 +135,16 @@ internal class SetupFragment :
             SpannableString(getString(R.string.azure_communication_ui_calling_call_setup_action_bar_title))
         }
 
-        val titleView = callCompositeActivity.supportActionBar?.customView?.findViewById<TextView>(R.id.toolbar_title)
-        titleView?.text = titleSpan
+        val titleView = callCompositeActivity.findViewById<TextView>(R.id.toolbar_title)
+        titleView.text = titleSpan
 
         // Only set the subtitle if the title has also been set
         if (!TextUtils.isEmpty(localOptions?.setupScreenViewData?.subtitle)) {
             if (!TextUtils.isEmpty(localOptions?.setupScreenViewData?.title)) {
                 val subtitleSpan = SpannableString(localOptions?.setupScreenViewData?.subtitle)
-                val subtitleView = callCompositeActivity.supportActionBar?.customView?.findViewById<TextView>(R.id.toolbar_subtitle)
-                subtitleView?.text = subtitleSpan
+                val subtitleView = callCompositeActivity.findViewById<TextView>(R.id.toolbar_subtitle)
+                subtitleView.visibility = View.VISIBLE
+                subtitleView.text = subtitleSpan
             } else {
                 holder.container.logger.error(
                     "Provided setupScreenViewData has subtitle, but no title provided. In this case subtitle is not displayed."

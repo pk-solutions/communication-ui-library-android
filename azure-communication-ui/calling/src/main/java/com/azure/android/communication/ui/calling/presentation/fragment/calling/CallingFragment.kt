@@ -326,7 +326,10 @@ internal class CallingFragment :
     private fun setActionBarTitle() {
         val titleSpan = SpannableString(localOptions?.setupScreenViewData?.title ?: "")
 
-        val titleView = callCompositeActivity.supportActionBar?.customView?.findViewById<TextView>(R.id.toolbar_title)
+        val titleView = callCompositeActivity.findViewById<TextView>(R.id.toolbar_title)
         titleView?.text = titleSpan
+
+        val subtitleView = callCompositeActivity.findViewById<TextView>(R.id.toolbar_subtitle)
+        subtitleView.visibility = View.GONE
     }
 }
