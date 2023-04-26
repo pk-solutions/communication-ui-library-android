@@ -113,10 +113,10 @@ internal class ParticipantMenuView(
                     topMargin += actionBar.height
 
                 val displaySize = context.displaySize
-                val layoutParams = participantMenuDrawer.window?.attributes
-                layoutParams?.y = topMargin
+                //val layoutParams = participantMenuDrawer.window?.attributes
+                //layoutParams?.y = topMargin
 
-                participantMenuDrawer.window?.attributes = layoutParams
+                //participantMenuDrawer.window?.attributes = layoutParams
                 participantMenuDrawer.window?.setLayout(displaySize.x, displaySize.y - topMargin)
             }
         } else {
