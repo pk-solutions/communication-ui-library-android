@@ -17,6 +17,7 @@ import com.azure.android.communication.ui.calling.redux.state.CameraOperationalS
 import com.azure.android.communication.ui.calling.redux.state.PermissionStatus
 import com.azure.android.communication.ui.calling.utilities.BottomCellAdapter
 import com.azure.android.communication.ui.calling.utilities.BottomCellItem
+import com.azure.android.communication.ui.calling.utilities.BottomCellItemType
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -112,14 +113,32 @@ internal class ParticipantMenuView(
         bottomCellAdapter = BottomCellAdapter(isXlBottomDrawer)
 
         val items = mutableListOf<BottomCellItem>()
-        if (remoteParticipantId == null)
+        if (remoteParticipantId == null) {
+            items.add(getYouTitle())
             items.add(getCameraToggle(cameraState))
+        }
 
         // TODO: spotlight user? seems to be a beta/JS-only feature right now.
         // TODO: remove-from-meeting button
 
         bottomCellAdapter.setBottomCellItems(items)
         participantMenuTable.adapter = bottomCellAdapter
+    }
+
+    private fun getYouTitle(): BottomCellItem {
+        return BottomCellItem(
+            null,
+            "YOU", // TODO: translations
+            "Your local options",
+            null,
+            null,
+            null,
+            null,
+            null,
+            false,
+            BottomCellItemType.BottomMenuTitle,
+            null
+        )
     }
 
     private fun getCameraToggle(cameraState: ControlBarViewModel.CameraModel): BottomCellItem {
