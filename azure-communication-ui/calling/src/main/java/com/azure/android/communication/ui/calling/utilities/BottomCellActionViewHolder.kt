@@ -87,7 +87,7 @@ internal class BottomCellActionViewHolder(itemView: View) : BottomCellViewHolder
 
         return (
             !bottomCellItem.isOnHold && (
-                bottomCellItem.enabled == true || bottomCellItem.accessoryImageDescription == muteDescription ||
+                bottomCellItem.accessoryVisible == true || bottomCellItem.accessoryImageDescription == muteDescription ||
                     bottomCellItem.accessoryImageDescription == unMutedDescription
                 )
             )

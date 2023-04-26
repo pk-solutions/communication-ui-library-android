@@ -10,6 +10,7 @@ import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.util.LayoutDirection
 import android.view.View
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -125,19 +126,7 @@ internal class SetupFragment :
         get() = (activity as AppCompatActivity)
 
     private fun setActionBarTitle() {
-        fun setActionbarTextColor(text: SpannableString, @ColorInt color: Int) {
-            text.setSpan(
-                ForegroundColorSpan(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        color
-                    )
-                ),
-                0,
-                text.length,
-                Spannable.SPAN_INCLUSIVE_INCLUSIVE
-            )
-        }
+        // TODO: CallingFragment has similar code. should combine.
 
         val localOptions = holder.container.configuration.callCompositeLocalOptions
         val titleSpan = if (!TextUtils.isEmpty(localOptions?.setupScreenViewData?.title)) {
@@ -146,16 +135,16 @@ internal class SetupFragment :
             SpannableString(getString(R.string.azure_communication_ui_calling_call_setup_action_bar_title))
         }
 
-        setActionbarTextColor(titleSpan, R.color.azure_communication_ui_calling_color_action_bar_text)
-
-        callCompositeActivity.supportActionBar?.title = titleSpan
+        val titleView = callCompositeActivity.findViewById<TextView>(R.id.toolbar_title)
+        titleView.text = titleSpan
 
         // Only set the subtitle if the title has also been set
         if (!TextUtils.isEmpty(localOptions?.setupScreenViewData?.subtitle)) {
             if (!TextUtils.isEmpty(localOptions?.setupScreenViewData?.title)) {
                 val subtitleSpan = SpannableString(localOptions?.setupScreenViewData?.subtitle)
-                setActionbarTextColor(subtitleSpan, R.color.azure_communication_ui_calling_color_action_bar_subtext)
-                callCompositeActivity.supportActionBar?.subtitle = subtitleSpan
+                val subtitleView = callCompositeActivity.findViewById<TextView>(R.id.toolbar_subtitle)
+                subtitleView.visibility = View.VISIBLE
+                subtitleView.text = subtitleSpan
             } else {
                 holder.container.logger.error(
                     "Provided setupScreenViewData has subtitle, but no title provided. In this case subtitle is not displayed."

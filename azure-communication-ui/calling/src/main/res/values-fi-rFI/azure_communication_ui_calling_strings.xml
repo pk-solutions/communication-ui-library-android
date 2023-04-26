@@ -76,14 +76,13 @@
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped"><b>Litterointia tallennetaan.</b> Litterointi
         on pysäytetty.</string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_started"><b>Tallennus ja litterointi on aloitettu.
-        </b> Liittymällä annat suostumuksesi kokouksen litteroimiseen
-        .<u>Tietosuojakäytäntö</u></string>
+        </b> Liittymällä annat suostumuksesi kokouksen litteroimiseen.</string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped"><b>Tallennus ja litterointi tallennetaan
         </b> Tallennus ja litterointi on pysäytetty.</string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped_still_transcribing"><b>Tallennus on pysäytetty.</b> Sinä
         litteroit nyt vain tämän kokouksen.</string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped_still_recording"><b>Litterointi on pysäytetty.
-        </b> Olet nyt tallentamassa vain tätä kokousta.<u>Tietosuojakäytäntö</u></string>
+        </b> Olet nyt tallentamassa vain tätä kokousta.</string>
     <string name="azure_communication_ui_calling_view_link_learn_more_label">Lisätietoja</string>
     <string name="azure_communication_ui_calling_view_link_privacy_policy_label">Tietosuojakäytäntö</string>
     <string name="azure_communication_ui_calling_view_link">Linkki</string>

@@ -17,6 +17,7 @@ import android.util.LayoutDirection
 import android.view.View
 import android.view.ViewStub
 import android.view.accessibility.AccessibilityManager
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -198,6 +199,7 @@ internal class CallingFragment :
         participantMenuView.start(
             viewLifecycleOwner,
             holder.container.customKeysHandler::onDialogKey,
+            localOptions?.isXlBottomDrawer == true,
         )
     }
 
@@ -322,24 +324,12 @@ internal class CallingFragment :
         get() = (activity as AppCompatActivity)
 
     private fun setActionBarTitle() {
-        fun setActionbarTextColor(text: SpannableString, @ColorInt color: Int) {
-            text.setSpan(
-                ForegroundColorSpan(
-                    ContextCompat.getColor(
-                            requireContext(),
-                            color
-                    )
-                ),
-                0,
-                text.length,
-                Spannable.SPAN_INCLUSIVE_INCLUSIVE
-            )
-        }
-
         val titleSpan = SpannableString(localOptions?.setupScreenViewData?.title ?: "")
 
-        setActionbarTextColor(titleSpan, R.color.azure_communication_ui_calling_color_action_bar_text)
+        val titleView = callCompositeActivity.findViewById<TextView>(R.id.toolbar_title)
+        titleView?.text = titleSpan
 
-        callCompositeActivity.supportActionBar?.title = titleSpan
+        val subtitleView = callCompositeActivity.findViewById<TextView>(R.id.toolbar_subtitle)
+        subtitleView.visibility = View.GONE
     }
 }

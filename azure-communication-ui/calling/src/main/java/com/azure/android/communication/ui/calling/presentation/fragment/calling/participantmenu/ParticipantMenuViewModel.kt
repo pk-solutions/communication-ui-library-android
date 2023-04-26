@@ -12,12 +12,10 @@ internal class ParticipantMenuViewModel(private val dispatch: (Action) -> Unit) 
 
     private val displayStateFlow = MutableStateFlow(DisplayParticipantMenuModel(false, null))
     private lateinit var cameraStateFlow: MutableStateFlow<ControlBarViewModel.CameraModel>
-    private lateinit var xlBottomDrawerStateFlow: MutableStateFlow<Boolean>
 
     fun init(
         permissionState: PermissionState,
         cameraState: CameraState,
-        isXlBottomDrawer: Boolean,
     ) {
         cameraStateFlow = MutableStateFlow(
             ControlBarViewModel.CameraModel(
@@ -25,8 +23,6 @@ internal class ParticipantMenuViewModel(private val dispatch: (Action) -> Unit) 
                 cameraState
             )
         )
-
-        xlBottomDrawerStateFlow = MutableStateFlow(isXlBottomDrawer)
     }
 
     fun update(
@@ -38,7 +34,6 @@ internal class ParticipantMenuViewModel(private val dispatch: (Action) -> Unit) 
 
     fun getDisplayStateFlow(): StateFlow<DisplayParticipantMenuModel> = displayStateFlow
     fun getCameraStateFlow(): StateFlow<ControlBarViewModel.CameraModel> = cameraStateFlow
-    fun getXlBottomDrawerStateFlow(): StateFlow<Boolean> = xlBottomDrawerStateFlow
 
     /**
      * Displays the menu for the local participant.

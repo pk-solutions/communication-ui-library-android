@@ -19,6 +19,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
@@ -180,15 +181,9 @@ internal class CallCompositeActivity : AppCompatActivity() {
 
     private fun configureActionBar() {
         //supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setBackgroundDrawable(
-            ColorDrawable(
-                ContextCompat.getColor(
-                    this,
-                    R.color.azure_communication_ui_calling_color_primary
-                )
-            )
-        )
         //supportActionBar?.setHomeAsUpIndicator(R.drawable.azure_communication_ui_calling_ic_fluent_arrow_left_24_filled)
+        val toolbar = findViewById<Toolbar>(R.id.azure_communication_ui_action_bar)
+        setSupportActionBar(toolbar)
     }
 
     private fun configureLocalization() {

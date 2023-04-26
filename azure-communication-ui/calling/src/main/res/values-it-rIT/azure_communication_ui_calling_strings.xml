@@ -72,7 +72,7 @@
     <string name="azure_communication_ui_calling_view_banner_recording_stopped"><b>È in corso il salvataggio della registrazione. </b> La registrazione è stata arrestata.
         </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_started"><b>trascrizione è stata avviata.</b> Partecipando,
-        fornisci il consenso per la trascrizione della riunione.<u>Informativa sulla privacy</u></string>
+        fornisci il consenso per la trascrizione della riunione.</string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped"><b>È in corso il salvataggio della trascrizione.</b> La trascrizione
         è stata arrestata.</string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_started"><b>Registrazione e trascrizione sono

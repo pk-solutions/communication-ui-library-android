@@ -68,22 +68,22 @@
     <!--    Compliance Banner-->
     <string name="azure_communication_ui_calling_view_banner_recording_started"><b>Se ha iniciado la grabación.</b> Al unirse, está
         dando su consentimiento para que se transcriba esta reunión.
-        <u>Directiva de privacidad</u></string>
+        </string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped"><b>La grabación se está guardando.</b> La grabación se ha detenido.
-         <u>Obtener más información</u></string>
+         </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_started"><b>Se ha iniciado la transcripción.</b> Al unirse, 
-        está dando su consentimiento para que se transcriba esta reunión. <u>Directiva de privacidad</u></string>
+        está dando su consentimiento para que se transcriba esta reunión. </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped"><b>Se está guardando la transcripción.</b>La transcripción
-        se ha detenido. <u>Obtener más información</u></string>
+        se ha detenido. </string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_started"><b>La grabación y transcripción han
         comenzado.</b> Al unirse, da su consentimiento para que se transcriba esta reunión
-        . <u>Directiva de privacidad</u></string>
+        . </string>
     <string name="azure_communication_ui_calling_view_banner_recording_and_transcribing_stopped"><b>La grabación y transcripción se
-        están guardando.</b> Se detuvo la grabación y transcripción. <u>Obtener más información</u></string>
+        están guardando.</b> Se detuvo la grabación y transcripción. </string>
     <string name="azure_communication_ui_calling_view_banner_recording_stopped_still_transcribing"><b>La grabación se ha detenido.</b> Ahora
-        solo está transcribiendo esta reunión. <u>Directiva de privacidad</u></string>
+        solo está transcribiendo esta reunión. </string>
     <string name="azure_communication_ui_calling_view_banner_transcription_stopped_still_recording"><b>La transcripción se ha detenido.
-    </b> Ahora solo está grabando esta reunión. <u>Directiva de privacidad</u></string>
+    </b> Ahora solo está grabando esta reunión. </string>
     <string name="azure_communication_ui_calling_view_link_learn_more_label">Obtener más información</string>
     <string name="azure_communication_ui_calling_view_link_privacy_policy_label">Directiva de privacidad</string>
     <string name="azure_communication_ui_calling_view_link">Vínculo</string>

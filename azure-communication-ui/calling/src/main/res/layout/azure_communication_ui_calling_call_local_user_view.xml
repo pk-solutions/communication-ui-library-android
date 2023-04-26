@@ -9,7 +9,6 @@
     android:layout_height="match_parent"
     android:focusable="false"
     android:accessibilityTraversalAfter="@id/azure_communication_ui_call_floating_header"
-    android:padding="4dp"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -43,7 +42,7 @@
         android:id="@+id/azure_communication_ui_call_local_avatarHolder"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/azure_communication_ui_calling_corner_radius_rectangle_4dp_surface"
+        android:background="@color/azure_communication_ui_calling_color_surface"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

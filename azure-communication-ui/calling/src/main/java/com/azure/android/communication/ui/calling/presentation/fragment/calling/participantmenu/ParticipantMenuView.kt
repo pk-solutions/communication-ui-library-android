@@ -17,6 +17,7 @@ import com.azure.android.communication.ui.calling.redux.state.CameraOperationalS
 import com.azure.android.communication.ui.calling.redux.state.PermissionStatus
 import com.azure.android.communication.ui.calling.utilities.BottomCellAdapter
 import com.azure.android.communication.ui.calling.utilities.BottomCellItem
+import com.azure.android.communication.ui.calling.utilities.BottomCellItemType
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -35,6 +36,7 @@ internal class ParticipantMenuView(
     private var participantMenuTable: RecyclerView
     private lateinit var participantMenuDrawer: DrawerDialog
     private lateinit var bottomCellAdapter: BottomCellAdapter
+    private var isXlBottomDrawer = false
 
     init {
         inflate(context, R.layout.azure_communication_ui_calling_listview, this)
@@ -45,7 +47,10 @@ internal class ParticipantMenuView(
     fun start(
         viewLifecycleOwner: LifecycleOwner,
         onKeyListener: DialogInterface.OnKeyListener,
+        isXlBottomDrawer: Boolean,
     ) {
+        this.isXlBottomDrawer = isXlBottomDrawer
+
         initializeDrawer(onKeyListener)
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -62,29 +67,6 @@ internal class ParticipantMenuView(
                 updateItems(viewModel.getDisplayStateFlow().value.remoteParticipantId, it)
             }
         }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getXlBottomDrawerStateFlow().collect {
-                if (it) {
-                    participantMenuTable.layoutManager = FlexboxLayoutManager(context).apply {
-                        flexDirection = FlexDirection.ROW
-                        flexWrap = FlexWrap.WRAP
-                        justifyContent = JustifyContent.SPACE_EVENLY
-                        alignItems = AlignItems.CENTER
-                    }
-                    participantMenuTable.updatePadding(top = 30)
-                    participantMenuTable.updateLayoutParams {
-                        this.height = LayoutParams.MATCH_PARENT // Fill screen
-                    }
-                } else {
-                    participantMenuTable.layoutManager = LinearLayoutManager(context)
-                    participantMenuTable.updatePadding(top = 0)
-                    participantMenuTable.updateLayoutParams {
-                        this.height = LayoutParams.WRAP_CONTENT
-                    }
-                }
-            }
-        }
     }
 
     fun stop() {
@@ -95,31 +77,68 @@ internal class ParticipantMenuView(
         this.removeAllViews()
     }
 
-    private fun initializeDrawer(onKeyListener: DialogInterface.OnKeyListener) {
-        participantMenuDrawer = DrawerDialog(context, DrawerDialog.BehaviorType.BOTTOM)
+    private fun initializeDrawer(
+        onKeyListener: DialogInterface.OnKeyListener,
+    ) {
+        val dimValue = if (isXlBottomDrawer) 0f else 0.5f
+
+        participantMenuDrawer = DrawerDialog(context, DrawerDialog.BehaviorType.BOTTOM, dimValue)
         participantMenuDrawer.setContentView(this)
         participantMenuDrawer.setOnDismissListener {
             viewModel.close()
         }
         participantMenuDrawer.setOnKeyListener(onKeyListener)
 
-        bottomCellAdapter = BottomCellAdapter()
+        bottomCellAdapter = BottomCellAdapter(isXlBottomDrawer)
         bottomCellAdapter.setBottomCellItems(emptyList())
         participantMenuTable.adapter = bottomCellAdapter
+
+        if (isXlBottomDrawer) {
+            participantMenuTable.layoutManager = FlexboxLayoutManager(context).apply {
+                flexDirection = FlexDirection.ROW
+                flexWrap = FlexWrap.WRAP
+                justifyContent = JustifyContent.SPACE_EVENLY
+                alignItems = AlignItems.CENTER
+            }
+            participantMenuTable.updatePadding(top = 30)
+            participantMenuTable.updateLayoutParams {
+                height = LayoutParams.MATCH_PARENT
+            }
+        } else {
+            participantMenuTable.layoutManager = LinearLayoutManager(context)
+        }
     }
 
     private fun updateItems(remoteParticipantId: String?, cameraState: ControlBarViewModel.CameraModel) {
-        bottomCellAdapter = BottomCellAdapter(viewModel.getXlBottomDrawerStateFlow().value)
+        bottomCellAdapter = BottomCellAdapter(isXlBottomDrawer)
 
         val items = mutableListOf<BottomCellItem>()
-        if (remoteParticipantId == null)
+        if (remoteParticipantId == null) {
+            //items.add(getYouTitle())
             items.add(getCameraToggle(cameraState))
+        }
 
         // TODO: spotlight user? seems to be a beta/JS-only feature right now.
         // TODO: remove-from-meeting button
 
         bottomCellAdapter.setBottomCellItems(items)
         participantMenuTable.adapter = bottomCellAdapter
+    }
+
+    private fun getYouTitle(): BottomCellItem {
+        return BottomCellItem(
+            null,
+            "YOU", // TODO: translations
+            "Your local options",
+            null,
+            null,
+            null,
+            null,
+            null,
+            false,
+            BottomCellItemType.BottomMenuTitle,
+            null
+        )
     }
 
     private fun getCameraToggle(cameraState: ControlBarViewModel.CameraModel): BottomCellItem {
@@ -164,7 +183,7 @@ internal class ParticipantMenuView(
             accessoryImage = null,
             accessoryColor = null,
             accessoryImageDescription = title,
-            enabled = false,
+            accessoryVisible = false,
             participantViewData = null,
             isOnHold = false,
             onClickAction = null,
