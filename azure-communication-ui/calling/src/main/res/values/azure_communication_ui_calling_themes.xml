@@ -30,6 +30,7 @@
         <item name="android:colorControlHighlight">
             @color/azure_communication_ui_calling_color_focus_highlight
         </item>
+        <item name="windowNoTitle">true</item>
         <item name="titleTextColor">
             @color/azure_communication_ui_calling_color_action_bar_text
         </item>
