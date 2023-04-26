@@ -103,6 +103,9 @@ internal class ParticipantMenuView(
                 alignItems = AlignItems.CENTER
             }
             participantMenuTable.updatePadding(top = 30)
+            participantMenuTable.updateLayoutParams {
+                height = LayoutParams.MATCH_PARENT
+            }
             participantMenuDrawer.setOnShowListener {
                 var topMargin = context.statusBarHeight
                 val actionBar = context.activity?.supportActionBar
