@@ -103,15 +103,18 @@ internal class ParticipantMenuView(
                 alignItems = AlignItems.CENTER
             }
             participantMenuTable.updatePadding(top = 30)
-            participantMenuTable.updateLayoutParams {
-                val displayHeight = context.displaySize.y
+            participantMenuDrawer.setOnShowListener {
                 var topMargin = context.statusBarHeight
-
                 val actionBar = context.activity?.supportActionBar
                 if (actionBar != null)
                     topMargin += actionBar.height
 
-                height = displayHeight - topMargin
+                val displaySize = context.displaySize
+                val layoutParams = participantMenuDrawer.window?.attributes
+                layoutParams?.y = topMargin
+
+                participantMenuDrawer.window?.attributes = layoutParams
+                participantMenuDrawer.window?.setLayout(displaySize.x, displaySize.y - topMargin)
             }
         } else {
             participantMenuTable.layoutManager = LinearLayoutManager(context)
