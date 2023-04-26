@@ -167,7 +167,8 @@ internal class ParticipantGridCellVideoView(
             )
             participantVideoContainerSpeakingFrameLayout.background = ContextCompat.getDrawable(
                 context,
-                R.drawable.azure_communication_ui_calling_speaking_rectangle_indicator_no_corner
+                //R.drawable.azure_communication_ui_calling_speaking_rectangle_indicator_no_corner
+                R.color.azure_communication_ui_calling_color_primary
             )
             return
         }
@@ -178,7 +179,8 @@ internal class ParticipantGridCellVideoView(
         )
         videoContainer.background = ContextCompat.getDrawable(
             context,
-            R.drawable.azure_communication_ui_calling_corner_radius_rectangle_4dp_surface
+            //R.drawable.azure_communication_ui_calling_corner_radius_rectangle_4dp_surface
+            R.color.azure_communication_ui_calling_color_surface
         )
         participantVideoContainerSpeakingFrameLayout.background = ContextCompat.getDrawable(
             context,
