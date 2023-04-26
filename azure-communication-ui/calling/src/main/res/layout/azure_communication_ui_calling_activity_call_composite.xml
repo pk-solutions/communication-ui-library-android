@@ -16,13 +16,41 @@
         android:layout_height="wrap_content"
         android:background="@color/azure_communication_ui_calling_color_primary"
         android:elevation="4dp"
-        android:theme="@style/AzureCommunicationUICalling.ActionBar"
-        />
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:gravity="center"
+            >
+            <TextView
+                android:id="@+id/toolbar_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/azure_communication_ui_calling_color_on_background"
+                android:visibility="gone"
+                tools:visibility="visible"
+                tools:text="Calling"
+                />
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textColor="@color/azure_communication_ui_calling_color_on_background"
+                tools:text="Setup"
+                />
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/azure_communication_ui_fragment_container_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:layout="@layout/azure_communication_ui_calling_fragment_setup"
         />
 
 </LinearLayout>
