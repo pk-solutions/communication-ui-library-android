@@ -59,6 +59,7 @@ internal class CallCompositeActivity : AppCompatActivity() {
     private val permissionManager get() = container.permissionManager
     private val audioSessionManager get() = container.audioSessionManager
     private val audioFocusManager get() = container.audioFocusManager
+    private val audioModeManager get() = container.audioModeManager
     private val lifecycleManager get() = container.lifecycleManager
     private val errorHandler get() = container.errorHandler
     private val remoteParticipantJoinedHandler get() = container.remoteParticipantHandler
@@ -122,6 +123,10 @@ internal class CallCompositeActivity : AppCompatActivity() {
             audioFocusManager.start()
         }
 
+        lifecycleScope.launch {
+            audioModeManager.start()
+        }
+
         notificationService.start(lifecycleScope)
         callHistoryService.start(lifecycleScope)
     }
@@ -150,6 +155,7 @@ internal class CallCompositeActivity : AppCompatActivity() {
         if (CallCompositeInstanceManager.hasCallComposite(instanceId)) {
             audioFocusManager.stop()
             audioSessionManager.onDestroy(this)
+            audioModeManager.onDestroy()
             if (isFinishing) {
                 store.dispatch(CallingAction.CallEndRequested())
                 CallCompositeInstanceManager.removeCallComposite(instanceId)
@@ -260,6 +266,8 @@ internal class CallCompositeActivity : AppCompatActivity() {
                 supportActionBar?.show()
                 requestedOrientation = if (localOptions?.isLockRotation == true) {
                     ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                } else if (isAndroidTV(this)) {
+                    ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
                 } else {
                     ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
                 }
