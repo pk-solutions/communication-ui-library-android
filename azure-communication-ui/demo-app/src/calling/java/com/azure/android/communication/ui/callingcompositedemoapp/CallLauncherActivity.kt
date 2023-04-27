@@ -11,6 +11,9 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.azure.android.communication.calling.IncomingCall
+import com.azure.android.communication.common.CommunicationIdentifier
+import com.azure.android.communication.common.CommunicationUserIdentifier
 import com.azure.android.communication.ui.callingcompositedemoapp.databinding.ActivityCallLauncherBinding
 import com.azure.android.communication.ui.callingcompositedemoapp.features.AdditionalFeatures
 import com.azure.android.communication.ui.callingcompositedemoapp.features.FeatureFlags
@@ -53,6 +56,7 @@ class CallLauncherActivity : AppCompatActivity() {
         val deeplinkName = data?.getQueryParameter("name")
         val deeplinkGroupId = data?.getQueryParameter("groupid")
         val deeplinkTeamsUrl = data?.getQueryParameter("teamsurl")
+        val deeplinkParticipants = data?.getQueryParameter("participants")
 
         binding.run {
             if (!deeplinkAcsToken.isNullOrEmpty()) {
@@ -71,12 +75,57 @@ class CallLauncherActivity : AppCompatActivity() {
                 groupIdOrTeamsMeetingLinkText.setText(deeplinkGroupId)
                 groupCallRadioButton.isChecked = true
                 teamsMeetingRadioButton.isChecked = false
+                directCallRadioButton.isChecked = false
             } else if (!deeplinkTeamsUrl.isNullOrEmpty()) {
                 groupIdOrTeamsMeetingLinkText.setText(deeplinkTeamsUrl)
                 groupCallRadioButton.isChecked = false
                 teamsMeetingRadioButton.isChecked = true
+                directCallRadioButton.isChecked = false
+            } else if (!deeplinkParticipants.isNullOrEmpty()) {
+                groupIdOrTeamsMeetingLinkText.setText(deeplinkParticipants)
+                groupCallRadioButton.isChecked = false
+                teamsMeetingRadioButton.isChecked = false
+                directCallRadioButton.isChecked = true
             } else {
                 groupIdOrTeamsMeetingLinkText.setText(BuildConfig.GROUP_CALL_ID)
+            }
+
+            startCallAgentButton.setOnClickListener {
+                try {
+                    startCallAgent {
+                        runOnUiThread {
+                            answerCallButton.isEnabled = true
+                        }
+                        it.addOnCallEndedListener {
+                            runOnUiThread {
+                                answerCallButton.isEnabled = false
+                            }
+                        }
+                    }
+                    startCallAgentButton.isEnabled = false
+                    stopCallAgentButton.isEnabled = true
+                } catch (err: Throwable) {
+                    showAlert("Failed to start call agent: " + err.message)
+                    startCallAgentButton.isEnabled = true
+                    stopCallAgentButton.isEnabled = false
+                }
+            }
+
+            stopCallAgentButton.setOnClickListener {
+                try {
+                    stopCallAgent()
+                    startCallAgentButton.isEnabled = true
+                    stopCallAgentButton.isEnabled = false
+                } catch (err: Throwable) {
+                    showAlert("Failed to stop call agent: " + err.message)
+                    startCallAgentButton.isEnabled = false
+                    stopCallAgentButton.isEnabled = true
+                }
+            }
+
+            answerCallButton.setOnClickListener {
+                answerCallButton.isEnabled = false
+                accept()
             }
 
             launchButton.setOnClickListener {
@@ -87,12 +136,21 @@ class CallLauncherActivity : AppCompatActivity() {
                 if (groupCallRadioButton.isChecked) {
                     groupIdOrTeamsMeetingLinkText.setText(BuildConfig.GROUP_CALL_ID)
                     teamsMeetingRadioButton.isChecked = false
+                    directCallRadioButton.isChecked = false
                 }
             }
             teamsMeetingRadioButton.setOnClickListener {
                 if (teamsMeetingRadioButton.isChecked) {
                     groupIdOrTeamsMeetingLinkText.setText(BuildConfig.TEAMS_MEETING_LINK)
                     groupCallRadioButton.isChecked = false
+                    directCallRadioButton.isChecked = false
+                }
+            }
+            directCallRadioButton.setOnClickListener {
+                if (directCallRadioButton.isChecked) {
+                    groupIdOrTeamsMeetingLinkText.setText(BuildConfig.DIRECT_PARTICIPANTS)
+                    groupCallRadioButton.isChecked = false
+                    teamsMeetingRadioButton.isChecked = false
                 }
             }
 
@@ -124,9 +182,41 @@ class CallLauncherActivity : AppCompatActivity() {
         }
     }
 
-    private fun launch() {
+    private fun stopCallAgent() {
+        callLauncherViewModel.stopCallAgent()
+    }
+
+    private fun startCallAgent(incomingCallHandler: (ic: IncomingCall) -> Unit) {
         val userName = binding.userNameText.text.toString()
         val acsToken = binding.acsTokenText.text.toString()
+
+        callLauncherViewModel.startCallAgent(
+            this@CallLauncherActivity,
+            acsToken,
+            userName,
+            incomingCallHandler,
+        )
+    }
+
+    private fun accept() {
+        try {
+            val userName = binding.userNameText.text.toString()
+
+            callLauncherViewModel.launch(
+                this@CallLauncherActivity,
+                userName,
+                null,
+                null,
+                null,
+                true,
+            )
+        } catch (err: Throwable) {
+            showAlert("Failed to accept incoming call: " + err.message)
+        }
+    }
+
+    private fun launch() {
+        val userName = binding.userNameText.text.toString()
 
         var groupId: UUID? = null
         if (binding.groupCallRadioButton.isChecked) {
@@ -148,13 +238,28 @@ class CallLauncherActivity : AppCompatActivity() {
                 return
             }
         }
+        var participants: ArrayList<CommunicationIdentifier>? = null
+        if (binding.directCallRadioButton.isChecked) {
+            try {
+                participants = ArrayList()
+                val id = CommunicationUserIdentifier(
+                    binding.groupIdOrTeamsMeetingLinkText.text.toString().trim()
+                )
+                participants.add(id)
+            } catch (e: Throwable) {
+                val message = "IDs are invalid or empty."
+                showAlert(message)
+                return
+            }
+        }
 
         callLauncherViewModel.launch(
             this@CallLauncherActivity,
-            acsToken,
             userName,
             groupId,
             meetingLink,
+            participants,
+            false,
         )
     }
 

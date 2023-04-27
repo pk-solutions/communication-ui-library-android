@@ -8,8 +8,12 @@
     <string name="acs_endpoint_hint">ACS Endpoint</string>
     <string name="name_hint">Your Name</string>
     <string name="identity_hint">Identity</string>
+    <string name="start_call_agent_label">Start call agent</string>
+    <string name="stop_call_agent_label">Stop call agent</string>
+    <string name="answer_call_label">Answer call</string>
     <string name="group_call_label">Group call</string>
     <string name="teams_meeting_label">Teams meeting</string>
+    <string name="direct_call_label">Direct call</string>
     <string name="group_call_id_or_teams_meeting_hint">Group ID or Meeting link</string>
     <string name="chat_thread_id_hint">Chat Thread ID</string>
     <string name="endpoint_url_hint">Endpoint</string>

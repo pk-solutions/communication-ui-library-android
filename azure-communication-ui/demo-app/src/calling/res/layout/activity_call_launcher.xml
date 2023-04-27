@@ -40,6 +40,47 @@
             app:layout_constraintTop_toBottomOf="@id/acsTokenText"
             />
 
+        <Button
+            android:id="@+id/startCallAgentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/start_call_agent_label"
+            app:layout_constraintEnd_toStartOf="@id/stopCallAgentButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userNameText"
+            />
+
+        <Button
+            android:id="@+id/stopCallAgentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stop_call_agent_label"
+            android:enabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/startCallAgentButton"
+            app:layout_constraintTop_toBottomOf="@+id/userNameText"
+            />
+
+        <Button
+            android:id="@+id/answerCallButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/answer_call_label"
+            android:enabled="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/call_guideline"
+            />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/call_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5"
+            />
+
         <RadioButton
             android:id="@+id/groupCallRadioButton"
             android:layout_width="wrap_content"
@@ -48,7 +89,7 @@
             android:checked="true"
             android:text="@string/group_call_label"
             app:layout_constraintStart_toStartOf="@id/userNameText"
-            app:layout_constraintTop_toBottomOf="@id/userNameText"
+            app:layout_constraintTop_toBottomOf="@id/call_guideline"
             />
 
         <RadioButton
@@ -59,7 +100,18 @@
             android:layout_marginTop="16dp"
             android:text="@string/teams_meeting_label"
             app:layout_constraintStart_toEndOf="@id/groupCallRadioButton"
-            app:layout_constraintTop_toBottomOf="@id/userNameText"
+            app:layout_constraintTop_toBottomOf="@id/call_guideline"
+            />
+
+        <RadioButton
+            android:id="@+id/directCallRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/direct_call_label"
+            app:layout_constraintStart_toEndOf="@id/teamsMeetingRadioButton"
+            app:layout_constraintTop_toBottomOf="@id/call_guideline"
             />
 
         <EditText
